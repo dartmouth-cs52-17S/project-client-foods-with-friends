@@ -15,6 +15,8 @@ Core Mentor
 
 ### This is a react-native app that connects strangers to eat together if they don't have anyone to eat with for a meal!
 
+You need to have the cli installed
+
 to run:
 
 `npm install`
