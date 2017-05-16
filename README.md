@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ## CS52 Final Project
 ### Foods with Friends
 
@@ -25,7 +24,7 @@ to run:
 `npm install -g react-native-cli`
 
 `react-native run-ios`
-=======
+
 # starter express app template
 
 * node with babel
@@ -33,6 +32,3 @@ to run:
 * airbnb eslint rules
 
 Procfile set up to run on [heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#deploy-the-app)
-
-
->>>>>>> 255f984f75ad26e9bf5af3f6bee1b076cad91f09
