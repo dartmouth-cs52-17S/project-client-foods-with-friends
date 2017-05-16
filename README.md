@@ -13,11 +13,8 @@ Makes use or react-native, redux, and babel
 
 `npm install -g react-native-cli`
 
-`react-native run-ios`
-
 ## Deployment
-
-TODO: how to deploy the project
+`react-native run-ios`
 
 ## Authors
 * Allison Chuang
