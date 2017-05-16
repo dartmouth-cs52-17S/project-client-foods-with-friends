@@ -1,7 +1,11 @@
-<<<<<<< HEAD
+
 # OSX
 #
 .DS_Store
+node_modules
+.env
+npm-debug.log
+build
 
 # Xcode
 #
@@ -52,10 +56,3 @@ buck-out/
 fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots
-=======
-.DS_Store
-node_modules
-.env
-npm-debug.log
-build
->>>>>>> 255f984f75ad26e9bf5af3f6bee1b076cad91f09

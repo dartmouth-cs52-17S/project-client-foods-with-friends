@@ -7,7 +7,7 @@
 		"test": "jest",
 		"build": "babel app -d build",
 		"prod": "npm run build; node build/server.js",
-		"dev": "nodemon app/server.js --exec babel-node",
+		"dev": "nodemon app/server.js --exec babel-node"
 	},
 	"license": "ISC",
 	"dependencies": {
