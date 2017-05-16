@@ -22,6 +22,8 @@ to run:
 
 `npm install`
 
+`npm install -g react-native-cli`
+
 `react-native run-ios`
 =======
 # starter express app template
