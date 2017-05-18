@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import {
   StyleSheet,
@@ -9,6 +11,7 @@ import {
 } from 'react-native';
 
 import Profile from './profile';
+import { signupUser } from '../actions';
 
 const styles = StyleSheet.create({
   button: {
@@ -97,23 +100,26 @@ class SignUp extends React.Component {
     this.updateEmail = this.updateEmail.bind(this);
     this.updateUsername = this.updateUsername.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
-  updateEmail(event) {
+  updateEmail(text) {
+    console.log(this.state.email);
     this.setState({
-      email: event.target.value,
+      email: text,
     });
   }
 
-  updatePassword(event) {
+  updatePassword(text) {
     this.setState({
-      password: event.target.value,
+      password: text,
     });
   }
 
-  updateUsername(event) {
+  updateUsername(text) {
     this.setState({
-      password: event.target.value,
+      password: text,
     });
   }
 
@@ -150,8 +156,8 @@ class SignUp extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.timeLabel}>Sign Up!</Text>
-        <TextInput style={styles.TextInput} placeholder={'email'} onChange={this.updateEmail} value={this.state.email} />
-        <TextInput id={'password'} style={styles.TextInput} type={'password'} placeholder={'password'} onChange={this.updatePassword} value={this.state.password} />
+        <TextInput style={styles.TextInput} placeholder={'email'} onChangeText={this.updateEmail} value={this.state.email} />
+        <TextInput id={'password'} style={styles.TextInput} type={'password'} placeholder={'password'} onChangeText={this.updatePassword} value={this.state.password} />
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onClick={this.handleSubmit}>
             <Text> Submit! </Text>
@@ -166,5 +172,5 @@ class SignUp extends React.Component {
     );
   }
 }
-
-module.exports = SignUp;
+export default (connect(null,
+  { signupUser })(SignUp));
