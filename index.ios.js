@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { View, StyleSheet, AppRegistry, NavigatorIOS } from 'react-native';
+import { View, StyleSheet, AppRegistry } from 'react-native';
 import Navigator from './navigator'
 
 const styles = StyleSheet.create({
