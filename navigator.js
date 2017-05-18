@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { View, StyleSheet, AppRegistry, NavigatorIOS } from 'react-native';
-import Profile from './components/profile'
+import SignUp from './components/signup'
 
 const styles = StyleSheet.create({
   container:  {
@@ -18,8 +18,8 @@ class Navigator extends Component {
           style={styles.container}
           translucent={false}
           initialRoute={{
-            title: 'HI',
-            component: Profile,
+            title: 'Profile',
+            component: SignUp,
           }}
         />
       </View>

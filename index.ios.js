@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-
-import { View, StyleSheet, AppRegistry } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware, compose } from 'redux';
+import thunk from 'redux-thunk';
+import reducers from './reducers';
+import { View, StyleSheet, AsyncStorage, AppRegistry } from 'react-native';
 import Navigator from './navigator'
+import { ActionTypes } from './actions'
 
 const styles = StyleSheet.create({
   container:  {
@@ -10,12 +14,23 @@ const styles = StyleSheet.create({
   },
 });
 
+const store = createStore(reducers, {}, compose(
+  applyMiddleware(thunk),
+  window.devToolsExtension ? window.devToolsExtension() : f => f,
+));
+const token = AsyncStorage.getItem('token');
+if (token) {
+  store.dispatch({ type: ActionTypes.AUTH_USER });
+}
+
 class foodswithfriends extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <Navigator />
-      </View>
+      <Provider store={store}>
+        <View style={styles.container}>
+          <Navigator />
+        </View>
+      </Provider>
     );
   }
 }

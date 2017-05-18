@@ -56,7 +56,7 @@ class Profile extends Component {
       passProps: { },
     });
   }
-  render()  {
+  render() {
     return (
       <View style={styles.imageView}>
         <Image
@@ -80,6 +80,6 @@ class Profile extends Component {
       </View>
     );
   }
-};
+}
 
-module.exports = Profile;
+export default Profile;
