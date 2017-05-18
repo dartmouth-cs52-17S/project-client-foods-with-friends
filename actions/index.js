@@ -1,4 +1,5 @@
 import axios from 'axios';
+import AsyncStorage from 'react-native';
 
 const ROOT_URL = 'https://munchees.herokuapp.com/api/signup';
 
@@ -19,7 +20,7 @@ export function signupUser({ fullname, email, password }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}`, { fullname, email, password }).then((response) => {
       dispatch({ type: ActionTypes.AUTH_USER });
-      localStorage.setItem('token', response.data.token);
+      AsyncStorage.setItem('token', response.data.token);
     })
     .catch((error) => {
       dispatch(authError(`Signup Failed: ${error.response.data}`));

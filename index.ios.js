@@ -4,11 +4,11 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
 import { View, StyleSheet, AsyncStorage, AppRegistry } from 'react-native';
-import Navigator from './navigator'
-import { ActionTypes } from './actions'
+import Navigator from './navigator';
+import { ActionTypes } from './actions';
 
 const styles = StyleSheet.create({
-  container:  {
+  container: {
     flex: 1,
     alignSelf: 'stretch',
   },
