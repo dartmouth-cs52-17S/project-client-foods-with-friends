@@ -94,11 +94,12 @@ class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      fullname: '',
       email: '',
       password: '',
     };
     this.updateEmail = this.updateEmail.bind(this);
-    this.updateUsername = this.updateUsername.bind(this);
+    this.updateFullname = this.updateFullname.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
@@ -117,9 +118,9 @@ class SignUp extends React.Component {
     });
   }
 
-  updateUsername(text) {
+  updateFullname(text) {
     this.setState({
-      password: text,
+      fullname: text,
     });
   }
 
@@ -127,7 +128,7 @@ class SignUp extends React.Component {
     console.log('handle submit');
     event.preventDefault();
     const user = {
-      username: this.state.username,
+      fullname: this.state.fullname,
       email: this.state.email,
       password: this.state.password,
     };
@@ -146,7 +147,7 @@ class SignUp extends React.Component {
     this.setState({
       email: '',
       password: '',
-      username: '',
+      fullname: '',
     });
     // this.props.history.go('/');
   }
@@ -156,13 +157,14 @@ class SignUp extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={styles.timeLabel}>Sign Up!</Text>
-        <TextInput style={styles.TextInput} placeholder={'email'} onChangeText={this.updateEmail} value={this.state.email} />
-        <TextInput id={'password'} style={styles.TextInput} type={'password'} placeholder={'password'} onChangeText={this.updatePassword} value={this.state.password} />
+        <TextInput style={styles.TextInput} placeholder={'Full Name'} onChangeText={this.updateFullname} value={this.state.fullname} />
+        <TextInput style={styles.TextInput} placeholder={'Email'} onChangeText={this.updateEmail} value={this.state.email} />
+        <TextInput id={'password'} style={styles.TextInput} type={'Password'} placeholder={'password'} onChangeText={this.updatePassword} value={this.state.password} />
         <View style={styles.buttonBox}>
-          <TouchableHighlight style={styles.button} onClick={this.handleSubmit}>
+          <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)}>
             <Text> Submit! </Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.button} onClick={this.handleCancel}>
+          <TouchableHighlight style={styles.button} onPress={this.handleCancel}>
             <Text> cancel </Text>
           </TouchableHighlight>
         </View>
