@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { View, StyleSheet, AppRegistry, NavigatorIOS } from 'react-native';
-import Navigator from './navigator'
+import Profile from './components/profile'
 
 const styles = StyleSheet.create({
   container:  {
@@ -10,14 +10,21 @@ const styles = StyleSheet.create({
   },
 });
 
-class foodswithfriends extends Component {
+class Navigator extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Navigator />
+        <NavigatorIOS
+          style={styles.container}
+          translucent={false}
+          initialRoute={{
+            title: 'HI',
+            component: Profile,
+          }}
+        />
       </View>
     );
   }
 }
 
-AppRegistry.registerComponent('foodswithfriends', () => foodswithfriends);
+module.exports = Navigator;

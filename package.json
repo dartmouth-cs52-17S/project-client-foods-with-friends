@@ -8,6 +8,7 @@
   },
   "license": "ISC",
   "dependencies": {
+    "apsl-react-native-button": "^3.0.2",
     "eslint-plugin-react-native": "^2.3.2",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0"
