@@ -1,4 +1,4 @@
-import Button from 'apsl-react-native-button';
+import Button1 from 'apsl-react-native-button';
 import React from 'react';
 
 import {
@@ -54,12 +54,12 @@ class Match extends React.Component {
             placeholder="Enter topic"
             style={styles.topic}
           />
-          <Button
+          <Button1
             style={styles.button}
             textStyle={styles.buttonText}
           >
           Match Me!
-          </Button>
+          </Button1>
         </View>
       </ScrollView>
     );

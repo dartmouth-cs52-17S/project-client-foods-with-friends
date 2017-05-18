@@ -8,7 +8,8 @@ import {
   FlatList,
 } from 'react-native';
 
-import Match from './match'
+import Match from './match';
+
 const styles = StyleSheet.create({
   image: {
     width: 200,
