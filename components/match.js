@@ -1,4 +1,3 @@
-import Button1 from 'apsl-react-native-button';
 import React from 'react';
 
 import {
@@ -92,10 +91,6 @@ class Match extends React.Component {
     this.setState({ timeZoneOffsetInHours: offset });
   };
 
-  handlePress() {
-    console.log('Pressed!');
-  }
-
   render() {
     return (
       <ScrollView style={styles.body}>
@@ -113,12 +108,6 @@ class Match extends React.Component {
             placeholder="Enter topic"
             style={styles.topic}
           />
-          <Button1
-            style={styles.button}
-            textStyle={styles.buttonText}
-          >
-          Match Me!
-          </Button1>
         </View>
       </ScrollView>
     );
