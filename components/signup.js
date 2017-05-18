@@ -1,17 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
+
 import {
-  View,
-  Image,
-  TouchableHighlight,
   StyleSheet,
   Text,
   TextInput,
-  FlatList,
+  View,
+  TouchableHighlight,
 } from 'react-native';
-import { withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { signupUser } from '../actions';
-import Match from './match';
+
+import Profile from './profile';
 
 const styles = StyleSheet.create({
   button: {
@@ -23,12 +20,29 @@ const styles = StyleSheet.create({
     height: 60,
     alignSelf: 'center',
   },
+  container: {
+    flex: 1,
+    alignSelf: 'stretch',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  TextInput: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+  },
+  buttonBox: {
+    flex: 1,
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
   buttonText: {
     color: '#FFFFFF',
     fontSize: 23,
     fontWeight: 'bold',
   },
-  timeLabel: {
+  title: {
     textAlign: 'center',
     marginTop: 30,
     fontSize: 30,
@@ -41,11 +55,12 @@ const styles = StyleSheet.create({
   topic: {
     borderWidth: 0.5,
     borderColor: '#0f0f0f',
-    fontSize: 20,
+    flex: 1,
+    fontSize: 30,
     marginLeft: 50,
     marginRight: 50,
     height: 50,
-    padding: 0,
+    padding: 4,
     marginBottom: 4,
     marginTop: 15,
   },
@@ -71,62 +86,85 @@ const styles = StyleSheet.create({
   },
 });
 
-class SignUp extends Component {
+class SignUp extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
-      fullname: '',
       email: '',
       password: '',
     };
-    this.onFullnameChange = this.onFullnameChange.bind(this);
-    this.onEmailChange = this.onEmailChange.bind(this);
-    this.onPasswordChange = this.onPasswordChange.bind(this);
-
-    this.onPressButton = this.onPressButton.bind(this);
+    this.updateEmail = this.updateEmail.bind(this);
+    this.updateUsername = this.updateUsername.bind(this);
+    this.updatePassword = this.updatePassword.bind(this);
   }
 
-  onFullnameChange(event) {
-    this.setState({ fullname: event.target.value });
-    console.log(this.state.fullname);
+  updateEmail(event) {
+    this.setState({
+      email: event.target.value,
+    });
   }
 
-  onEmailChange(event) {
-    this.setState({ email: event.target.value });
+  updatePassword(event) {
+    this.setState({
+      password: event.target.value,
+    });
   }
 
-  onPasswordChange(event) {
-    this.setState({ password: event.target.value });
+  updateUsername(event) {
+    this.setState({
+      password: event.target.value,
+    });
   }
 
-  onPressButton(event) {
-    signupUser(this.state);
-    console.log(this.state.fullname);
+  handleSubmit(event) {
+    console.log('handle submit');
+    event.preventDefault();
+    const user = {
+      username: this.state.username,
+      email: this.state.email,
+      password: this.state.password,
+    };
+    this.props.signupUser(user, this.props.history);
+
     this.props.navigator.push({
       title: 'PROFILE',
-      component: Match,
+      component: Profile,
       passProps: { },
     });
   }
 
-  render() {
+  handleCancel(event) {
+    console.log('handle cancel');
+    event.preventDefault();
+    this.setState({
+      email: '',
+      password: '',
+      username: '',
+    });
+    // this.props.history.go('/');
+  }
+
+
+  render(props) {
     return (
-      <View>
-        <TextInput placeholder="Full name" style={styles.topic} onChange={this.onFullnameChange} value={this.state.fullname} />
-        <TextInput placeholder="Email" style={styles.topic} onChange={this.onEmailChange} value={this.state.email} />
-        <TextInput placeholder="Password" style={styles.topic} onChange={this.onPasswordChange} value={this.state.password} />
-        <TouchableHighlight onPress={this.onPressButton}>
-          <Text>Sign Up</Text>
-        </TouchableHighlight>
+      <View style={styles.container}>
+        <Text style={styles.timeLabel}>Sign Up!</Text>
+        <TextInput style={styles.TextInput} placeholder={'email'} onChange={this.updateEmail} value={this.state.email} />
+        <TextInput id={'password'} style={styles.TextInput} type={'password'} placeholder={'password'} onChange={this.updatePassword} value={this.state.password} />
+        <View style={styles.buttonBox}>
+          <TouchableHighlight style={styles.button} onClick={this.handleSubmit}>
+            <Text> Submit! </Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={styles.button} onClick={this.handleCancel}>
+            <Text> cancel </Text>
+          </TouchableHighlight>
+        </View>
+
+
       </View>
     );
   }
 }
 
-const mapDispatchToProps = dispatch => (
-  {
-    signup: ({ fullname, email, password }) => dispatch(signupUser({ fullname, email, password })),
-  }
-);
-
-export default withRouter(connect(null, mapDispatchToProps)(SignUp));
+module.exports = SignUp;
