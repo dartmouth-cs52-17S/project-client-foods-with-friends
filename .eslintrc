@@ -1,0 +1,40 @@
+{
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+  "plugins": [
+    "react",
+    "react-native",
+  ],
+    "rules": {
+        "no-debugger": "warn",
+        "react-native/no-unused-styles": 2,
+        "react-native/split-platform-components": 2,
+        "react-native/no-inline-styles": 2,
+        "react-native/no-color-literals": 2,
+        "strict": 0,
+        "quotes": [2, "single"],
+        "no-else-return": 0,
+        "new-cap": ["error", {"capIsNewExceptions": ["Router"]}],
+        "no-console": 0,
+        "import/no-unresolved": [2, { "caseSensitive": false } ],
+        "no-unused-vars": ["error", { "vars": "all", "args": "none" }],
+        "no-underscore-dangle": 0,
+        "arrow-body-style": 0,
+        "one-var": ["error", { "uninitialized": "always", "initialized": "never" }],
+        "one-var-declaration-per-line": ["error", "initializations"],
+        "max-len": ["error", 200],
+        "no-extra-parens": 0,
+        "no-restricted-syntax": [
+          0,
+          "DebuggerStatement"
+        ],
+    },
+    "ecmaFeatures": {
+        "modules": true,
+        "jsx": true
+    }
+}
