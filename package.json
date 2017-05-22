@@ -14,7 +14,8 @@
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-redux-router": "^1.0.7",
-    "react-redux": "^5.0.4",
+    "react-redux": "^5.0.5",
+    "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
     "redux": "^3.6.0",
     "redux-thunk": "^2.2.0"
