@@ -10,9 +10,9 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import Profile from './profile';
-import SignIn from './signin';
-import { signupUser } from '../actions';
+import Match from './match';
+import SignUp from './signup';
+import { signinUser } from '../actions';
 
 const styles = StyleSheet.create({
   button: {
@@ -48,7 +48,7 @@ const styles = StyleSheet.create({
   signin: {
     alignSelf: 'center',
   },
-  signinText: {
+  signupText: {
     textDecorationLine: 'underline',
   },
   buttonText: {
@@ -98,27 +98,32 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     fontSize: 14,
   },
+  error: {
+    flex: 1,
+    alignSelf: 'stretch',
+  },
+  errorMessage: {
+    color: 'red',
+  },
 });
 
-class SignUp extends React.Component {
+class SignIn extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      fullname: '',
       email: '',
       password: '',
     };
     this.updateEmail = this.updateEmail.bind(this);
-    this.updateFullname = this.updateFullname.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
-    this.handleSignin = this.handleSignin.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
+    this.renderError = this.renderError.bind(this);
   }
 
   updateEmail(text) {
-    console.log(this.state.email);
     this.setState({
       email: text,
     });
@@ -130,27 +135,19 @@ class SignUp extends React.Component {
     });
   }
 
-  updateFullname(text) {
-    this.setState({
-      fullname: text,
-    });
-  }
-
   handleSubmit(event) {
-    console.log('handle submit');
     event.preventDefault();
     const user = {
-      fullname: this.state.fullname,
       email: this.state.email,
       password: this.state.password,
     };
-    this.props.signupUser(user, this.props.history);
+    this.props.signinUser(user);
 
-    this.props.navigator.push({
-      title: 'Profile',
-      component: Profile,
-      passProps: { },
-    });
+    // this.props.navigator.push({
+    //   title: 'Match',
+    //   component: Match,
+    //   passProps: { },
+    // });
   }
 
   handleCancel(event) {
@@ -163,22 +160,31 @@ class SignUp extends React.Component {
     });
   }
 
-  handleSignin(event) {
+  handleSignup(event) {
     this.props.navigator.push({
-      title: 'Sign In',
-      component: SignIn,
+      title: 'Sign Up',
+      component: SignUp,
       passProps: { },
     });
   }
 
+  renderError() {
+    if (this.props.error === null) {
+      return <View />;
+    } else {
+      return <View><Text style={styles.errorMessage}>{this.props.error}</Text></View>;
+    }
+  }
 
   render(props) {
     return (
       <View style={styles.container}>
-        <Text style={styles.timeLabel}>Sign Up!</Text>
-        <TextInput style={styles.TextInput} placeholder={'Full Name'} onChangeText={this.updateFullname} value={this.state.fullname} />
+        <Text style={styles.timeLabel}>Sign In!</Text>
         <TextInput style={styles.TextInput} placeholder={'Email'} onChangeText={this.updateEmail} value={this.state.email} />
         <TextInput id={'password'} style={styles.TextInput} type={'Password'} placeholder={'password'} onChangeText={this.updatePassword} value={this.state.password} />
+        <View style={styles.error}>
+          {this.renderError()}
+        </View>
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
             <Text> Submit! </Text>
@@ -188,13 +194,20 @@ class SignUp extends React.Component {
           </TouchableHighlight>
         </View>
         <View style={styles.signinBox}>
-          <TouchableHighlight style={styles.signin} onPress={this.handleSignin}>
-            <Text style={styles.signinText}> Already have an account? Sign in here </Text>
+          <TouchableHighlight style={styles.signin} onPress={this.handleSignup}>
+            <Text style={styles.signupText}> Need a new account? Sign up here </Text>
           </TouchableHighlight>
         </View>
       </View>
     );
   }
 }
-export default (connect(null,
-  { signupUser })(SignUp));
+
+const mapStateToProps = state => (
+  {
+    error: state.auth.message,
+  }
+);
+
+export default (connect(mapStateToProps,
+  { signinUser })(SignIn));
