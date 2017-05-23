@@ -18,10 +18,14 @@ const store = createStore(reducers, {}, compose(
   applyMiddleware(thunk),
   window.devToolsExtension ? window.devToolsExtension() : f => f,
 ));
-const token = AsyncStorage.getItem('token');
-if (token) {
-  store.dispatch({ type: ActionTypes.AUTH_USER });
-}
+AsyncStorage.getItem('token').then((response) => {
+  console.log(response);
+  if (response !== null) {
+    store.dispatch({ type: ActionTypes.AUTH_USER });
+  }
+}).catch((err) => {
+  console.log(err);
+});
 
 class foodswithfriends extends Component {
   render() {
