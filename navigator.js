@@ -80,9 +80,22 @@ class Navigator extends Component {
         </View>
       );
     } else if (this.props.auth && this.props.page) {
-      <View style={styles.container}>
-        <Profile />
-      </View>;
+      return (
+        <View style={styles.container}>
+          <NavigatorIOS
+            style={styles.container}
+            translucent={false}
+            initialRoute={{
+              title: 'Profile',
+              component: Profile,
+              rightButtonTitle: 'Sign Out',
+              onRightButtonPress: () => {
+                this.props.signoutUser();
+              },
+            }}
+          />
+        </View>
+      );
     } else if (!this.props.auth && !this.props.page) {
       return (
         <View style={styles.container}>
