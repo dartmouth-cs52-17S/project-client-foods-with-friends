@@ -1,11 +1,12 @@
 import axios from 'axios';
-import AsyncStorage from 'react-native';
+import { AsyncStorage } from 'react-native';
 
 const ROOT_URL = 'https://munchees.herokuapp.com/api';
 
 export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
+  DEAUTH_USER: 'DEAUTH_USER',
 };
 
 
@@ -42,7 +43,7 @@ export function signinUser({ email, password }) {
 
 export function signoutUser() {
   return (dispatch) => {
-    localStorage.removeItem('token');
+    AsyncStorage.removeItem('token', err => console.log('finished', err));
     dispatch({ type: ActionTypes.DEAUTH_USER });
   };
 }

@@ -11,7 +11,7 @@ import {
 
 import Match from './match';
 import SignUp from './signup';
-import { signinUser } from '../actions';
+import { signinUser, signoutUser } from '../actions';
 
 const styles = StyleSheet.create({
   button: {
@@ -134,7 +134,8 @@ class SignIn extends React.Component {
     this.props.navigator.push({
       title: 'Match Me',
       leftButtonTitle: ' ',
-      rightButtonTitle: 'Profile',
+      rightButtonTitle: 'Sign Out',
+      onRightButtonPress: () => { this.props.signoutUser(); this.handleSignup(); },
       component: Match,
       passProps: { },
     });
@@ -159,7 +160,7 @@ class SignIn extends React.Component {
       password: this.state.password,
     };
     this.props.signinUser(user);
-    if (this.props.auth) {
+    if (this.props.auth === true) {
       this.signin();
     }
   }
@@ -174,7 +175,7 @@ class SignIn extends React.Component {
     });
   }
 
-  handleSignup(event) {
+  handleSignup() {
     this.props.navigator.push({
       title: 'Sign Up',
       component: SignUp,
@@ -227,6 +228,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     signinUser: ({ email, password }) => dispatch(signinUser({ email, password })),
+    signoutUser: () => dispatch(signoutUser()),
   }
 );
 
