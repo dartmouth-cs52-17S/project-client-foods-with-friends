@@ -4,11 +4,33 @@ import { AsyncStorage } from 'react-native';
 const ROOT_URL = 'https://munchees.herokuapp.com/api';
 
 export const ActionTypes = {
-  AUTH_USER: 'AUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
   DEAUTH_USER: 'DEAUTH_USER',
+  AUTH_USER: 'AUTH_USER',
+  CLEAR_ERROR: 'CLEAR_ERROR',
+  NEW_ACCOUNT: 'NEW_ACCOUNT',
 };
 
+export function goToSignin() {
+  return {
+    type: ActionTypes.NEW_ACCOUNT,
+    page: false,
+  };
+}
+
+export function goToSignup() {
+  return {
+    type: ActionTypes.NEW_ACCOUNT,
+    page: true,
+  };
+}
+
+export function clearError() {
+  return {
+    type: ActionTypes.CLEAR_ERROR,
+    message: '',
+  };
+}
 
 export function authError(error) {
   return {
@@ -43,7 +65,7 @@ export function signinUser({ email, password }) {
 
 export function signoutUser() {
   return (dispatch) => {
-    AsyncStorage.removeItem('token', err => console.log('finished', err));
+    AsyncStorage.removeItem('token');
     dispatch({ type: ActionTypes.DEAUTH_USER });
   };
 }

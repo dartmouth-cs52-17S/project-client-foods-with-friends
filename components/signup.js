@@ -12,40 +12,78 @@ import {
 
 import Profile from './profile';
 import SignIn from './signin';
-import { signupUser } from '../actions';
+import { signupUser, clearError, goToSignin } from '../actions';
 
 const styles = StyleSheet.create({
-  button: {
-    marginTop: 50,
-    backgroundColor: '#519bdd',
-    borderRadius: 5,
-    borderWidth: 0,
-    width: 150,
-    height: 60,
+  error: {
+    flex: 1,
+    alignSelf: 'stretch',
+    marginBottom: -250,
+    marginTop: 10,
+  },
+  errorMessage: {
     alignSelf: 'center',
+    textAlign: 'center',
+    fontSize: 16,
+    color: 'red',
+    marginLeft: 15,
+    marginRight: 15,
+  },
+  label: {
+    marginTop: '50%',
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginBottom: 30,
   },
   container: {
     flex: 1,
     alignSelf: 'stretch',
+    display: 'flex',
     flexDirection: 'column',
-    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  inputs: {
+    flex: 1,
+    alignSelf: 'stretch',
   },
   TextInput: {
+    alignSelf: 'center',
     height: 40,
+    width: '80%',
     borderColor: 'gray',
     borderWidth: 1,
+    paddingLeft: 8,
   },
   buttonBox: {
     flex: 1,
     alignSelf: 'stretch',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
+    marginTop: 0,
+  },
+  button: {
+    marginTop: -160,
+    backgroundColor: '#519bdd',
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#519bdd',
+    width: '80%',
+    height: 45,
+    alignSelf: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  buttonText: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
   signinBox: {
     flex: 1,
     alignSelf: 'stretch',
   },
   signin: {
+    marginTop: -100,
     alignSelf: 'center',
   },
   signinText: {
@@ -68,10 +106,10 @@ class SignUp extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSignin = this.handleSignin.bind(this);
+    this.renderError = this.renderError.bind(this);
   }
 
   updateEmail(text) {
-    console.log(this.state.email);
     this.setState({
       email: text,
     });
@@ -90,24 +128,25 @@ class SignUp extends React.Component {
   }
 
   handleSubmit(event) {
-    console.log('handle submit');
     event.preventDefault();
     const user = {
       fullname: this.state.fullname,
       email: this.state.email,
       password: this.state.password,
     };
-    this.props.signupUser(user, this.props.history);
-
-    this.props.navigator.push({
-      title: 'Profile',
-      component: Profile,
-      passProps: { },
-    });
+    this.props.signupUser(user);
+    //
+    // if (this.props.auth === true) {
+    //   this.props.navigator.push({
+    //     title: 'Profile',
+    //     leftButtonTitle: ' ',
+    //     component: Profile,
+    //     passProps: { },
+    //   });
+    // }
   }
 
   handleCancel(event) {
-    console.log('handle cancel');
     event.preventDefault();
     this.setState({
       email: '',
@@ -117,27 +156,39 @@ class SignUp extends React.Component {
   }
 
   handleSignin(event) {
-    this.props.navigator.push({
-      title: 'Sign In',
-      component: SignIn,
-      passProps: { },
-    });
+    this.props.clearError();
+    // this.props.navigator.push({
+    //   title: 'Sign In',
+    //   leftButtonTitle: ' ',
+    //   component: SignIn,
+    //   passProps: { },
+    // });
+    this.props.goToSignin();
   }
 
+  renderError() {
+    if (this.props.error === null) {
+      return <View />;
+    } else {
+      return <View><Text style={styles.errorMessage}>{this.props.error}</Text></View>;
+    }
+  }
 
   render(props) {
     return (
       <View style={styles.container}>
-        <Text style={styles.timeLabel}>Sign Up!</Text>
-        <TextInput style={styles.TextInput} placeholder={'Full Name'} onChangeText={this.updateFullname} value={this.state.fullname} />
-        <TextInput style={styles.TextInput} placeholder={'Email'} onChangeText={this.updateEmail} value={this.state.email} />
-        <TextInput id={'password'} style={styles.TextInput} type={'Password'} placeholder={'password'} onChangeText={this.updatePassword} value={this.state.password} />
+        <View style={styles.error}>
+          {this.renderError()}
+        </View>
+        <Text style={styles.label}>Munch Buddies</Text>
+        <View style={styles.inputs}>
+          <TextInput style={styles.TextInput} placeholder={'Full Name'} onChangeText={this.updateFullname} value={this.state.fullname} />
+          <TextInput style={styles.TextInput} placeholder={'Email'} onChangeText={this.updateEmail} value={this.state.email} />
+          <TextInput style={styles.TextInput} placeholder={'Password'} onChangeText={this.updatePassword} value={this.state.password} />
+        </View>
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
-            <Text> Submit! </Text>
-          </TouchableHighlight>
-          <TouchableHighlight style={styles.button} onPress={this.handleCancel}>
-            <Text> cancel </Text>
+            <Text style={styles.buttonText}> Sign Up </Text>
           </TouchableHighlight>
         </View>
         <View style={styles.signinBox}>
@@ -149,5 +200,21 @@ class SignUp extends React.Component {
     );
   }
 }
-export default (connect(null,
-  { signupUser })(SignUp));
+
+const mapStateToProps = state => (
+  {
+    error: state.auth.message,
+    auth: state.auth.authenticated,
+  }
+);
+
+const mapDispatchToProps = dispatch => (
+  {
+    signupUser: ({ fullname, email, password }) => dispatch(signupUser({ fullname, email, password })),
+    clearError: () => dispatch(clearError()),
+    goToSignin: () => dispatch(goToSignin()),
+  }
+);
+
+export default (connect(mapStateToProps,
+  mapDispatchToProps)(SignUp));
