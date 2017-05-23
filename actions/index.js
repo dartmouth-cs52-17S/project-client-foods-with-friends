@@ -1,11 +1,12 @@
 import axios from 'axios';
-import AsyncStorage from 'react-native';
+import { AsyncStorage } from 'react-native';
 
-const ROOT_URL = 'https://munchees.herokuapp.com/api/signup';
+const ROOT_URL = 'https://munchees.herokuapp.com/api';
 
 export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   AUTH_ERROR: 'AUTH_ERROR',
+  DEAUTH_USER: 'DEAUTH_USER',
 };
 
 
@@ -18,12 +19,31 @@ export function authError(error) {
 
 export function signupUser({ fullname, email, password }) {
   return (dispatch) => {
-    axios.post(`${ROOT_URL}`, { fullname, email, password }).then((response) => {
+    axios.post(`${ROOT_URL}/signup`, { fullname, email, password }).then((response) => {
       dispatch({ type: ActionTypes.AUTH_USER });
       AsyncStorage.setItem('token', response.data.token);
     })
     .catch((error) => {
-      dispatch(authError(`Signup Failed: ${error.response.data}`));
+      dispatch(authError(`Sign up Failed: ${error.response.data}`));
     });
+  };
+}
+
+export function signinUser({ email, password }) {
+  return (dispatch) => {
+    axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
+      dispatch({ type: ActionTypes.AUTH_USER });
+      AsyncStorage.setItem('token', response.data.token);
+    })
+    .catch((error) => {
+      dispatch(authError(`Sign in Failed: ${error.response.data}`));
+    });
+  };
+}
+
+export function signoutUser() {
+  return (dispatch) => {
+    AsyncStorage.removeItem('token', err => console.log('finished', err));
+    dispatch({ type: ActionTypes.DEAUTH_USER });
   };
 }

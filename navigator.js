@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import { View, StyleSheet, AppRegistry, NavigatorIOS } from 'react-native';
-import SignUp from './components/signup'
+import SignUp from './components/signup';
 
 const styles = StyleSheet.create({
-  container:  {
+  container: {
     flex: 1,
     alignSelf: 'stretch',
   },
@@ -18,7 +18,7 @@ class Navigator extends Component {
           style={styles.container}
           translucent={false}
           initialRoute={{
-            title: 'Profile',
+            title: 'Sign Up',
             component: SignUp,
           }}
         />
