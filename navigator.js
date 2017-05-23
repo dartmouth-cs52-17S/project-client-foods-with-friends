@@ -21,47 +21,9 @@ class Navigator extends Component {
     this.state = { title: 'Sign Up', component: SignUp };
 
     this.renderPage = this.renderPage.bind(this);
-    this.moveToSignup = this.moveToSignup.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.auth !== nextProps.auth) {
-      this.renderPage();
-    }
-  }
-
-  moveToSignup() {
-    return (
-      <View style={styles.container}>
-        <NavigatorIOS
-          style={styles.container}
-          translucent={false}
-          initialRoute={{
-            title: 'Sign Up',
-            component: SignUp,
-          }}
-        />
-      </View>
-    );
-  }
-
-  renderNavigator(title, component) {
-    return (
-      <View style={styles.container}>
-        <NavigatorIOS
-          style={styles.container}
-          translucent={false}
-          initialRoute={{
-            title: { title },
-            component: { component },
-          }}
-        />
-      </View>
-    );
   }
 
   renderPage() {
-    console.log(`check ${this.props.page}`);
     if (this.props.auth && !this.props.page) {
       return (
         <View style={styles.container}>

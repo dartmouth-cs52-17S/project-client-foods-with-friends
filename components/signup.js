@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
     marginBottom: -250,
-    marginTop: 10,
+    marginTop: 50,
   },
   errorMessage: {
     alignSelf: 'center',
@@ -135,15 +135,6 @@ class SignUp extends React.Component {
       password: this.state.password,
     };
     this.props.signupUser(user);
-    //
-    // if (this.props.auth === true) {
-    //   this.props.navigator.push({
-    //     title: 'Profile',
-    //     leftButtonTitle: ' ',
-    //     component: Profile,
-    //     passProps: { },
-    //   });
-    // }
   }
 
   handleCancel(event) {
@@ -157,12 +148,6 @@ class SignUp extends React.Component {
 
   handleSignin(event) {
     this.props.clearError();
-    // this.props.navigator.push({
-    //   title: 'Sign In',
-    //   leftButtonTitle: ' ',
-    //   component: SignIn,
-    //   passProps: { },
-    // });
     this.props.goToSignin();
   }
 
@@ -180,7 +165,7 @@ class SignUp extends React.Component {
         <View style={styles.error}>
           {this.renderError()}
         </View>
-        <Text style={styles.label}>Munch Buddies</Text>
+        <Text style={styles.label}>Munch Buddy</Text>
         <View style={styles.inputs}>
           <TextInput style={styles.TextInput} placeholder={'Full Name'} onChangeText={this.updateFullname} value={this.state.fullname} />
           <TextInput style={styles.TextInput} placeholder={'Email'} onChangeText={this.updateEmail} value={this.state.email} />
