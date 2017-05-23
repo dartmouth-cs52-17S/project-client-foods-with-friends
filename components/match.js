@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 import {
   StyleSheet,
@@ -8,6 +8,7 @@ import {
   Button,
   ScrollView,
   TouchableOpacity,
+  NavigatorIOS,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
@@ -36,7 +37,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class Match extends React.Component {
+class MatchPage extends React.Component {
   // static defaultProps = {
   //   date1: new Date(),
   //   date2: new Date(),
@@ -129,4 +130,19 @@ class Match extends React.Component {
   }
 }
 
-module.exports = Match;
+export default class Match extends Component {
+  static navigationOptions = {
+    tabBarLabel: 'Match',
+  };
+  render() {
+    return (
+      <NavigatorIOS
+        initialRoute={{
+          component: MatchPage,
+          title: 'Matches!!',
+        }}
+        style={{ flex: 1 }}
+      />
+    );
+  }
+}

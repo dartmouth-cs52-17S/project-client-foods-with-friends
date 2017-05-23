@@ -7,6 +7,7 @@ import Match from './components/match';
 import SignIn from './components/signin';
 import Profile from './components/profile';
 import { signoutUser } from './actions';
+import MunchBuddyTabs from './tab';
 
 const styles = StyleSheet.create({
   container: {
@@ -27,18 +28,7 @@ class Navigator extends Component {
     if (this.props.auth && !this.props.page) {
       return (
         <View style={styles.container}>
-          <NavigatorIOS
-            style={styles.container}
-            translucent={false}
-            initialRoute={{
-              title: 'Get a Match!',
-              component: Match,
-              rightButtonTitle: 'Sign Out',
-              onRightButtonPress: () => {
-                this.props.signoutUser();
-              },
-            }}
-          />
+          <MunchBuddyTabs />
         </View>
       );
     } else if (this.props.auth && this.props.page) {
@@ -49,7 +39,7 @@ class Navigator extends Component {
             translucent={false}
             initialRoute={{
               title: 'Profile',
-              component: Profile,
+              component: MunchBuddyTabs,
               rightButtonTitle: 'Sign Out',
               onRightButtonPress: () => {
                 this.props.signoutUser();

@@ -6,8 +6,10 @@ import {
   StyleSheet,
   Text,
   FlatList,
+  NavigatorIOS,
 } from 'react-native';
 
+import { signoutUser } from '../actions';
 import Match from './match';
 
 const styles = StyleSheet.create({
@@ -31,26 +33,26 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: '#519bdd',
     fontWeight: 'bold',
-    fontFamily: "Avenir Next",
+    fontFamily: 'Avenir Next',
   },
   title: {
     marginTop: 10,
     fontSize: 20,
-    fontFamily: "Avenir Next",
+    fontFamily: 'Avenir Next',
   },
   text: {
     textAlign: 'center',
     marginTop: 7,
     fontSize: 14,
-    fontFamily: "Avenir Next",
+    fontFamily: 'Avenir Next',
   },
   button: {
     borderWidth: 1,
     borderColor: '#000000',
-  }
+  },
 });
 
-class Profile extends Component {
+class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,11 +61,12 @@ class Profile extends Component {
   }
 
   onPressButton() {
-    this.props.navigator.push({
-      title: 'PROFILE',
-      component: Match,
-      passProps: { },
-    });
+    this.props.signoutUser();
+    // this.props.navigator.push({
+    //   title: 'PROFILE',
+    //   component: Match,
+    //   passProps: { },
+    // });
   }
   render() {
     return (
@@ -89,11 +92,26 @@ class Profile extends Component {
           renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
         />
         <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
-          <Text>Match Page</Text>
+          <Text>Sign Out</Text>
         </TouchableHighlight>
       </View>
     );
   }
 }
 
-export default Profile;
+export default class Profile extends Component {
+  static navigationOptions = {
+    tabBarLabel: 'Profile',
+  };
+  render() {
+    return (
+      <NavigatorIOS
+        initialRoute={{
+          component: ProfilePage,
+          title: 'Matches!!',
+        }}
+        style={{ flex: 1 }}
+      />
+    );
+  }
+}
