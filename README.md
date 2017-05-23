@@ -10,6 +10,7 @@ Makes use or react-native, redux, and babel
 
 ### Setup
 `npm install -g react-native-cli`
+
 `npm install`
 
 ### Usage
