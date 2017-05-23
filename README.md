@@ -1,27 +1,26 @@
-### Foods with Friends
+# Foods with Friends
 
 TODO: short project description, some sample screenshots or mockups
 This is a react-native app that connects strangers to eat together if they don't have anyone to eat with for a meal!
 
-## Architecture
+## #Architecture
 
 TODO:  descriptions of code organization and tools and libraries used
 Makes use or react-native, redux, and babel
 
-## Setup
+### Setup
+`npm install -g react-native-cli`
 `npm install`
 
-`npm install -g react-native-cli`
-
-## Deployment
+### Usage
 `react-native run-ios`
 
-## Authors
+### Authors
 * Allison Chuang
 * Jane Lee
 * Gurkaran Singh
 * Abby Starr
 * Allen Wu
 
-## Acknowledgments
+### Acknowledgments
 * Jason Feng – core mentor
