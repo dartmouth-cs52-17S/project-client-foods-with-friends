@@ -33,27 +33,32 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'gray',
     borderWidth: 1,
+    fontFamily: "Avenir Next",
   },
   buttonBox: {
     flex: 1,
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    fontFamily: "Avenir Next",
   },
   buttonText: {
     color: '#FFFFFF',
     fontSize: 23,
     fontWeight: 'bold',
+    fontFamily: "Avenir Next",
   },
   title: {
     textAlign: 'center',
     marginTop: 30,
     fontSize: 30,
+    fontFamily: "Avenir Next",
   },
   topicLabel: {
     textAlign: 'center',
     marginTop: 25,
     fontSize: 25,
+    fontFamily: "Avenir Next",
   },
   topic: {
     borderWidth: 0.5,
@@ -66,6 +71,7 @@ const styles = StyleSheet.create({
     padding: 4,
     marginBottom: 4,
     marginTop: 15,
+    fontFamily: "Avenir Next",
   },
   labelContainer: {
     flexDirection: 'row',
@@ -78,6 +84,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontWeight: '500',
+    fontFamily: "Avenir Next",
   },
   headingContainer: {
     padding: 4,
@@ -86,6 +93,11 @@ const styles = StyleSheet.create({
   heading: {
     fontWeight: '500',
     fontSize: 14,
+    fontFamily: "Avenir Next",
+  },
+  avenir: {
+    fontSize: 14,
+    fontFamily: "Avenir Next",
   },
 });
 
@@ -162,10 +174,10 @@ class SignUp extends React.Component {
         <TextInput id={'password'} style={styles.TextInput} type={'Password'} placeholder={'password'} onChangeText={this.updatePassword} value={this.state.password} />
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit.bind(this)}>
-            <Text> Submit! </Text>
+            <Text style={styles.avenir}> Submit! </Text>
           </TouchableHighlight>
           <TouchableHighlight style={styles.button} onPress={this.handleCancel}>
-            <Text> cancel </Text>
+            <Text style={styles.avenir}> cancel </Text>
           </TouchableHighlight>
         </View>
 

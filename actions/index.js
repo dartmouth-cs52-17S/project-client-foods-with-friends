@@ -16,6 +16,7 @@ export function authError(error) {
   };
 }
 
+
 export function signupUser({ fullname, email, password }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}`, { fullname, email, password }).then((response) => {
