@@ -10,20 +10,6 @@ import {
 } from 'react-native';
 
 const styles = StyleSheet.create({
-  button: {
-    marginTop: 50,
-    backgroundColor: '#519bdd',
-    borderRadius: 5,
-    borderWidth: 0,
-    width: 150,
-    height: 60,
-    alignSelf: 'center',
-  },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 23,
-    fontWeight: 'bold',
-  },
   timeLabel: {
     textAlign: 'center',
     marginTop: 30,
@@ -45,26 +31,6 @@ const styles = StyleSheet.create({
     padding: 4,
     marginBottom: 4,
     marginTop: 15,
-  },
-  labelContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 2,
-  },
-  labelView: {
-    marginRight: 10,
-    paddingVertical: 2,
-  },
-  label: {
-    fontWeight: '500',
-  },
-  headingContainer: {
-    padding: 4,
-    backgroundColor: '#f6f7f8',
-  },
-  heading: {
-    fontWeight: '500',
-    fontSize: 14,
   },
 });
 

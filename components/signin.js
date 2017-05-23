@@ -50,53 +50,6 @@ const styles = StyleSheet.create({
   signupText: {
     textDecorationLine: 'underline',
   },
-  buttonText: {
-    color: '#FFFFFF',
-    fontSize: 23,
-    fontWeight: 'bold',
-  },
-  title: {
-    textAlign: 'center',
-    marginTop: 30,
-    fontSize: 30,
-  },
-  topicLabel: {
-    textAlign: 'center',
-    marginTop: 25,
-    fontSize: 25,
-  },
-  topic: {
-    borderWidth: 0.5,
-    borderColor: '#0f0f0f',
-    flex: 1,
-    fontSize: 30,
-    marginLeft: 50,
-    marginRight: 50,
-    height: 50,
-    padding: 4,
-    marginBottom: 4,
-    marginTop: 15,
-  },
-  labelContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginVertical: 2,
-  },
-  labelView: {
-    marginRight: 10,
-    paddingVertical: 2,
-  },
-  label: {
-    fontWeight: '500',
-  },
-  headingContainer: {
-    padding: 4,
-    backgroundColor: '#f6f7f8',
-  },
-  heading: {
-    fontWeight: '500',
-    fontSize: 14,
-  },
   error: {
     flex: 1,
     alignSelf: 'stretch',
