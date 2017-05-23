@@ -9,15 +9,26 @@ const initialState = {
 const AuthReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.AUTH_USER:
-      return { authenticated: true };
+      return Object.assign({}, state, {
+        authenticated: true,
+      });
     case ActionTypes.NEW_ACCOUNT:
-      return { page: action.page };
+      return Object.assign({}, state, {
+        page: action.page,
+      });
     case ActionTypes.CLEAR_ERROR:
-      return { message: action.message };
+      return Object.assign({}, state, {
+        message: action.message,
+      });
     case ActionTypes.DEAUTH_USER:
-      return { authenticated: false };
+      return Object.assign({}, state, {
+        authenticated: false,
+      });
     case ActionTypes.AUTH_ERROR:
-      return { authenticated: false, message: action.message };
+      return Object.assign({}, state, {
+        authenticated: false,
+        message: action.message,
+      });
     default:
       return state;
   }
