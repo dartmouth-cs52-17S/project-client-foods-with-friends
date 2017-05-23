@@ -3,7 +3,7 @@ import {
   NavigatorIOS,
 } from 'react-native';
 
-import ProfilePage from './components/profile';
+import ProfilePage from './containers/profile';
 
 export default class Profile extends Component {
   static navigationOptions = {
@@ -12,9 +12,10 @@ export default class Profile extends Component {
   render() {
     return (
       <NavigatorIOS
+        translucent={false}
         initialRoute={{
           component: ProfilePage,
-          title: 'Matches!!',
+          title: 'My Profile',
         }}
         style={{ flex: 1 }}
       />

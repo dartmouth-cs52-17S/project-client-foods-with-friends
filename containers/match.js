@@ -139,7 +139,7 @@ export default class Match extends Component {
       <NavigatorIOS
         initialRoute={{
           component: MatchPage,
-          title: 'Matches!!',
+          title: 'Get Matched',
         }}
         style={{ flex: 1 }}
       />

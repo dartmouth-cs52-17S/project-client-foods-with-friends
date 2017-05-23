@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { View, StyleSheet, NavigatorIOS } from 'react-native';
-import SignUp from './components/signup';
-import Match from './components/match';
-import SignIn from './components/signin';
-import Profile from './components/profile';
+import SignUp from './containers/signup';
+import Match from './containers/match';
+import SignIn from './containers/signin';
+import Profile from './containers/profile';
 import { signoutUser } from './actions';
 import MunchBuddyTabs from './tab';
 
