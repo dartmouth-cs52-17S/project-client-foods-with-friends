@@ -39,3 +39,10 @@ export function signinUser({ email, password }) {
     });
   };
 }
+
+export function signoutUser() {
+  return (dispatch) => {
+    localStorage.removeItem('token');
+    dispatch({ type: ActionTypes.DEAUTH_USER });
+  };
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import {
   StyleSheet,
@@ -101,6 +100,7 @@ const styles = StyleSheet.create({
   error: {
     flex: 1,
     alignSelf: 'stretch',
+    marginBottom: -250,
   },
   errorMessage: {
     color: 'red',
@@ -121,6 +121,23 @@ class SignIn extends React.Component {
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
     this.renderError = this.renderError.bind(this);
+    this.signin = this.signin.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.auth === true) {
+      this.signin();
+    }
+  }
+
+  signin() {
+    this.props.navigator.push({
+      title: 'Match Me',
+      leftButtonTitle: ' ',
+      rightButtonTitle: 'Profile',
+      component: Match,
+      passProps: { },
+    });
   }
 
   updateEmail(text) {
@@ -142,12 +159,9 @@ class SignIn extends React.Component {
       password: this.state.password,
     };
     this.props.signinUser(user);
-
-    // this.props.navigator.push({
-    //   title: 'Match',
-    //   component: Match,
-    //   passProps: { },
-    // });
+    if (this.props.auth) {
+      this.signin();
+    }
   }
 
   handleCancel(event) {
@@ -206,8 +220,15 @@ class SignIn extends React.Component {
 const mapStateToProps = state => (
   {
     error: state.auth.message,
+    auth: state.auth.authenticated,
+  }
+);
+
+const mapDispatchToProps = dispatch => (
+  {
+    signinUser: ({ email, password }) => dispatch(signinUser({ email, password })),
   }
 );
 
 export default (connect(mapStateToProps,
-  { signinUser })(SignIn));
+  mapDispatchToProps)(SignIn));
