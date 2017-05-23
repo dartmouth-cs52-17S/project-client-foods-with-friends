@@ -12,33 +12,42 @@ import Match from './match';
 
 const styles = StyleSheet.create({
   image: {
-    width: 200,
+    width: 250,
     height: 250,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
+    borderWidth: 1,
+    borderColor: '#000000',
+    borderRadius: 125,
   },
   imageView: {
-    borderRadius: 50,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
   username: {
-    marginTop: 15,
-    fontSize: 40,
+    marginTop: 5,
+    fontSize: 30,
     color: '#519bdd',
     fontWeight: 'bold',
+    fontFamily: "Avenir Next",
   },
   title: {
-    marginTop: 15,
-    fontSize: 30,
+    marginTop: 10,
+    fontSize: 20,
+    fontFamily: "Avenir Next",
   },
   text: {
     textAlign: 'center',
     marginTop: 7,
-    fontSize: 20,
+    fontSize: 14,
+    fontFamily: "Avenir Next",
   },
+  button: {
+    borderWidth: 1,
+    borderColor: '#000000',
+  }
 });
 
 class Profile extends Component {
@@ -64,12 +73,14 @@ class Profile extends Component {
           source={{ uri: 'https://image.freepik.com/free-icon/business-person-silhouette-wearing-tie_318-49988.jpg' }}
         />
         <Text style={styles.username}>Users Name</Text>
-        <Text style={styles.title}>Conversation Topics:</Text>
-        <TouchableHighlight onPress={this.onPressButton}>
-          <Text>TOUCH ME</Text>
-        </TouchableHighlight>
+        <Text style={styles.title}>Interests:</Text>
         <FlatList
           data={[{ title: 'Farming' }, { title: 'Dogs' }]}
+          renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
+        />
+        <Text style={styles.title}>Conversation Topics:</Text>
+        <FlatList
+          data={[{ title: 'The Human heart' }, { title: 'Banana Slugs' }]}
           renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
         />
         <Text style={styles.title}>Meal History:</Text>
@@ -77,6 +88,9 @@ class Profile extends Component {
           data={[{ title: 'June 21, 4:00pm' }, { title: 'June 22, 5:30pm' }]}
           renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
         />
+        <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
+          <Text>Match Page</Text>
+        </TouchableHighlight>
       </View>
     );
   }
