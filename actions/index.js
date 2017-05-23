@@ -8,7 +8,22 @@ export const ActionTypes = {
   DEAUTH_USER: 'DEAUTH_USER',
   AUTH_USER: 'AUTH_USER',
   CLEAR_ERROR: 'CLEAR_ERROR',
+  NEW_ACCOUNT: 'NEW_ACCOUNT',
 };
+
+export function goToSignin() {
+  return {
+    type: ActionTypes.NEW_ACCOUNT,
+    page: false,
+  };
+}
+
+export function goToSignup() {
+  return {
+    type: ActionTypes.NEW_ACCOUNT,
+    page: true,
+  };
+}
 
 export function clearError() {
   return {

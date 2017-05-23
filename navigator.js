@@ -5,6 +5,7 @@ import { View, StyleSheet, NavigatorIOS } from 'react-native';
 import SignUp from './components/signup';
 import Match from './components/match';
 import SignIn from './components/signin';
+import Profile from './components/profile';
 import { signoutUser } from './actions';
 
 const styles = StyleSheet.create({
@@ -17,17 +18,17 @@ const styles = StyleSheet.create({
 class Navigator extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { title: 'Sign Up', component: SignUp };
 
     this.renderPage = this.renderPage.bind(this);
     this.moveToSignup = this.moveToSignup.bind(this);
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.auth !== nextProps.auth) {
-  //     this.renderPage();
-  //   }
-  // }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.auth !== nextProps.auth) {
+      this.renderPage();
+    }
+  }
 
   moveToSignup() {
     return (
@@ -44,9 +45,24 @@ class Navigator extends Component {
     );
   }
 
+  renderNavigator(title, component) {
+    return (
+      <View style={styles.container}>
+        <NavigatorIOS
+          style={styles.container}
+          translucent={false}
+          initialRoute={{
+            title: { title },
+            component: { component },
+          }}
+        />
+      </View>
+    );
+  }
+
   renderPage() {
-    if (this.props.auth) {
-      console.log(this.props.auth);
+    console.log(`check ${this.props.page}`);
+    if (this.props.auth && !this.props.page) {
       return (
         <View style={styles.container}>
           <NavigatorIOS
@@ -63,18 +79,20 @@ class Navigator extends Component {
           />
         </View>
       );
-    } else {
-      console.log('wtf');
+    } else if (this.props.auth && this.props.page) {
+      <View style={styles.container}>
+        <Profile />
+      </View>;
+    } else if (!this.props.auth && !this.props.page) {
       return (
         <View style={styles.container}>
-          <NavigatorIOS
-            style={styles.container}
-            translucent={false}
-            initialRoute={{
-              title: 'Sign Up',
-              component: SignIn,
-            }}
-          />
+          <SignIn />
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <SignUp />
         </View>
       );
     }
@@ -92,6 +110,7 @@ class Navigator extends Component {
 const mapStateToProps = state => (
   {
     auth: state.auth.authenticated,
+    page: state.auth.page,
   }
 );
 

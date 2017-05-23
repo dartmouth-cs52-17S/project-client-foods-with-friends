@@ -11,7 +11,7 @@ import {
 
 import Match from './match';
 import SignUp from './signup';
-import { signinUser, signoutUser, clearError } from '../actions';
+import { signinUser, signoutUser, clearError, goToSignup } from '../actions';
 
 const styles = StyleSheet.create({
   error: {
@@ -132,7 +132,7 @@ class SignIn extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     const user = {
-      email: this.state.email,
+      email: this.state.email.toLowerCase(),
       password: this.state.password,
     };
     this.props.signinUser(user);
@@ -143,12 +143,13 @@ class SignIn extends React.Component {
 
   handleSignup() {
     this.props.clearError();
-    this.props.navigator.push({
-      title: 'Sign Up',
-      leftButtonTitle: ' ',
-      component: SignUp,
-      passProps: { },
-    });
+    // this.props.navigator.push({
+    //   title: 'Sign Up',
+    //   leftButtonTitle: ' ',
+    //   component: SignUp,
+    //   passProps: { },
+    // });
+    this.props.goToSignup();
   }
 
   renderError() {
@@ -197,6 +198,7 @@ const mapDispatchToProps = dispatch => (
     signinUser: ({ email, password }) => dispatch(signinUser({ email, password })),
     signoutUser: () => dispatch(signoutUser()),
     clearError: () => dispatch(clearError()),
+    goToSignup: () => dispatch(goToSignup()),
   }
 );
 

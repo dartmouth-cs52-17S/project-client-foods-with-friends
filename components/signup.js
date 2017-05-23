@@ -12,7 +12,7 @@ import {
 
 import Profile from './profile';
 import SignIn from './signin';
-import { signupUser, clearError } from '../actions';
+import { signupUser, clearError, goToSignin } from '../actions';
 
 const styles = StyleSheet.create({
   error: {
@@ -110,7 +110,6 @@ class SignUp extends React.Component {
   }
 
   updateEmail(text) {
-    console.log(text);
     this.setState({
       email: text,
     });
@@ -129,7 +128,6 @@ class SignUp extends React.Component {
   }
 
   handleSubmit(event) {
-    console.log('handle submit');
     event.preventDefault();
     const user = {
       fullname: this.state.fullname,
@@ -159,12 +157,13 @@ class SignUp extends React.Component {
 
   handleSignin(event) {
     this.props.clearError();
-    this.props.navigator.push({
-      title: 'Sign In',
-      leftButtonTitle: ' ',
-      component: SignIn,
-      passProps: { },
-    });
+    // this.props.navigator.push({
+    //   title: 'Sign In',
+    //   leftButtonTitle: ' ',
+    //   component: SignIn,
+    //   passProps: { },
+    // });
+    this.props.goToSignin();
   }
 
   renderError() {
@@ -213,6 +212,7 @@ const mapDispatchToProps = dispatch => (
   {
     signupUser: ({ fullname, email, password }) => dispatch(signupUser({ fullname, email, password })),
     clearError: () => dispatch(clearError()),
+    goToSignin: () => dispatch(goToSignin()),
   }
 );
 
