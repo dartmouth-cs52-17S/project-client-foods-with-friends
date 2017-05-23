@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import {
   View,
   Image,
@@ -10,7 +11,6 @@ import {
 } from 'react-native';
 
 import { signoutUser } from '../actions';
-import Match from './match';
 
 const styles = StyleSheet.create({
   image: {
@@ -99,19 +99,27 @@ class ProfilePage extends Component {
   }
 }
 
-export default class Profile extends Component {
-  static navigationOptions = {
-    tabBarLabel: 'Profile',
-  };
-  render() {
-    return (
-      <NavigatorIOS
-        initialRoute={{
-          component: ProfilePage,
-          title: 'Matches!!',
-        }}
-        style={{ flex: 1 }}
-      />
-    );
+// export default class Profile extends Component {
+//   static navigationOptions = {
+//     tabBarLabel: 'Profile',
+//   };
+//   render() {
+//     return (
+//       <NavigatorIOS
+//         initialRoute={{
+//           component: ProfilePage,
+//           title: 'Matches!!',
+//         }}
+//         style={{ flex: 1 }}
+//       />
+//     );
+//   }
+// }
+
+const mapDispatchToProps = dispatch => (
+  {
+    signoutUser: () => dispatch(signoutUser()),
   }
-}
+);
+
+export default (connect(null, mapDispatchToProps)(ProfilePage));
