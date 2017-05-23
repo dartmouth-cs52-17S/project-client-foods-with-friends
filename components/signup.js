@@ -135,15 +135,15 @@ class SignUp extends React.Component {
       password: this.state.password,
     };
     this.props.signupUser(user);
-
-    if (this.props.auth === true) {
-      this.props.navigator.push({
-        title: 'Profile',
-        leftButtonTitle: ' ',
-        component: Profile,
-        passProps: { },
-      });
-    }
+    //
+    // if (this.props.auth === true) {
+    //   this.props.navigator.push({
+    //     title: 'Profile',
+    //     leftButtonTitle: ' ',
+    //     component: Profile,
+    //     passProps: { },
+    //   });
+    // }
   }
 
   handleCancel(event) {

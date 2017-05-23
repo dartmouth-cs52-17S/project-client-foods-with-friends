@@ -136,9 +136,9 @@ class SignIn extends React.Component {
       password: this.state.password,
     };
     this.props.signinUser(user);
-    if (this.props.auth === true) {
-      this.signin();
-    }
+    // if (this.props.auth === true) {
+    //   this.signin();
+    // }
   }
 
   handleSignup() {
