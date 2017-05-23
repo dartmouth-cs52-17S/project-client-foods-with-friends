@@ -7,7 +7,9 @@ import {
   TextInput,
   View,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const styles = StyleSheet.create({
   timeLabel: {
@@ -36,17 +38,40 @@ const styles = StyleSheet.create({
 
 class Match extends React.Component {
   static defaultProps = {
-    date: new Date(),
-    timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
+    date1: new Date(),
+    date2: new Date(),
   };
 
   state = {
-    date: this.props.date,
-    timeZoneOffsetInHours: this.props.timeZoneOffsetInHours,
+    date1: new Date(),
+    date2: new Date(),
+    isDateTimePicker1Visible: false,
+    isDateTimePicker2Visible: false,
   };
 
-  onDateChange = (date) => {
-    this.setState({ date });
+  _showDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: true });
+  _showDateTimePicker2 = () => this.setState({ isDateTimePicker2Visible: true });
+
+  _hideDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: false });
+  _hideDateTimePicker2 = () => this.setState({ isDateTimePicker2Visible: false });
+
+  _handleDate1Picked = (date1) => {
+    console.log('A date has been picked: ', date1);
+    this.setState(date1: date1);
+    this._hideDateTimePicker1();
+  };
+  _handleDate2Picked = (date2) => {
+    this.setState(date2: date2);
+    console.log('A date has been picked: ', date2);
+    this._hideDateTimePicker2();
+  };
+
+  onDate1Change = (date1) => {
+    this.setState({ date1 });
+  };
+
+  onDate1Change = (date2) => {
+    this.setState({ date2 });
   };
 
   onTimezoneChange = (event) => {
@@ -62,12 +87,26 @@ class Match extends React.Component {
       <ScrollView style={styles.body}>
         <View>
           <Text style={styles.timeLabel}>Pick a time:</Text>
-          <DatePickerIOS
-            date={this.state.date}
-            mode="time"
-            timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-            onDateChange={this.onDateChange}
-            minuteInterval={15}
+          <TouchableOpacity onPress={this._showDateTimePicker1}>
+            <Text>START TIME</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={this._showDateTimePicker2}>
+            <Text>END TIME</Text>
+          </TouchableOpacity>
+          <Text>{this.state.date1}</Text>
+          <DateTimePicker
+            isVisible={this.state.isDateTimePicker1Visible}
+            onConfirm={this._handleDate1Picked}
+            onCancel={this._hideDateTimePicker1}
+            mode={'time'}
+            titleIOS={'Pick a start time'}
+          />
+          <DateTimePicker
+            isVisible={this.state.isDateTimePicker2Visible}
+            onConfirm={this._handleDate2Picked}
+            onCancel={this._hideDateTimePicker2}
+            mode={'time'}
+            titleIOS={'Pick an end time'}
           />
           <Text style={styles.topicLabel}>Pick a conversation topic:</Text>
           <TextInput
