@@ -1,13 +1,15 @@
 import React from 'react';
 
 import {
-  DatePickerIOS,
   StyleSheet,
   Text,
   TextInput,
   View,
+  Button,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
+import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const styles = StyleSheet.create({
   timeLabel: {
@@ -35,26 +37,47 @@ const styles = StyleSheet.create({
 });
 
 class Match extends React.Component {
-  static defaultProps = {
-    date: new Date(),
-    timeZoneOffsetInHours: (-1) * (new Date()).getTimezoneOffset() / 60,
+  // static defaultProps = {
+  //   date1: new Date(),
+  //   date2: new Date(),
+  // };
+  constructor(props) {
+    super(props);
+    this.state = {
+      date1: new Date().toString(),
+      date2: new Date().toString(),
+      isDateTimePicker1Visible: false,
+      isDateTimePicker2Visible: false,
+    };
+  }
+
+  _showDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: true });
+  _showDateTimePicker2 = () => this.setState({ isDateTimePicker2Visible: true });
+
+  _hideDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: false });
+  _hideDateTimePicker2 = () => this.setState({ isDateTimePicker2Visible: false });
+
+  _handleDate1Picked = (date1) => {
+    console.log('A date has been picked: ', date1);
+    const temp = date1.toString();
+    this.setState({ date1: temp });
+    console.log(temp);
+    console.log(this.state.date1);
+    this._hideDateTimePicker1();
+  };
+  _handleDate2Picked = (date2) => {
+    console.log('A date has been picked: ', date2);
+    console.log(this.state.date2);
+    this.setState({ date2 });
+    this._hideDateTimePicker2();
   };
 
-  state = {
-    date: this.props.date,
-    timeZoneOffsetInHours: this.props.timeZoneOffsetInHours,
+  onDate1Change = (date1) => {
+    this.setState({ date1 });
   };
 
-  onDateChange = (date) => {
-    this.setState({ date });
-  };
-
-  onTimezoneChange = (event) => {
-    const offset = parseInt(event.nativeEvent.text, 10);
-    if (isNaN(offset)) {
-      return;
-    }
-    this.setState({ timeZoneOffsetInHours: offset });
+  onDate1Change = (date2) => {
+    this.setState({ date2 });
   };
 
   render() {
@@ -62,17 +85,43 @@ class Match extends React.Component {
       <ScrollView style={styles.body}>
         <View>
           <Text style={styles.timeLabel}>Pick a time:</Text>
-          <DatePickerIOS
-            date={this.state.date}
-            mode="time"
-            timeZoneOffsetInMinutes={this.state.timeZoneOffsetInHours * 60}
-            onDateChange={this.onDateChange}
-            minuteInterval={15}
+
+          <TouchableOpacity onPress={this._showDateTimePicker1} style={styles.topicLabel}>
+            <Text>START TIME</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.topicLabel}>{this.state.date1.toString()}</Text>
+
+          <TouchableOpacity onPress={this._showDateTimePicker2} style={styles.topicLabel}>
+            <Text>END TIME</Text>
+          </TouchableOpacity>
+
+          <Text style={styles.topicLabel}>{this.state.date2.toString()}</Text>
+
+          <DateTimePicker
+            isVisible={this.state.isDateTimePicker1Visible}
+            onConfirm={this._handleDate1Picked}
+            onCancel={this._hideDateTimePicker1}
+            mode={'time'}
+            titleIOS={'Pick a start time'}
           />
+
+          <DateTimePicker
+            isVisible={this.state.isDateTimePicker2Visible}
+            onConfirm={this._handleDate2Picked}
+            onCancel={this._hideDateTimePicker2}
+            mode={'time'}
+            titleIOS={'Pick an end time'}
+          />
+
           <Text style={styles.topicLabel}>Pick a conversation topic:</Text>
           <TextInput
             placeholder="Enter topic"
             style={styles.topic}
+          />
+          <Button
+            title="Match Me!"
+            color="#841584"
           />
         </View>
       </ScrollView>

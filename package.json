@@ -13,6 +13,8 @@
     "eslint-plugin-react-native": "^2.3.2",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
+    "react-native-accordion": "^1.0.1",
+    "react-native-modal-datetime-picker": "^4.6.0",
     "react-native-redux-router": "^1.0.7",
     "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",
