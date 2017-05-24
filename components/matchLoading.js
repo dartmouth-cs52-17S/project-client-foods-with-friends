@@ -3,6 +3,8 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import MatchHistory from '../containers/matchHistory';
+import Match from '../containers/match';
 
 const styles = StyleSheet.create({
   container: {
@@ -26,7 +28,14 @@ const matchLoading = (props) => {
     <View style={styles.container}>
       <Text style={styles.description}>Finding your match... Check back shortly!</Text>
 
-      <TouchableHighlight onPress={this.beenMatchedButon}>
+      <TouchableHighlight onPress={() => {
+        props.navigator.push({
+          title: 'Match',
+          leftButtonTitle: ' ',
+          component: Match,
+        });
+      }}
+      >
         <Text style={styles.topicLabel}>OK!</Text>
       </TouchableHighlight>
     </View>
