@@ -13,21 +13,26 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 const styles = StyleSheet.create({
-  timeLabel: {
-    textAlign: 'center',
+  title: {
     marginTop: 30,
     fontSize: 30,
+    textAlign: 'center',
+  },
+  dateLabel: {
+    marginTop: 25,
+    fontSize: 20,
+    textAlign: 'center',
   },
   topicLabel: {
-    textAlign: 'center',
     marginTop: 25,
-    fontSize: 25,
+    fontSize: 15,
+    textAlign: 'center',
   },
   topic: {
     borderWidth: 0.5,
     borderColor: '#0f0f0f',
     flex: 1,
-    fontSize: 30,
+
     marginLeft: 50,
     marginRight: 50,
     height: 50,
@@ -38,10 +43,6 @@ const styles = StyleSheet.create({
 });
 
 class MatchPage extends React.Component {
-  // static defaultProps = {
-  //   date1: new Date(),
-  //   date2: new Date(),
-  // };
   constructor(props) {
     super(props);
     this.state = {
@@ -51,6 +52,19 @@ class MatchPage extends React.Component {
       isDateTimePicker2Visible: false,
     };
   }
+
+
+  onDate1Change = (date1) => {
+    this.setState({ date1 });
+  };
+
+  onDate1Change = (date2) => {
+    this.setState({ date2 });
+  };
+
+  matchButton = () => {
+    console.log('matchButtonPressed!');
+  };
 
   _showDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: true });
   _showDateTimePicker2 = () => this.setState({ isDateTimePicker2Visible: true });
@@ -73,31 +87,24 @@ class MatchPage extends React.Component {
     this._hideDateTimePicker2();
   };
 
-  onDate1Change = (date1) => {
-    this.setState({ date1 });
-  };
-
-  onDate1Change = (date2) => {
-    this.setState({ date2 });
-  };
 
   render() {
     return (
-      <ScrollView style={styles.body}>
+      <ScrollView>
         <View>
-          <Text style={styles.timeLabel}>Pick a time:</Text>
+          <Text style={styles.title}>Pick a time:</Text>
 
-          <TouchableOpacity onPress={this._showDateTimePicker1} style={styles.topicLabel}>
-            <Text>START TIME</Text>
+          <TouchableOpacity onPress={this._showDateTimePicker1}>
+            <Text style={styles.topicLabel}>START TIME</Text>
           </TouchableOpacity>
 
-          <Text style={styles.topicLabel}>{this.state.date1.toString()}</Text>
+          <Text style={styles.dateLabel}>{this.state.date1.toString()}</Text>
 
-          <TouchableOpacity onPress={this._showDateTimePicker2} style={styles.topicLabel}>
-            <Text>END TIME</Text>
+          <TouchableOpacity onPress={this._showDateTimePicker2}>
+            <Text style={styles.topicLabel}>END TIME</Text>
           </TouchableOpacity>
 
-          <Text style={styles.topicLabel}>{this.state.date2.toString()}</Text>
+          <Text style={styles.dateLabel}>{this.state.date2.toString()}</Text>
 
           <DateTimePicker
             isVisible={this.state.isDateTimePicker1Visible}
@@ -122,7 +129,7 @@ class MatchPage extends React.Component {
           />
           <Button
             title="Match Me!"
-            color="#841584"
+            onPress={this.matchButton}
           />
         </View>
       </ScrollView>
