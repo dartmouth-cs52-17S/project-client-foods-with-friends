@@ -1,9 +1,9 @@
-import { TabNavigator } from 'react-navigation';
+import { tabNavigator } from 'react-navigation';
 
 import Match from '../containers/match';
 import Profile from './profiletab';
 
-const MunchBuddyTabs = TabNavigator({
+const MunchBuddyTabs = tabNavigator({
   Match: { screen: Match },
   Profile: { screen: Profile },
 });
