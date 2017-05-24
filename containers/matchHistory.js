@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, StyleSheet, Text, FlatList, ScrollView, NavigatorIOS } from 'react-native';
 
-import matchProfile from '../components/matchProfile';
+import MatchProfile from '../components/matchProfile';
 
 const styles = StyleSheet.create({
   body: {
@@ -35,7 +35,7 @@ class MatchHistory extends React.Component {
     this.validateDates();
     this.props.navigator.push({
       title: '!',
-      component: matchProfile,
+      component: MatchProfile,
     });
   };
 

@@ -2,13 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import MunchBuddyTabs from '../components/tab';
 
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableHighlight,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableHighlight } from 'react-native';
 
 import Match from './match';
 import { goToSignin } from '../actions';

@@ -1,13 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  TouchableHighlight,
-} from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableHighlight } from 'react-native';
 
 import { signupUser, clearError, goToSignin } from '../actions';
 

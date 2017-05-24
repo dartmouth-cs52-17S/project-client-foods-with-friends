@@ -1,15 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {
-  View,
-  Image,
-  TouchableHighlight,
-  StyleSheet,
-  Text,
-  FlatList,
-  ScrollView,
-  NavigatorIOS,
-} from 'react-native';
+import { View, Image, TouchableHighlight, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
 
 import { signoutUser, clearError } from '../actions';
 

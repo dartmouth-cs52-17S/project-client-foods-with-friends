@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const matchProfile = (props) => {
+const MatchProfile = (props) => {
   return (
     <View style={styles.container}>
       <Text style={styles.description}>Finding your match... Check back shortly!</Text>
@@ -25,4 +25,4 @@ const matchProfile = (props) => {
   );
 };
 
-export default matchProfile;
+export default MatchProfile;

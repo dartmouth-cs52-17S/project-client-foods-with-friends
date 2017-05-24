@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { View, StyleSheet, NavigatorIOS } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import SignUp from './signup';
 import SignIn from './signin';
 import { signoutUser } from '../actions';
