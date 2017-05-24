@@ -1,7 +1,6 @@
 import { TabNavigator } from 'react-navigation';
 
 import Match from '../containers/match';
-
 import Profile from './profiletab';
 import MatchHistory from '../containers/matchHistory';
 import ChatHistory from '../containers/chatHistory';

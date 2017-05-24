@@ -56,7 +56,7 @@ class MatchHistory extends React.Component {
 
 export default class MatchHistoryNav extends Component {
   static navigationOptions = {
-    tabBarLabel: 'Match',
+    tabBarLabel: 'Match History',
   };
   render() {
     return (

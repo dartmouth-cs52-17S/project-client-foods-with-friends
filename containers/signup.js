@@ -50,10 +50,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 0,
   },
   button: {
-    marginTop: -160,
+    marginTop: -150,
     backgroundColor: '#519bdd',
     borderRadius: 5,
     borderWidth: 2,
