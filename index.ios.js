@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import reducers from './reducers';
 import { View, StyleSheet, AsyncStorage, AppRegistry } from 'react-native';
-import Navigator from './navigator';
+import reducers from './reducers';
+import Navigator from './containers/navigator';
 import { ActionTypes } from './actions';
 
 const styles = StyleSheet.create({
