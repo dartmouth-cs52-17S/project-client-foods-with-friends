@@ -80,6 +80,7 @@ class MatchPage extends React.Component {
     console.log(this.state.date1);
     this._hideDateTimePicker1();
   };
+
   _handleDate2Picked = (date2) => {
     console.log('A date has been picked: ', date2);
     console.log(this.state.date2);

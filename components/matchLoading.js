@@ -2,7 +2,11 @@
 // maybe include a spinny loady thing
 
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet,
+  Text,
+  View,
+TouchableHighlight,
+} from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -24,7 +28,11 @@ const styles = StyleSheet.create({
 const matchLoading = (props) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.description}>Finding your match...</Text>
+      <Text style={styles.description}>Finding your match... Check back shortly!</Text>
+
+      <TouchableHighlight onPress={this.beenMatchedButon}>
+        <Text style={styles.topicLabel}>OK!</Text>
+      </TouchableHighlight>
     </View>
   );
 };

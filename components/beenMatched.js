@@ -8,7 +8,7 @@ import {
   FlatList,
 } from 'react-native';
 
-import Match from './match';
+import Match from '../containers/match';
 
 const styles = StyleSheet.create({
   image: {
@@ -31,18 +31,18 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: '#519bdd',
     fontWeight: 'bold',
-    fontFamily: "Avenir Next",
+    fontFamily: 'Avenir Next',
   },
   title: {
     marginTop: 15,
     fontSize: 30,
-    fontFamily: "Avenir Next",
+    fontFamily: 'Avenir Next',
   },
   text: {
     textAlign: 'center',
     marginTop: 7,
     fontSize: 20,
-    fontFamily: "Avenir Next",
+    fontFamily: 'Avenir Next',
   },
 });
 
@@ -75,6 +75,10 @@ class BeenMatched extends Component {
           data={[{ title: 'Basketweaving' }]}
           renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
         />
+
+        <TouchableHighlight onPress={this.beenMatchedButon}>
+          <Text style={styles.topicLabel}>GO TO CHAT!</Text>
+        </TouchableHighlight>
       </View>
     );
   }
