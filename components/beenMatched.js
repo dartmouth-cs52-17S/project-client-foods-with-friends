@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
     borderRadius: 125,
-    borderWith: 1,
+    borderWidth: 1,
     borderColor: '#000000',
   },
   imageView: {
@@ -83,3 +83,5 @@ class BeenMatched extends Component {
     );
   }
 }
+
+export default BeenMatched;

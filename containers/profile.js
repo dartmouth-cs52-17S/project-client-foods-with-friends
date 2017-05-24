@@ -92,11 +92,6 @@ class ProfilePage extends React.Component {
               data={[{ title: 'The Human heart' }, { title: 'Banana Slugs' }]}
               renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
             />
-            <Text style={styles.title}>Meal History:</Text>
-            <FlatList
-              data={[{ title: 'June 21, 4:00pm' }, { title: 'June 22, 5:30pm' }]}
-              renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
-            />
             <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
               <Text>Sign Out</Text>
             </TouchableHighlight>

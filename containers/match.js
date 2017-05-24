@@ -11,6 +11,7 @@ import {
   NavigatorIOS,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
+import MatchLoading from '../components/matchLoading';
 
 const styles = StyleSheet.create({
   title: {
@@ -64,6 +65,10 @@ class MatchPage extends React.Component {
 
   matchButton = () => {
     console.log('matchButtonPressed!');
+    this.props.navigator.push({
+      title: 'Match Me!',
+      component: MatchLoading,
+    });
   };
 
   _showDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: true });
@@ -141,6 +146,7 @@ class MatchPage extends React.Component {
 export default class Match extends Component {
   static navigationOptions = {
     tabBarLabel: 'Match',
+
   };
   render() {
     return (
