@@ -10,6 +10,7 @@ import {
   ScrollView,
   TouchableOpacity,
   NavigatorIOS,
+  AlertIOS,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
@@ -46,8 +47,8 @@ class MatchPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date1: moment().format('hh:mm A'),
-      date2: moment().format('hh:mm A'),
+      date1: moment(),
+      date2: moment(),
       isDateTimePicker1Visible: false,
       isDateTimePicker2Visible: false,
     };
@@ -63,12 +64,15 @@ class MatchPage extends React.Component {
 
   matchButton = () => {
     console.log('matchButtonPressed!');
+    this.validateDates();
   };
 
   validateDates = () => {
-    /*
-    If dates are set for something weird, don't let the user submit them.
-    */
+    if (this.state.date2.isBefore(this.state.date1)) {
+      AlertIOS.alert('That\'s not a valid meal time!');
+    } else {
+      AlertIOS.alert('Ran successfully');
+    }
   };
 
   _showDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: true });
@@ -79,7 +83,7 @@ class MatchPage extends React.Component {
 
   _handleDate1Picked = (date1) => {
     console.log('A date has been picked: ', date1);
-    const temp = moment(date1).format('hh:mm A');
+    const temp = moment(date1);
     this.setState({ date1: temp });
     console.log(temp);
     console.log(this.state.date1);
@@ -89,7 +93,7 @@ class MatchPage extends React.Component {
   _handleDate2Picked = (date2) => {
     console.log('A date has been picked: ', date2);
     console.log(this.state.date2);
-    const temp = moment(date2).format('hh:mm A');
+    const temp = moment(date2);
     this.setState({ date2: temp });
     this._hideDateTimePicker2();
   };
@@ -105,13 +109,13 @@ class MatchPage extends React.Component {
             <Text style={styles.topicLabel}>START TIME</Text>
           </TouchableOpacity>
 
-          <Text style={styles.dateLabel}>{this.state.date1.toString()}</Text>
+          <Text style={styles.dateLabel}>{this.state.date1.format('hh:mm A').toString()}</Text>
 
           <TouchableOpacity onPress={this._showDateTimePicker2}>
             <Text style={styles.topicLabel}>END TIME</Text>
           </TouchableOpacity>
 
-          <Text style={styles.dateLabel}>{this.state.date2.toString()}</Text>
+          <Text style={styles.dateLabel}>{this.state.date2.format('hh:mm A').toString()}</Text>
 
           <DateTimePicker
             isVisible={this.state.isDateTimePicker1Visible}
