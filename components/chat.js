@@ -1,11 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  ScrollView,
-  NavigatorIOS,
-} from 'react-native';
+import { View, StyleSheet, Text, ScrollView, NavigatorIOS } from 'react-native';
 
 
 const styles = StyleSheet.create({

@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import {
-  NavigatorIOS,
-} from 'react-native';
+import { NavigatorIOS } from 'react-native';
 
 import ProfilePage from '../containers/profile';
 

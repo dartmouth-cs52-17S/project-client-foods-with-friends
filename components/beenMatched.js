@@ -1,12 +1,5 @@
 import React, { Component } from 'react';
-import {
-  View,
-  Image,
-  TouchableHighlight,
-  StyleSheet,
-  Text,
-  FlatList,
-} from 'react-native';
+import { View, Image, TouchableHighlight, StyleSheet, Text, FlatList } from 'react-native';
 
 import Match from '../containers/match';
 
