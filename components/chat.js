@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Text,
-  FlatList,
   ScrollView,
   NavigatorIOS,
 } from 'react-native';

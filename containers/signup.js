@@ -9,8 +9,6 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import Profile from './profile';
-import SignIn from './signin';
 import { signupUser, clearError, goToSignin } from '../actions';
 
 const styles = StyleSheet.create({
