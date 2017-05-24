@@ -6,6 +6,7 @@ import SignUp from './signup';
 import SignIn from './signin';
 import { signoutUser } from '../actions';
 import MunchBuddyTabs from '../components/tab';
+import ProfileAdd from './profileAdd';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +33,7 @@ class Navigator extends Component {
     } else if (this.props.auth && this.props.page) {
       return (
         <View style={styles.container}>
-          <MunchBuddyTabs />
+          <ProfileAdd />
         </View>
       );
     } else if (!this.props.auth && !this.props.page) {
