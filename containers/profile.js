@@ -11,7 +11,7 @@ import {
   NavigatorIOS,
 } from 'react-native';
 
-import { signoutUser } from '../actions';
+import { signoutUser, clearError } from '../actions';
 
 const styles = StyleSheet.create({
   body: {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ProfilePage extends React.Component {
+class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,11 +66,7 @@ class ProfilePage extends React.Component {
 
   onPressButton() {
     this.props.signoutUser();
-    // this.props.navigator.push({
-    //   title: 'PROFILE',
-    //   component: Match,
-    //   passProps: { },
-    // });
+    this.props.clearError();
   }
   render() {
     return (
@@ -92,11 +88,6 @@ class ProfilePage extends React.Component {
               data={[{ title: 'The Human heart' }, { title: 'Banana Slugs' }]}
               renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
             />
-            <Text style={styles.title}>Meal History:</Text>
-            <FlatList
-              data={[{ title: 'June 21, 4:00pm' }, { title: 'June 22, 5:30pm' }]}
-              renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
-            />
             <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
               <Text>Sign Out</Text>
             </TouchableHighlight>
@@ -110,6 +101,7 @@ class ProfilePage extends React.Component {
 const mapDispatchToProps = dispatch => (
   {
     signoutUser: () => dispatch(signoutUser()),
+    clearError: () => dispatch(clearError()),
   }
 );
 

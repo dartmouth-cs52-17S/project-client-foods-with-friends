@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 
 import Match from './match';
-import SignUp from './signup';
 import { signinUser, signoutUser, clearError, goToSignup } from '../actions';
 
 const styles = StyleSheet.create({
