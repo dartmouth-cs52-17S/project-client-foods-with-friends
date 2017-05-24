@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import {
   StyleSheet,
@@ -32,7 +33,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#0f0f0f',
     flex: 1,
-
     marginLeft: 50,
     marginRight: 50,
     height: 50,
@@ -46,13 +46,12 @@ class MatchPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date1: new Date().toString(),
-      date2: new Date().toString(),
+      date1: moment().format('hh:mm A'),
+      date2: moment().format('hh:mm A'),
       isDateTimePicker1Visible: false,
       isDateTimePicker2Visible: false,
     };
   }
-
 
   onDate1Change = (date1) => {
     this.setState({ date1 });
@@ -66,6 +65,12 @@ class MatchPage extends React.Component {
     console.log('matchButtonPressed!');
   };
 
+  validateDates = () => {
+    /*
+    If dates are set for something weird, don't let the user submit them.
+    */
+  };
+
   _showDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: true });
   _showDateTimePicker2 = () => this.setState({ isDateTimePicker2Visible: true });
 
@@ -74,7 +79,7 @@ class MatchPage extends React.Component {
 
   _handleDate1Picked = (date1) => {
     console.log('A date has been picked: ', date1);
-    const temp = date1.toString();
+    const temp = moment(date1).format('hh:mm A');
     this.setState({ date1: temp });
     console.log(temp);
     console.log(this.state.date1);
@@ -84,7 +89,8 @@ class MatchPage extends React.Component {
   _handleDate2Picked = (date2) => {
     console.log('A date has been picked: ', date2);
     console.log(this.state.date2);
-    this.setState({ date2 });
+    const temp = moment(date2).format('hh:mm A');
+    this.setState({ date2: temp });
     this._hideDateTimePicker2();
   };
 
