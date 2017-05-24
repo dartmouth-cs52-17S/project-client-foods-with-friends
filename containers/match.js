@@ -33,6 +33,7 @@ const styles = StyleSheet.create({
   },
   topic: {
     borderWidth: 0.5,
+    borderRadius: 4,
     borderColor: '#0f0f0f',
     flex: 1,
     marginLeft: 50,
@@ -75,10 +76,7 @@ class MatchPage extends React.Component {
   validateDates = () => {
     if (this.state.date2.isBefore(this.state.date1)) {
       AlertIOS.alert('That\'s not a valid meal time!');
-    } else {
-      AlertIOS.alert('Ran successfully');
     }
-
   };
 
   _showDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: true });

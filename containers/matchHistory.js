@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  FlatList,
-  ScrollView,
-  NavigatorIOS,
-} from 'react-native';
+import { View, StyleSheet, Text, FlatList, ScrollView, NavigatorIOS } from 'react-native';
+
+import matchProfile from '../components/matchProfile';
 
 const styles = StyleSheet.create({
   body: {
@@ -34,6 +29,15 @@ class MatchHistory extends React.Component {
     this.state = {
     };
   }
+
+  matchButton = () => {
+    console.log('matchButtonPressed!');
+    this.validateDates();
+    this.props.navigator.push({
+      title: '!',
+      component: matchProfile,
+    });
+  };
 
   render() {
     return (
