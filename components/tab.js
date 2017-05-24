@@ -3,8 +3,8 @@ import { TabNavigator } from 'react-navigation';
 import Match from '../containers/match';
 
 import Profile from './profiletab';
-import MatchHistory from '../components/matchHistory';
-import Chat from '../components/chat';
+import MatchHistory from './matchHistory';
+import Chat from './chat';
 
 const MunchBuddyTabs = TabNavigator({
   Match: { screen: Match },
