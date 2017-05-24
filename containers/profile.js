@@ -11,7 +11,7 @@ import {
   NavigatorIOS,
 } from 'react-native';
 
-import { signoutUser } from '../actions';
+import { signoutUser, clearError } from '../actions';
 
 const styles = StyleSheet.create({
   body: {
@@ -66,11 +66,7 @@ class ProfilePage extends React.Component {
 
   onPressButton() {
     this.props.signoutUser();
-    // this.props.navigator.push({
-    //   title: 'PROFILE',
-    //   component: Match,
-    //   passProps: { },
-    // });
+    this.props.clearError();
   }
   render() {
     return (
@@ -105,6 +101,7 @@ class ProfilePage extends React.Component {
 const mapDispatchToProps = dispatch => (
   {
     signoutUser: () => dispatch(signoutUser()),
+    clearError: () => dispatch(clearError()),
   }
 );
 
