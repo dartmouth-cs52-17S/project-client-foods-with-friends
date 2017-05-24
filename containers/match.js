@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 
 import {
   StyleSheet,
@@ -9,6 +10,7 @@ import {
   ScrollView,
   TouchableOpacity,
   NavigatorIOS,
+  AlertIOS,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import MatchLoading from '../components/matchLoading';
@@ -33,7 +35,6 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderColor: '#0f0f0f',
     flex: 1,
-
     marginLeft: 50,
     marginRight: 50,
     height: 50,
@@ -47,13 +48,12 @@ class MatchPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      date1: new Date().toString(),
-      date2: new Date().toString(),
+      date1: moment(),
+      date2: moment(),
       isDateTimePicker1Visible: false,
       isDateTimePicker2Visible: false,
     };
   }
-
 
   onDate1Change = (date1) => {
     this.setState({ date1 });
@@ -65,10 +65,20 @@ class MatchPage extends React.Component {
 
   matchButton = () => {
     console.log('matchButtonPressed!');
+    this.validateDates();
     this.props.navigator.push({
       title: 'Match Me!',
       component: MatchLoading,
     });
+  };
+
+  validateDates = () => {
+    if (this.state.date2.isBefore(this.state.date1)) {
+      AlertIOS.alert('That\'s not a valid meal time!');
+    } else {
+      AlertIOS.alert('Ran successfully');
+    }
+
   };
 
   _showDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: true });
@@ -79,7 +89,7 @@ class MatchPage extends React.Component {
 
   _handleDate1Picked = (date1) => {
     console.log('A date has been picked: ', date1);
-    const temp = date1.toString();
+    const temp = moment(date1);
     this.setState({ date1: temp });
     console.log(temp);
     console.log(this.state.date1);
@@ -89,7 +99,8 @@ class MatchPage extends React.Component {
   _handleDate2Picked = (date2) => {
     console.log('A date has been picked: ', date2);
     console.log(this.state.date2);
-    this.setState({ date2 });
+    const temp = moment(date2);
+    this.setState({ date2: temp });
     this._hideDateTimePicker2();
   };
 
@@ -104,13 +115,13 @@ class MatchPage extends React.Component {
             <Text style={styles.topicLabel}>START TIME</Text>
           </TouchableOpacity>
 
-          <Text style={styles.dateLabel}>{this.state.date1.toString()}</Text>
+          <Text style={styles.dateLabel}>{this.state.date1.format('hh:mm A').toString()}</Text>
 
           <TouchableOpacity onPress={this._showDateTimePicker2}>
             <Text style={styles.topicLabel}>END TIME</Text>
           </TouchableOpacity>
 
-          <Text style={styles.dateLabel}>{this.state.date2.toString()}</Text>
+          <Text style={styles.dateLabel}>{this.state.date2.format('hh:mm A').toString()}</Text>
 
           <DateTimePicker
             isVisible={this.state.isDateTimePicker1Visible}
