@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class ProfilePage extends React.Component {
+class ProfilePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
