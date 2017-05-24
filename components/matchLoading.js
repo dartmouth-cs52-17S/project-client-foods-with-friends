@@ -5,7 +5,7 @@ import React from 'react';
 import { StyleSheet,
   Text,
   View,
-TouchableHighlight,
+  TouchableHighlight,
 } from 'react-native';
 
 const styles = StyleSheet.create({

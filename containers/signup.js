@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import {
   StyleSheet,
@@ -10,8 +9,6 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import Profile from './profile';
-import SignIn from './signin';
 import { signupUser, clearError, goToSignin } from '../actions';
 
 const styles = StyleSheet.create({

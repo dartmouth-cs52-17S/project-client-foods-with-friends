@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import {
   View,
   StyleSheet,
@@ -8,8 +7,6 @@ import {
   ScrollView,
   NavigatorIOS,
 } from 'react-native';
-
-import { signoutUser } from '../actions';
 
 const styles = StyleSheet.create({
   body: {

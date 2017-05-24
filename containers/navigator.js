@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { View, StyleSheet, NavigatorIOS } from 'react-native';
 import SignUp from './signup';
 import SignIn from './signin';
-import Profile from './profile';
 import { signoutUser } from '../actions';
 import MunchBuddyTabs from '../components/tab';
 
