@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
+import { View, StyleSheet, AsyncStorage, AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import { View, StyleSheet, AsyncStorage, AppRegistry } from 'react-native';
 import reducers from './reducers';
 import Navigator from './containers/navigator';
 import { ActionTypes } from './actions';
@@ -27,7 +27,7 @@ AsyncStorage.getItem('token').then((response) => {
   console.log(err);
 });
 
-class foodswithfriends extends Component {
+export default class foodswithfriends extends Component {
   render() {
     return (
       <Provider store={store}>

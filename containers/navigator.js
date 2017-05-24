@@ -32,18 +32,7 @@ class Navigator extends Component {
     } else if (this.props.auth && this.props.page) {
       return (
         <View style={styles.container}>
-          <NavigatorIOS
-            style={styles.container}
-            translucent={false}
-            initialRoute={{
-              title: 'Profile',
-              component: MunchBuddyTabs,
-              rightButtonTitle: 'Sign Out',
-              onRightButtonPress: () => {
-                this.props.signoutUser();
-              },
-            }}
-          />
+          <MunchBuddyTabs />
         </View>
       );
     } else if (!this.props.auth && !this.props.page) {
