@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class MatchHistory extends React.Component {
+class MatchHistoryPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,19 +54,4 @@ class MatchHistory extends React.Component {
   }
 }
 
-export default class MatchHistoryNav extends Component {
-  static navigationOptions = {
-    tabBarLabel: 'Match History',
-  };
-  render() {
-    return (
-      <NavigatorIOS
-        initialRoute={{
-          component: MatchHistory,
-          title: 'Match History',
-        }}
-        style={{ flex: 1 }}
-      />
-    );
-  }
-}
+export default MatchHistoryPage;

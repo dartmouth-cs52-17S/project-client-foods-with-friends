@@ -12,7 +12,9 @@ import {
   NavigatorIOS,
   AlertIOS,
 } from 'react-native';
+
 import DateTimePicker from 'react-native-modal-datetime-picker';
+
 import MatchLoading from '../components/matchLoading';
 
 const styles = StyleSheet.create({
@@ -45,7 +47,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class MatchPage extends React.Component {
+class MatchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -201,20 +203,4 @@ class MatchPage extends React.Component {
   }
 }
 
-export default class Match extends Component {
-  static navigationOptions = {
-    tabBarLabel: 'Match',
-
-  };
-  render() {
-    return (
-      <NavigatorIOS
-        initialRoute={{
-          component: MatchPage,
-          title: 'Get Matched',
-        }}
-        style={{ flex: 1 }}
-      />
-    );
-  }
-}
+export default MatchPage;

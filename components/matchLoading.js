@@ -3,8 +3,7 @@
 
 import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import MatchHistory from '../containers/matchHistory';
-import Match from '../containers/match';
+import MatchPage from '../containers/matchPage';
 
 const styles = StyleSheet.create({
   container: {
@@ -32,7 +31,7 @@ const matchLoading = (props) => {
         props.navigator.push({
           title: 'Match',
           leftButtonTitle: ' ',
-          component: Match,
+          component: MatchPage,
         });
       }}
       >

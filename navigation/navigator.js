@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { View, StyleSheet } from 'react-native';
-import SignUp from './signup';
-import SignIn from './signin';
+import SignUp from '../containers/signup';
+import SignIn from '../containers/signin';
 import { signoutUser } from '../actions';
-import MunchBuddyTabs from '../components/tab';
-import ProfileAdd from './profileAdd';
+import MunchBuddyTabs from './tab';
+import ProfileAdd from '../containers/profileAdd';
 
 const styles = StyleSheet.create({
   container: {
