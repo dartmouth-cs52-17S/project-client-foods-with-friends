@@ -10,6 +10,7 @@ import {
   ScrollView,
   TouchableOpacity,
   NavigatorIOS,
+  AlertIOS,
 } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import MatchLoading from '../components/matchLoading';
@@ -55,51 +56,52 @@ class MatchPage extends React.Component {
     };
   }
 
-  onDate1Change = (date1) => {
+  onDate1Change(date1) {
     this.setState({ date1 });
-  };
+  }
 
-  onDate1Change = (date2) => {
+  onDate2Change(date2) {
     this.setState({ date2 });
-  };
+  }
 
-  matchButton = () => {
-    this.validateDates();
-    this.props.navigator.push({
-      title: 'Match Me!',
-      leftButtonTitle: ' ',
-      component: MatchLoading,
-    });
-  };
+  matchButton() {
+    if (this.validateDates()) {
+      this.props.navigator.push({
+        title: 'Match Me!',
+        leftButtonTitle: ' ',
+        component: MatchLoading,
+      });
+    }
+  }
 
-  validateDates = () => {
+  validateDates() {
     if (this.state.date2.isBefore(this.state.date1)) {
       AlertIOS.alert('That\'s not a valid meal time!');
     }
-  };
+  }
 
-  _showDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: true });
-  _showDateTimePicker2 = () => this.setState({ isDateTimePicker2Visible: true });
+  _showDateTimePicker1() { this.setState({ isDateTimePicker1Visible: true }); }
+  _showDateTimePicker2() { this.setState({ isDateTimePicker2Visible: true }); }
 
-  _hideDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: false });
-  _hideDateTimePicker2 = () => this.setState({ isDateTimePicker2Visible: false });
+  _hideDateTimePicker1() { this.setState({ isDateTimePicker1Visible: false }); }
+  _hideDateTimePicker2() { this.setState({ isDateTimePicker2Visible: false }); }
 
-  _handleDate1Picked = (date1) => {
+  _handleDate1Picked(date1) {
     console.log('A date has been picked: ', date1);
     const temp = moment(date1);
     this.setState({ date1: temp });
     console.log(temp);
     console.log(this.state.date1);
     this._hideDateTimePicker1();
-  };
+  }
 
-  _handleDate2Picked = (date2) => {
+  _handleDate2Picked(date2) {
     console.log('A date has been picked: ', date2);
     console.log(this.state.date2);
     const temp = moment(date2);
     this.setState({ date2: temp });
     this._hideDateTimePicker2();
-  };
+  }
 
 
   render() {
