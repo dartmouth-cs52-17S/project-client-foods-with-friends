@@ -69,20 +69,16 @@ export function postMatch({ start_time, end_time, topic, loc }) {
   console.log('in postMatch function');
   let ourToken;
   return (dispatch) => {
-    AsyncStorage.getItem('token', (err, res) => {
-      if (err) {
-        console.log(`an error was detected! ${err}`);
-      } else {
-        console.log(`response? ${res}`);
-        ourToken = res;
-      }
-    });
-    axios.post(`${ROOT_URL}/matchRequest`, { start_time, end_time, topic, loc, ourToken}).then((response) => {
-      console.log('posted successfully to match request');
-      dispatch({ type: ActionTypes.POST_MATCH });
-    })
-    .catch((error) => {
-      dispatch(authError(`Sign in Failed: ${error.response.data}`));
+    console.log('beginning of dispatch');
+    AsyncStorage.getItem('token').then((result) => {
+      console.log('in getItem somewhere?');
+      axios.post(`${ROOT_URL}/matchRequest`, { start_time, end_time, topic, loc, result }).then((response) => {
+        console.log('posted successfully to match request');
+        dispatch({ type: ActionTypes.POST_MATCH });
+      })
+      .catch((error) => {
+        dispatch(authError(`cannot postMatch: ${error.response.data}`));
+      });
     });
   };
 }

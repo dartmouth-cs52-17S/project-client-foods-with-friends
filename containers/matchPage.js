@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
 
 import {
@@ -16,6 +17,7 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import MatchLoading from '../components/matchLoading';
+import { postMatch } from '../actions';
 
 const styles = StyleSheet.create({
   title: {
@@ -62,6 +64,7 @@ class MatchPage extends Component {
     this.onDate1Change = this.onDate1Change.bind(this);
     this.onDate2Change = this.onDate1Change.bind(this);
     this.matchButton = this.matchButton.bind(this);
+    this.sendEndpoint = this.sendEndpoint.bind(this);
     this.validateDates = this.validateDates.bind(this);
     this._showDateTimePicker1 = this._showDateTimePicker1.bind(this);
     this._showDateTimePicker2 = this._showDateTimePicker2.bind(this);
@@ -84,17 +87,43 @@ class MatchPage extends Component {
   }
 
   getPosition() {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const initialPosition = JSON.stringify(position);
-        this.setState({ initialPosition });
-      });
+    return new Promise((fulfill, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const initialPosition = JSON.stringify(position);
+          this.setState({ initialPosition }, () => {
+            fulfill();
+            console.log('our current position:');
+            console.log(position);
+          });
+        });
+    });
   }
 
+/*
   matchButton() {
     if (this.validateDates()) {
-      this.getPosition();
-      this.sendEndpoint();
+      this.getPosition()
+      .then((response) => {
+        this.sendEndpoint();
+      });
+      this.props.navigator.push({
+        title: 'Match Me!',
+        leftButtonTitle: ' ',
+        component: MatchLoading,
+      });
+    }
+  }
+  */
+  matchButton() {
+    if (this.validateDates()) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log('position:');
+          console.log(position);
+          console.log(position.coords);
+          this.sendEndpoint([position.coords.latitude, position.coords.longitude]);
+        });
       this.props.navigator.push({
         title: 'Match Me!',
         leftButtonTitle: ' ',
@@ -103,6 +132,7 @@ class MatchPage extends Component {
     }
   }
 
+/*
   sendEndpoint() {
     /*
     Need:
@@ -111,12 +141,22 @@ class MatchPage extends Component {
     geolocation called "loc"
     conversation topic "topic"
     */
+    /*
     const matchInfo = {
-      "start_time": this.state.date1.toISOString(),
-      "end_time": this.state.date2.toISOString(),
-      "topic": this.state.topic,
-      "loc": this.state.position,
-    }
+      start_time: this.state.date1.toISOString(),
+      end_time: this.state.date2.toISOString(),
+      topic: this.state.topic,
+      loc: this.state.position,
+    };
+    this.props.postMatch(matchInfo);
+  } */
+  sendEndpoint(location) {
+    const matchInfo = {
+      start_time: this.state.date1.toISOString(),
+      end_time: this.state.date2.toISOString(),
+      topic: this.state.topic,
+      loc: location,
+    };
     this.props.postMatch(matchInfo);
   }
 
@@ -203,4 +243,5 @@ class MatchPage extends Component {
   }
 }
 
-export default MatchPage;
+
+export default connect(null, { postMatch })(MatchPage);
