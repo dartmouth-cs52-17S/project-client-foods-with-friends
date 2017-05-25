@@ -6,11 +6,11 @@ import MatchHistoryPage from '../containers/matchHistoryPage';
 class MatchHistory extends Component {
   static navigationOptions = {
     tabBarLabel: 'Match',
-    tabBarIcon: ({ tintColor }) => (
-      <Image
-        source={require('../imgs/match-history.png')}
-      />
-   ),
+  //   tabBarIcon: ({ tintColor }) => (
+  //     <Image
+  //       source={require('../imgs/match-history.png')}
+  //     />
+  //  ),
   };
   render() {
     return (

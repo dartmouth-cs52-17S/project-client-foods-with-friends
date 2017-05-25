@@ -65,6 +65,20 @@ export function signinUser({ email, password }) {
   };
 }
 
+export function editInterests(interests) {
+  console.log(interests);
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.post(`${ROOT_URL}/interests`, interests, { headers: { Authorization: User } }).then((response) => {
+        console.log('posted successfully to update interests!');
+      })
+      .catch((error) => {
+        console.log(`Cannot update interests: ${error.response.data}`);
+      });
+    });
+  };
+}
 
 export function postMatch({ start_time, end_time, topic, loc }) {
   console.log('in postMatch function');
