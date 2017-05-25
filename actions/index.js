@@ -9,7 +9,9 @@ export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   CLEAR_ERROR: 'CLEAR_ERROR',
   NEW_ACCOUNT: 'NEW_ACCOUNT',
+  POST_MATCH: 'POST_MATCH',
 };
+
 
 export function goToSignin() {
   return {
@@ -55,7 +57,29 @@ export function signinUser({ email, password }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
       dispatch({ type: ActionTypes.AUTH_USER });
-      AsyncStorage.setItem('token', response.data.token);
+      AsyncStorage.getItem('token', (err, res) => {});
+    })
+    .catch((error) => {
+      dispatch(authError(`Sign in Failed: ${error.response.data}`));
+    });
+  };
+}
+
+export function postMatch({ start_time, end_time, topic, loc }) {
+  console.log('in postMatch function');
+  let ourToken;
+  return (dispatch) => {
+    AsyncStorage.getItem('token', (err, res) => {
+      if (err) {
+        console.log(`an error was detected! ${err}`);
+      } else {
+        console.log(`response? ${res}`);
+        ourToken = res;
+      }
+    });
+    axios.post(`${ROOT_URL}/matchRequest`, { start_time, end_time, topic, loc, ourToken}).then((response) => {
+      console.log('posted successfully to match request');
+      dispatch({ type: ActionTypes.POST_MATCH });
     })
     .catch((error) => {
       dispatch(authError(`Sign in Failed: ${error.response.data}`));

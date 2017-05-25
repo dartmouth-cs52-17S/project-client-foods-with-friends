@@ -53,6 +53,8 @@ class MatchPage extends React.Component {
       date2: moment(),
       isDateTimePicker1Visible: false,
       isDateTimePicker2Visible: false,
+      topic: '',
+      position: '',
     };
 
     this.onDate1Change = this.onDate1Change.bind(this);
@@ -75,14 +77,45 @@ class MatchPage extends React.Component {
     this.setState({ date2 });
   }
 
+  onTopicChange(topic) {
+    this.setState({ topic });
+  }
+
+  getPosition() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const initialPosition = JSON.stringify(position);
+        this.setState({ initialPosition });
+      });
+  }
+
   matchButton() {
     if (this.validateDates()) {
+      this.getPosition();
+      this.sendEndpoint();
       this.props.navigator.push({
         title: 'Match Me!',
         leftButtonTitle: ' ',
         component: MatchLoading,
       });
     }
+  }
+
+  sendEndpoint() {
+    /*
+    Need:
+    start time in ISO 8601 "start_time"
+    end time in ISO 8601 "end_time"
+    geolocation called "loc"
+    conversation topic "topic"
+    */
+    const matchInfo = {
+      "start_time": this.state.date1.toISOString(),
+      "end_time": this.state.date2.toISOString(),
+      "topic": this.state.topic,
+      "loc": this.state.position,
+    }
+    this.props.postMatch(matchInfo);
   }
 
   validateDates() {
@@ -156,6 +189,7 @@ class MatchPage extends React.Component {
           <TextInput
             placeholder="Enter topic"
             style={styles.topic}
+            onChange={this.onTopicChange}
           />
           <Button
             title="Match Me!"
