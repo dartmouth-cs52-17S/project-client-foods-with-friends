@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class MatchPage extends React.Component {
+class MatchPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -55,10 +55,10 @@ class MatchPage extends React.Component {
   };
 
   matchButton = () => {
-    console.log('matchButtonPressed!');
     this.validateDates();
     this.props.navigator.push({
       title: 'Match Me!',
+      leftButtonTitle: ' ',
       component: MatchLoading,
     });
   };

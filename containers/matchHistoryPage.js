@@ -54,4 +54,23 @@ class MatchHistoryPage extends Component {
   }
 }
 
+<<<<<<< HEAD:containers/matchHistoryPage.js
 export default MatchHistoryPage;
+=======
+export default class MatchHistoryNav extends Component {
+  static navigationOptions = {
+    tabBarLabel: 'Match History',
+  };
+  render() {
+    return (
+      <NavigatorIOS
+        initialRoute={{
+          component: MatchHistory,
+          title: 'Match History',
+        }}
+        style={{ flex: 1 }}
+      />
+    );
+  }
+}
+>>>>>>> 96f70fc41b2c1fb2277fcfc7dd46b341f2c706fd:containers/matchHistory.js
