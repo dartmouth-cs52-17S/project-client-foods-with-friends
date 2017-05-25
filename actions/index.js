@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-const ROOT_URL = 'https://munchees.herokuapp.com/api';
+const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
 
 export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
@@ -57,7 +57,7 @@ export function signinUser({ email, password }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
       dispatch({ type: ActionTypes.AUTH_USER });
-      AsyncStorage.getItem('token', (err, res) => {});
+      AsyncStorage.setItem('token', response.data.token);
     })
     .catch((error) => {
       dispatch(authError(`Sign in Failed: ${error.response.data}`));
@@ -65,23 +65,58 @@ export function signinUser({ email, password }) {
   };
 }
 
+
 export function postMatch({ start_time, end_time, topic, loc }) {
   console.log('in postMatch function');
-  let ourToken;
+  const toPost = {
+    topic,
+    loc,
+    start_time,
+    end_time,
+  };
   return (dispatch) => {
     console.log('beginning of dispatch');
     AsyncStorage.getItem('token').then((result) => {
       console.log('in getItem somewhere?');
-      axios.post(`${ROOT_URL}/matchRequest`, { start_time, end_time, topic, loc, result }).then((response) => {
+      console.log(result);
+      const User = result;
+      axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { Authorization: User } }).then((response) => {
         console.log('posted successfully to match request');
         dispatch({ type: ActionTypes.POST_MATCH });
       })
       .catch((error) => {
+        console.log('error');
+        console.log(error);
         dispatch(authError(`cannot postMatch: ${error.response.data}`));
       });
     });
   };
 }
+/*
+export function postMatch({ start_time, end_time, topic, loc }) {
+  console.log('in postMatch function');
+  const toPost = {
+    start_time,
+    end_time,
+    topic,
+    loc,
+  };
+  return (dispatch) => {
+    console.log('beginning of dispatch');
+       axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { authorization: AsyncStorage.getItem('token') } }).then((response) => {
+        console.log('posted successfully to match request');
+        dispatch({ type: ActionTypes.POST_MATCH });
+      })
+      .catch((error) => {
+        console.log('error');
+        console.log(error);
+        dispatch(authError(`cannot postMatch: ${error.response.data}`));
+      });
+    });
+  };
+}
+*/
+
 
 export function signoutUser() {
   return (dispatch) => {
