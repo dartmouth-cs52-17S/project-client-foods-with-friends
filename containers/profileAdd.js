@@ -6,25 +6,14 @@ import MunchBuddyTabs from '../navigation/tab';
 import { goToSignin } from '../actions';
 
 const styles = StyleSheet.create({
-  error: {
-    flex: 1,
-    alignSelf: 'stretch',
-    marginBottom: -250,
-    marginTop: 50,
-  },
-  errorMessage: {
-    alignSelf: 'center',
-    textAlign: 'center',
-    fontSize: 16,
-    color: 'red',
-    marginLeft: 15,
-    marginRight: 15,
-  },
   label: {
-    marginTop: '50%',
-    fontSize: 30,
+    marginTop: '30%',
+    marginLeft: 20,
+    marginRight: 20,
+    textAlign: 'center',
+    fontSize: 35,
     fontWeight: 'bold',
-    marginBottom: 30,
+    marginBottom: 20,
   },
   container: {
     flex: 1,
@@ -32,18 +21,6 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-  },
-  inputs: {
-    flex: 1,
-    alignSelf: 'stretch',
-  },
-  TextInput: {
-    alignSelf: 'center',
-    height: 40,
-    width: '80%',
-    borderColor: 'gray',
-    borderWidth: 1,
-    paddingLeft: 8,
   },
   buttonBox: {
     flex: 1,
@@ -53,7 +30,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   button: {
-    marginTop: -240,
+    marginTop: -110,
     backgroundColor: '#519bdd',
     borderRadius: 5,
     borderWidth: 2,
@@ -72,6 +49,8 @@ const styles = StyleSheet.create({
   interests: {
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
     marginLeft: 10,
     marginRight: 10,
   },
@@ -105,7 +84,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const interests = ['dogs', 'cats', 'bananas'];
+const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
+  'volunteering', 'education', 'finance', 'reading', 'nightlife', 'fitness', 'tech',
+  'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues'];
 
 class ProfileAdd extends React.Component {
 
@@ -156,13 +137,7 @@ class ProfileAdd extends React.Component {
 
   renderInterests() {
     const interestItems = interests.map((interest) => {
-      let checked = false;
-      for (let i = 0; i < this.state.interests.length; i += 1) {
-        if (this.state.interests[i] === interest) {
-          checked = true;
-        }
-      }
-      if (checked) {
+      if (this.state.interests.includes(interest)) {
         return (
           <TouchableHighlight style={styles.checked} key={interest} onPress={() => { this.handleInterest(interest); }}>
             <Text>{interest}</Text>
@@ -187,7 +162,7 @@ class ProfileAdd extends React.Component {
     if (this.props.page) {
       return (
         <View style={styles.container}>
-          <Text style={styles.label}>Add Stuff About Yourself!</Text>
+          <Text style={styles.label}>Choose some interests!</Text>
           {this.renderInterests()}
           <View style={styles.buttonBox}>
             <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
