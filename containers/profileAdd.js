@@ -120,7 +120,7 @@ class ProfileAdd extends React.Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.addInterests(this.state.interests);
-    // this.props.goToSignin();
+    this.props.goToSignin();
   }
 
   handleInterest(interest) {
