@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import reducers from './reducers';
-import Navigator from './containers/navigator';
+import Navigator from './navigation/navigator';
 import { ActionTypes } from './actions';
 
 const styles = StyleSheet.create({

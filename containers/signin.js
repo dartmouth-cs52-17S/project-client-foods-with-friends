@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import { StyleSheet, Text, TextInput, View, TouchableHighlight } from 'react-native';
 
-import Match from './match';
+import MatchPage from './matchPage';
 import { signinUser, signoutUser, clearError, goToSignup } from '../actions';
 
 const styles = StyleSheet.create({
@@ -105,7 +105,7 @@ class SignIn extends React.Component {
       leftButtonTitle: ' ',
       rightButtonTitle: 'Sign Out',
       onRightButtonPress: () => { this.props.signoutUser(); this.handleSignup(); console.log(this.props.auth); },
-      component: Match,
+      component: MatchPage,
       passProps: { },
     });
   }
