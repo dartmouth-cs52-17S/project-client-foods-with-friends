@@ -69,20 +69,59 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  interests: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  checked: {
+    backgroundColor: '#219e27',
+    borderWidth: 2,
+    borderRadius: 6,
+    borderColor: '#219e27',
+    height: 35,
+    minWidth: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 3,
+  },
+  unchecked: {
+    backgroundColor: '#a5a6a8',
+    borderWidth: 2,
+    borderRadius: 6,
+    borderColor: '#a5a6a8',
+    height: 35,
+    minWidth: 20,
+    paddingLeft: 10,
+    paddingRight: 10,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    margin: 3,
+  },
 });
 
-class SignIn extends React.Component {
+const interests = ['dogs', 'cats', 'bananas'];
+
+class ProfileAdd extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
+      interests: [],
     };
     this.updateEmail = this.updateEmail.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.renderPage = this.renderPage.bind(this);
+    this.renderInterests = this.renderInterests.bind(this);
+    this.handleInterest = this.handleInterest.bind(this);
   }
 
   updateEmail(text) {
@@ -102,15 +141,54 @@ class SignIn extends React.Component {
     this.props.goToSignin();
   }
 
+  handleInterest(interest) {
+    if (this.state.interests.includes(interest)) {
+      const newstate = [...this.state.interests];
+      const index = newstate.indexOf(interest);
+      console.log(index);
+      newstate.splice(index, 1);
+      this.setState({ interests: newstate });
+      console.log(newstate);
+    } else {
+      this.setState({ interests: [...this.state.interests, interest] });
+    }
+  }
+
+  renderInterests() {
+    const interestItems = interests.map((interest) => {
+      let checked = false;
+      for (let i = 0; i < this.state.interests.length; i += 1) {
+        if (this.state.interests[i] === interest) {
+          checked = true;
+        }
+      }
+      if (checked) {
+        return (
+          <TouchableHighlight style={styles.checked} key={interest} onPress={() => { this.handleInterest(interest); }}>
+            <Text>{interest}</Text>
+          </TouchableHighlight>
+        );
+      } else {
+        return (
+          <TouchableHighlight style={styles.unchecked} key={interest} onPress={() => { this.handleInterest(interest); }}>
+            <Text>{interest}</Text>
+          </TouchableHighlight>
+        );
+      }
+    });
+    return (
+      <View style={styles.interests}>
+        {interestItems}
+      </View>
+    );
+  }
+
   renderPage() {
     if (this.props.page) {
       return (
         <View style={styles.container}>
           <Text style={styles.label}>Add Stuff About Yourself!</Text>
-          <View style={styles.inputs}>
-            <TextInput style={styles.TextInput} placeholder={'Info1'} onChangeText={this.updateEmail} value={this.state.email} />
-            <TextInput style={styles.TextInput} placeholder={'Info2'} onChangeText={this.updatePassword} value={this.state.password} />
-          </View>
+          {this.renderInterests()}
           <View style={styles.buttonBox}>
             <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
               <Text style={styles.buttonText}> Ok! </Text>
@@ -151,4 +229,4 @@ const mapDispatchToProps = dispatch => (
 );
 
 export default (connect(mapStateToProps,
-  mapDispatchToProps)(SignIn));
+  mapDispatchToProps)(ProfileAdd));

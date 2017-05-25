@@ -121,7 +121,7 @@ class SignUp extends React.Component {
     event.preventDefault();
     const user = {
       fullname: this.state.fullname,
-      email: this.state.email,
+      email: this.state.email.toLowerCase(),
       password: this.state.password,
     };
     this.props.signupUser(user);
