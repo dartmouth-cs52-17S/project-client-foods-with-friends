@@ -19,7 +19,6 @@ const store = createStore(reducers, {}, compose(
   window.devToolsExtension ? window.devToolsExtension() : f => f,
 ));
 AsyncStorage.getItem('token').then((response) => {
-  console.log(response);
   if (response !== null) {
     store.dispatch({ type: ActionTypes.AUTH_USER });
   }

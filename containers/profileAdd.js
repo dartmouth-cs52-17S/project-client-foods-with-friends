@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, TextInput, View, TouchableHighlight } from 'react-native';
 
 import MunchBuddyTabs from '../navigation/tab';
-import { goToSignin } from '../actions';
+import { goToSignin, editInterests } from '../actions';
 
 const styles = StyleSheet.create({
   label: {
@@ -119,6 +119,7 @@ class ProfileAdd extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    this.props.addInterests(this.state.interests);
     this.props.goToSignin();
   }
 
@@ -200,6 +201,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     goToSignin: () => dispatch(goToSignin()),
+    addInterests: interestList => dispatch(editInterests(interestList)),
   }
 );
 

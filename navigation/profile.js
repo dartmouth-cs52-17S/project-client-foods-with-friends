@@ -6,11 +6,11 @@ import ProfilePage from '../containers/profilePage';
 class Profile extends Component {
   static navigationOptions = {
     tabBarLabel: 'Profile',
-    tabBarIcon: ({ tintColor }) => (
-      <Image
-        source={require('../imgs/profile.png')}
-      />
-   ),
+  //   tabBarIcon: ({ tintColor }) => (
+  //     <Image
+  //       source={require('../imgs/profile.png')}
+  //     />
+  //  ),
   };
   render() {
     return (
