@@ -61,6 +61,18 @@ class ChatHistoryPage extends Component {
   render() {
     return (
       <View style={styles.body}>
+        <FlatList
+          data={this.state.data}
+          renderItem={({ item }) => (
+            <ListItem
+              roundAvatar
+              title={`${item.name.first} ${item.name.last}`}
+              subtitle={item.email}
+              avatar={{ uri: item.picture.thumbnail }}
+            />
+          )}
+          keyExtractor={item => item.email}
+        />
         <Text style={styles.username}>Chat</Text>
         <Text style={styles.text}> Coming Soon! </Text>
       </View>
