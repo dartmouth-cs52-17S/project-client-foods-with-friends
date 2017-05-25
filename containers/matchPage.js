@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import moment from 'moment';
-import { StyleSheet, Text, TextInput, View, Button, ScrollView, TouchableOpacity, NavigatorIOS, AlertIOS } from 'react-native';
+
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Button,
+  ScrollView,
+  TouchableOpacity,
+  NavigatorIOS,
+  AlertIOS,
+} from 'react-native';
+
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import MatchLoading from '../components/matchLoading';
+import { postMatch } from '../actions';
 
 const styles = StyleSheet.create({
   title: {
@@ -43,54 +57,140 @@ class MatchPage extends Component {
       date2: moment(),
       isDateTimePicker1Visible: false,
       isDateTimePicker2Visible: false,
+      topic: '',
+      position: '',
     };
+
+    this.onDate1Change = this.onDate1Change.bind(this);
+    this.onDate2Change = this.onDate1Change.bind(this);
+    this.matchButton = this.matchButton.bind(this);
+    this.sendEndpoint = this.sendEndpoint.bind(this);
+    this.validateDates = this.validateDates.bind(this);
+    this._showDateTimePicker1 = this._showDateTimePicker1.bind(this);
+    this._showDateTimePicker2 = this._showDateTimePicker2.bind(this);
+    this._hideDateTimePicker1 = this._hideDateTimePicker1.bind(this);
+    this._hideDateTimePicker2 = this._hideDateTimePicker2.bind(this);
+    this._handleDate1Picked = this._handleDate1Picked.bind(this);
+    this._handleDate2Picked = this._handleDate2Picked.bind(this);
   }
 
-  onDate1Change = (date1) => {
+  onDate1Change(date1) {
     this.setState({ date1 });
-  };
+  }
 
-  onDate1Change = (date2) => {
+  onDate2Change(date2) {
     this.setState({ date2 });
-  };
+  }
 
-  matchButton = () => {
-    this.validateDates();
-    this.props.navigator.push({
-      title: 'Match Me!',
-      leftButtonTitle: ' ',
-      component: MatchLoading,
+  onTopicChange(topic) {
+    this.setState({ topic });
+  }
+
+  getPosition() {
+    return new Promise((fulfill, reject) => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const initialPosition = JSON.stringify(position);
+          this.setState({ initialPosition }, () => {
+            fulfill();
+            console.log('our current position:');
+            console.log(position);
+          });
+        });
     });
-  };
+  }
 
-  validateDates = () => {
+/*
+  matchButton() {
+    if (this.validateDates()) {
+      this.getPosition()
+      .then((response) => {
+        this.sendEndpoint();
+      });
+      this.props.navigator.push({
+        title: 'Match Me!',
+        leftButtonTitle: ' ',
+        component: MatchLoading,
+      });
+    }
+  }
+  */
+  matchButton() {
+    if (this.validateDates()) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          console.log('position:');
+          console.log(position);
+          console.log(position.coords);
+          this.sendEndpoint([position.coords.latitude, position.coords.longitude]);
+        });
+      this.props.navigator.push({
+        title: 'Match Me!',
+        leftButtonTitle: ' ',
+        component: MatchLoading,
+      });
+    }
+  }
+
+/*
+  sendEndpoint() {
+    /*
+    Need:
+    start time in ISO 8601 "start_time"
+    end time in ISO 8601 "end_time"
+    geolocation called "loc"
+    conversation topic "topic"
+    */
+    /*
+    const matchInfo = {
+      start_time: this.state.date1.toISOString(),
+      end_time: this.state.date2.toISOString(),
+      topic: this.state.topic,
+      loc: this.state.position,
+    };
+    this.props.postMatch(matchInfo);
+  } */
+  sendEndpoint(location) {
+    const matchInfo = {
+      start_time: this.state.date1.toISOString(),
+      end_time: this.state.date2.toISOString(),
+      topic: this.state.topic,
+      loc: location,
+    };
+    this.props.postMatch(matchInfo);
+  }
+
+  validateDates() {
     if (this.state.date2.isBefore(this.state.date1)) {
       AlertIOS.alert('That\'s not a valid meal time!');
+      return false;
+    } else {
+      return true;
     }
-  };
+  }
 
-  _showDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: true });
-  _showDateTimePicker2 = () => this.setState({ isDateTimePicker2Visible: true });
+  _showDateTimePicker1() { this.setState({ isDateTimePicker1Visible: true }); }
+  _showDateTimePicker2() { this.setState({ isDateTimePicker2Visible: true }); }
 
-  _hideDateTimePicker1 = () => this.setState({ isDateTimePicker1Visible: false });
-  _hideDateTimePicker2 = () => this.setState({ isDateTimePicker2Visible: false });
+  _hideDateTimePicker1() { this.setState({ isDateTimePicker1Visible: false }); }
+  _hideDateTimePicker2() { this.setState({ isDateTimePicker2Visible: false }); }
 
-  _handleDate1Picked = (date1) => {
+  _handleDate1Picked(date1) {
     console.log('A date has been picked: ', date1);
     const temp = moment(date1);
     this.setState({ date1: temp });
     console.log(temp);
     console.log(this.state.date1);
     this._hideDateTimePicker1();
-  };
+  }
 
-  _handleDate2Picked = (date2) => {
+  _handleDate2Picked(date2) {
     console.log('A date has been picked: ', date2);
     console.log(this.state.date2);
     const temp = moment(date2);
     this.setState({ date2: temp });
     this._hideDateTimePicker2();
-  };
+  }
 
 
   render() {
@@ -131,6 +231,7 @@ class MatchPage extends Component {
           <TextInput
             placeholder="Enter topic"
             style={styles.topic}
+            onChange={this.onTopicChange}
           />
           <Button
             title="Match Me!"
@@ -142,4 +243,5 @@ class MatchPage extends Component {
   }
 }
 
-export default MatchPage;
+
+export default connect(null, { postMatch })(MatchPage);

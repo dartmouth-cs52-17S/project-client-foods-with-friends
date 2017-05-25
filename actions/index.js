@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-const ROOT_URL = 'https://munchees.herokuapp.com/api';
+const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
 
 export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
@@ -9,7 +9,9 @@ export const ActionTypes = {
   AUTH_USER: 'AUTH_USER',
   CLEAR_ERROR: 'CLEAR_ERROR',
   NEW_ACCOUNT: 'NEW_ACCOUNT',
+  POST_MATCH: 'POST_MATCH',
 };
+
 
 export function goToSignin() {
   return {
@@ -62,6 +64,59 @@ export function signinUser({ email, password }) {
     });
   };
 }
+
+
+export function postMatch({ start_time, end_time, topic, loc }) {
+  console.log('in postMatch function');
+  const toPost = {
+    topic,
+    loc,
+    start_time,
+    end_time,
+  };
+  return (dispatch) => {
+    console.log('beginning of dispatch');
+    AsyncStorage.getItem('token').then((result) => {
+      console.log('in getItem somewhere?');
+      console.log(result);
+      const User = result;
+      axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { Authorization: User } }).then((response) => {
+        console.log('posted successfully to match request');
+        dispatch({ type: ActionTypes.POST_MATCH });
+      })
+      .catch((error) => {
+        console.log('error');
+        console.log(error);
+        dispatch(authError(`cannot postMatch: ${error.response.data}`));
+      });
+    });
+  };
+}
+/*
+export function postMatch({ start_time, end_time, topic, loc }) {
+  console.log('in postMatch function');
+  const toPost = {
+    start_time,
+    end_time,
+    topic,
+    loc,
+  };
+  return (dispatch) => {
+    console.log('beginning of dispatch');
+       axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { authorization: AsyncStorage.getItem('token') } }).then((response) => {
+        console.log('posted successfully to match request');
+        dispatch({ type: ActionTypes.POST_MATCH });
+      })
+      .catch((error) => {
+        console.log('error');
+        console.log(error);
+        dispatch(authError(`cannot postMatch: ${error.response.data}`));
+      });
+    });
+  };
+}
+*/
+
 
 export function signoutUser() {
   return (dispatch) => {
