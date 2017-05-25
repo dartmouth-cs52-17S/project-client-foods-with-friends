@@ -54,6 +54,17 @@ class MatchPage extends React.Component {
       isDateTimePicker1Visible: false,
       isDateTimePicker2Visible: false,
     };
+
+    this.onDate1Change = this.onDate1Change.bind(this);
+    this.onDate2Change = this.onDate1Change.bind(this);
+    this.matchButton = this.matchButton.bind(this);
+    this.validateDates = this.validateDates.bind(this);
+    this._showDateTimePicker1 = this._showDateTimePicker1.bind(this);
+    this._showDateTimePicker2 = this._showDateTimePicker2.bind(this);
+    this._hideDateTimePicker1 = this._hideDateTimePicker1.bind(this);
+    this._hideDateTimePicker2 = this._hideDateTimePicker2.bind(this);
+    this._handleDate1Picked = this._handleDate1Picked.bind(this);
+    this._handleDate2Picked = this._handleDate2Picked.bind(this);
   }
 
   onDate1Change(date1) {
@@ -77,6 +88,9 @@ class MatchPage extends React.Component {
   validateDates() {
     if (this.state.date2.isBefore(this.state.date1)) {
       AlertIOS.alert('That\'s not a valid meal time!');
+      return false;
+    } else {
+      return true;
     }
   }
 
