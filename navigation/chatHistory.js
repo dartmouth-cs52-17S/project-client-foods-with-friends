@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { NavigatorIOS } from 'react-native';
+import { NavigatorIOS, Image } from 'react-native';
 
 import ChatHistoryPage from '../containers/chatHistoryPage';
 
 class ChatHistory extends Component {
   static navigationOptions = {
     tabBarLabel: 'Chat',
+    tabBarIcon: ({ tintColor }) => (
+      <Image
+        source={require('../imgs/chat.png')}
+      />
+   ),
   };
   render() {
     return (

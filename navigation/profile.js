@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
-import { NavigatorIOS } from 'react-native';
+import { NavigatorIOS, Image } from 'react-native';
 
 import ProfilePage from '../containers/profilePage';
 
 class Profile extends Component {
   static navigationOptions = {
     tabBarLabel: 'Profile',
+    tabBarIcon: ({ tintColor }) => (
+      <Image
+        source={require('../imgs/profile.png')}
+      />
+   ),
   };
   render() {
     return (
