@@ -63,6 +63,7 @@ class MatchPage extends Component {
 
     this.onDate1Change = this.onDate1Change.bind(this);
     this.onDate2Change = this.onDate1Change.bind(this);
+    this.onTopicChange = this.onTopicChange.bind(this);
     this.matchButton = this.matchButton.bind(this);
     this.sendEndpoint = this.sendEndpoint.bind(this);
     this.validateDates = this.validateDates.bind(this);
