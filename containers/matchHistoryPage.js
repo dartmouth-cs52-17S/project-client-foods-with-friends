@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableHighlight, NavigatorIOS, ListView } from 'react-native';
 import youtubeSearch from '../components/youtube-api';
 import VideoDetail from '../components/matchProfile';
@@ -54,14 +55,15 @@ class MatchHistoryPage extends Component {
   }
 
   fetchData() {
-    youtubeSearch(this.state.query)
-         .then((responseData) => {
-           this.setState({
-             dataSource: this.state.dataSource.cloneWithRows(responseData),
-             isLoading: false,
-           });
-         })
-         .done();
+
+    // youtubeSearch(this.state.query)
+    //      .then((responseData) => {
+    //        this.setState({
+    //          dataSource: this.state.dataSource.cloneWithRows(responseData),
+    //          isLoading: false,
+    //        });
+    //      })
+    //      .done();
   }
   renderLoadingView() {
     return (
@@ -119,5 +121,17 @@ class MatchHistoryPage extends Component {
   }
 }
 
+const mapStateToProps = state => (
+  {
+    history: state.match.receivedHistory,
+  }
+);
 
-export default MatchHistoryPage;
+const mapDispatchToProps = dispatch => (
+  {
+    getMatchHistory: () => dispatch(getMatchHistory()),
+  }
+);
+
+export default (connect(mapStateToProps,
+  mapDispatchToProps)(MatchHistoryPage));

@@ -18,7 +18,7 @@ const MatchReducer = (state = initialState, action) => {
       });
     case ActionTypes.RECEIVE_HISTORY:
       return Object.assign({}, state, {
-        receivedMatch: action.payload.match,
+        receivedHistory: action.payload.history,
       });
     case ActionTypes.CLEAR_MATCH:
       return Object.assign({}, state, {

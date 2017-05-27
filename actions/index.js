@@ -107,7 +107,7 @@ export function getMatchHistory() {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.get(`${ROOT_URL}/getMatchHistory`, { headers: { Authorization: User } }).then((response) => {
-        dispatch({ type: ActionTypes.RECEIVE_MATCH, payload: { match: response.data } });
+        dispatch({ type: ActionTypes.RECEIVE_MATCH, payload: { history: response.data } });
         console.log(response.data);
       })
       .catch((error) => {
