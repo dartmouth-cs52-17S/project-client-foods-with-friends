@@ -3,6 +3,7 @@ import { ActionTypes } from '../actions';
 const initialState = {
   match: false,
   receivedMatch: null,
+  receivedHistory: null,
 };
 
 const MatchReducer = (state = initialState, action) => {
@@ -12,6 +13,10 @@ const MatchReducer = (state = initialState, action) => {
         match: true,
       });
     case ActionTypes.RECEIVE_MATCH:
+      return Object.assign({}, state, {
+        receivedMatch: action.payload.match,
+      });
+    case ActionTypes.RECEIVE_HISTORY:
       return Object.assign({}, state, {
         receivedMatch: action.payload.match,
       });

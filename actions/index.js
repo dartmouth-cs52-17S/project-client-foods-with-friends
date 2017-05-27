@@ -11,6 +11,7 @@ export const ActionTypes = {
   NEW_ACCOUNT: 'NEW_ACCOUNT',
   POST_MATCH: 'POST_MATCH',
   RECEIVE_MATCH: 'RECEIVE_MATCH',
+  RECEIVE_HISTORY: 'RECEIVE_HISTORY',
   CLEAR_MATCH: 'CLEAR_MATCH',
 };
 
@@ -105,11 +106,12 @@ export function getMatchHistory() {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
-      axios.get(`${ROOT_URL}/getMatchResult`, { headers: { Authorization: User } }).then((response) => {
+      axios.get(`${ROOT_URL}/getMatchHistory`, { headers: { Authorization: User } }).then((response) => {
+        dispatch({ type: ActionTypes.RECEIVE_MATCH, payload: { match: response.data } });
         console.log(response.data);
       })
       .catch((error) => {
-        console.log(`Error trying to receive match: ${error.response.data}`);
+        console.log(`Error trying to receive history: ${error.response.data}`);
       });
     });
   };
