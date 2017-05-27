@@ -10,6 +10,7 @@ export const ActionTypes = {
   CLEAR_ERROR: 'CLEAR_ERROR',
   NEW_ACCOUNT: 'NEW_ACCOUNT',
   POST_MATCH: 'POST_MATCH',
+  RECEIVE_MATCH: 'RECEIVE_MATCH',
 };
 
 
@@ -74,6 +75,24 @@ export function editInterests(interests) {
       })
       .catch((error) => {
         console.log(`Cannot update interests: ${error.response.data}`);
+      });
+    });
+  };
+}
+
+export function getMatchResult() {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.get(`${ROOT_URL}/getMatchResult`, { headers: { Authorization: User } }).then((response) => {
+        if (response.data.InstaMatchedWith !== '') {
+          dispatch({ type: ActionTypes.RECEIVE_MATCH, payload: { match: response.data.InstaMatchedWith } });
+        } else {
+          console.log(response.data.InstaMatchedWith);
+        }
+      })
+      .catch((error) => {
+        console.log(`Error trying to receive match: ${error.response.data}`);
       });
     });
   };

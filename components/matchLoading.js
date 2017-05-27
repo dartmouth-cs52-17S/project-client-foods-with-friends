@@ -1,9 +1,12 @@
 // loading screen that says "Finding your match..." when user presses Match me!
 // maybe include a spinny loady thing
 
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import MatchPage from '../containers/matchPage';
+
+import { getMatchResult } from '../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,23 +25,40 @@ const styles = StyleSheet.create({
   },
 });
 
-const matchLoading = (props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.description}>Finding your match... Check back shortly!</Text>
+class MatchLoading extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-      <TouchableHighlight onPress={() => {
-        props.navigator.push({
-          title: 'Match',
-          leftButtonTitle: ' ',
-          component: MatchPage,
-        });
-      }}
-      >
-        <Text style={styles.topicLabel}>OK!</Text>
-      </TouchableHighlight>
-    </View>
-  );
-};
+  componentDidMount() {
+    const timer = setInterval(this.props.getMatchResult, 10000);
+  }
 
-export default matchLoading;
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.description}>Finding your match... Check back shortly!</Text>
+
+        <TouchableHighlight onPress={() => {
+          this.props.navigator.push({
+            title: 'Match',
+            leftButtonTitle: ' ',
+            component: MatchPage,
+          });
+        }}
+        >
+          <Text style={styles.topicLabel}>OK!</Text>
+        </TouchableHighlight>
+      </View>
+    );
+  }
+}
+
+const mapDispatchToProps = dispatch => (
+  {
+    getMatchResult: () => dispatch(getMatchResult()),
+  }
+);
+
+export default (connect(null, mapDispatchToProps)(MatchLoading));
