@@ -75,6 +75,7 @@ class MatchHistoryPage extends Component {
 
   showVideoDetail(video) {
     this.props.navigator.push({
+      translucent: 'false',
       title: video.snippet.title,
       component: VideoDetail,
       passProps: { video },
