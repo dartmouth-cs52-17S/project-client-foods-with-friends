@@ -15,6 +15,10 @@ const MatchReducer = (state = initialState, action) => {
       return Object.assign({}, state, {
         receivedMatch: action.payload.match,
       });
+    case ActionTypes.CLEAR_MATCH:
+      return Object.assign({}, state, {
+        receivedMatch: null,
+      });
     default:
       return state;
   }

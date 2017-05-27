@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import MatchPage from '../containers/matchPage';
 
-import { getMatchResult } from '../actions';
+import { getMatchResult, clearMatch } from '../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,11 +28,17 @@ const styles = StyleSheet.create({
 class MatchLoading extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+
+    const timer = setInterval(this.props.getMatchResult, 10000);
+
+    this.state = { timerid: timer };
   }
 
   componentDidMount() {
-    const timer = setInterval(this.props.getMatchResult, 10000);
+    if (this.props.match !== null) {
+      clearInterval(this.state.timerid);
+      this.props.clearMatch();
+    }
   }
 
   render() {
@@ -55,10 +61,17 @@ class MatchLoading extends Component {
   }
 }
 
-const mapDispatchToProps = dispatch => (
+const mapStateToProps = state => (
   {
-    getMatchResult: () => dispatch(getMatchResult()),
+    match: state.match.receivedMatch,
   }
 );
 
-export default (connect(null, mapDispatchToProps)(MatchLoading));
+const mapDispatchToProps = dispatch => (
+  {
+    getMatchResult: () => dispatch(getMatchResult()),
+    clearMatch: () => dispatch(clearMatch()),
+  }
+);
+
+export default (connect(mapStateToProps, mapDispatchToProps)(MatchLoading));

@@ -11,6 +11,7 @@ export const ActionTypes = {
   NEW_ACCOUNT: 'NEW_ACCOUNT',
   POST_MATCH: 'POST_MATCH',
   RECEIVE_MATCH: 'RECEIVE_MATCH',
+  CLEAR_MATCH: 'CLEAR_MATCH',
 };
 
 
@@ -86,15 +87,22 @@ export function getMatchResult() {
       const User = result;
       axios.get(`${ROOT_URL}/getMatchResult`, { headers: { Authorization: User } }).then((response) => {
         if (response.data.InstaMatchedWith !== '') {
+          console.log('matched!');
           dispatch({ type: ActionTypes.RECEIVE_MATCH, payload: { match: response.data.InstaMatchedWith } });
         } else {
-          console.log(response.data.InstaMatchedWith);
+          console.log(`sad ${response.data.InstaMatchedWith}`);
         }
       })
       .catch((error) => {
         console.log(`Error trying to receive match: ${error.response.data}`);
       });
     });
+  };
+}
+
+export function clearMatchResult() {
+  return {
+    type: ActionTypes.CLEAR_MATCH,
   };
 }
 
