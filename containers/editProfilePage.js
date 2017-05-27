@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
 import MunchBuddyTabs from '../navigation/tab';
-import { goToSignin, editInterests } from '../actions';
+import ProfilePage from './profilePage';
+import { editInterests } from '../actions';
 
 const styles = StyleSheet.create({
   label: {
@@ -120,7 +121,10 @@ class EditProfile extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.addInterests(this.state.interests);
-    this.props.goToSignin();
+    this.props.navigator.push({
+      title: 'My Profile',
+      component: ProfilePage,
+    });
   }
 
   handleInterest(interest) {
@@ -160,7 +164,7 @@ class EditProfile extends Component {
   renderPage() {
     return (
       <View style={styles.container}>
-        <Text style={styles.label}>Choose some interests!</Text>
+        <Text style={styles.label}>Edit interests!</Text>
         {this.renderInterests()}
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
@@ -188,15 +192,12 @@ class EditProfile extends Component {
 
 const mapStateToProps = state => (
   {
-    error: state.auth.message,
-    auth: state.auth.authenticated,
-    page: state.auth.page,
+    user: state.auth.user,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    goToSignin: () => dispatch(goToSignin()),
     addInterests: interestList => dispatch(editInterests(interestList)),
   }
 );
