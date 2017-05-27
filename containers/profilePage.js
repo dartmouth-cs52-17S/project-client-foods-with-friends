@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { View, Image, TouchableHighlight, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
 
 import { signoutUser, clearError } from '../actions';
+import EditProfile from './editProfilePage';
 
 const styles = StyleSheet.create({
   body: {
@@ -53,12 +54,21 @@ class ProfilePage extends Component {
     this.state = {
     };
     this.onPressButton = this.onPressButton.bind(this);
+    this.edit = this.edit.bind(this);
   }
 
   onPressButton() {
     this.props.signoutUser();
     this.props.clearError();
   }
+
+  edit() {
+    this.props.navigator.push({
+      title: 'Edit Interests',
+      component: EditProfile,
+    });
+  }
+
   render() {
     return (
       <ScrollView>
@@ -69,6 +79,9 @@ class ProfilePage extends Component {
               source={{ uri: 'https://image.freepik.com/free-icon/business-person-silhouette-wearing-tie_318-49988.jpg' }}
             />
             <Text style={styles.username}>Users Name</Text>
+            <TouchableHighlight style={styles.button} onPress={this.edit}>
+              <Text>Edit</Text>
+            </TouchableHighlight>
             <Text style={styles.title}>Interests:</Text>
             <FlatList
               data={[{ title: 'Farming' }, { title: 'Dogs' }]}

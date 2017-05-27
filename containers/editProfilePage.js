@@ -7,7 +7,7 @@ import { goToSignin, editInterests } from '../actions';
 
 const styles = StyleSheet.create({
   label: {
-    marginTop: '30%',
+    marginTop: '10%',
     marginLeft: 20,
     marginRight: 20,
     textAlign: 'center',
@@ -88,7 +88,7 @@ const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
   'volunteering', 'education', 'finance', 'reading', 'nightlife', 'fitness', 'tech',
   'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues'];
 
-class ProfileAdd extends Component {
+class EditProfile extends Component {
 
   constructor(props) {
     super(props);
@@ -127,10 +127,8 @@ class ProfileAdd extends Component {
     if (this.state.interests.includes(interest)) {
       const newstate = [...this.state.interests];
       const index = newstate.indexOf(interest);
-      console.log(index);
       newstate.splice(index, 1);
       this.setState({ interests: newstate });
-      console.log(newstate);
     } else {
       this.setState({ interests: [...this.state.interests, interest] });
     }
@@ -160,31 +158,29 @@ class ProfileAdd extends Component {
   }
 
   renderPage() {
-    if (this.props.page) {
-      return (
-        <View style={styles.container}>
-          <Text style={styles.label}>Choose some interests!</Text>
-          {this.renderInterests()}
-          <View style={styles.buttonBox}>
-            <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
-              <Text style={styles.buttonText}> Ok! </Text>
-            </TouchableHighlight>
-          </View>
+    return (
+      <View style={styles.container}>
+        <Text style={styles.label}>Choose some interests!</Text>
+        {this.renderInterests()}
+        <View style={styles.buttonBox}>
+          <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
+            <Text style={styles.buttonText}> Ok! </Text>
+          </TouchableHighlight>
         </View>
-      );
-    } else {
-      return (
-        <View style={styles.container}>
-          <MunchBuddyTabs />
-        </View>
-      );
-    }
+      </View>
+    );
   }
 
   render(props) {
     return (
       <View style={styles.container}>
-        {this.renderPage()}
+        <Text style={styles.label}>Choose some interests!</Text>
+        {this.renderInterests()}
+        <View style={styles.buttonBox}>
+          <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
+            <Text style={styles.buttonText}> Ok! </Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
@@ -206,4 +202,4 @@ const mapDispatchToProps = dispatch => (
 );
 
 export default (connect(mapStateToProps,
-  mapDispatchToProps)(ProfileAdd));
+  mapDispatchToProps)(EditProfile));
