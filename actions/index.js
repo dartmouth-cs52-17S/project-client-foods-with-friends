@@ -101,6 +101,20 @@ export function getMatchResult() {
   };
 }
 
+export function getMatchHistory() {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.get(`${ROOT_URL}/getMatchResult`, { headers: { Authorization: User } }).then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(`Error trying to receive match: ${error.response.data}`);
+      });
+    });
+  };
+}
+
 export function clearMatchResult() {
   return {
     type: ActionTypes.CLEAR_MATCH,
