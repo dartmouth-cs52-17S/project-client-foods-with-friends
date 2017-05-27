@@ -12,6 +12,7 @@ export const ActionTypes = {
   POST_MATCH: 'POST_MATCH',
   RECEIVE_MATCH: 'RECEIVE_MATCH',
   CLEAR_MATCH: 'CLEAR_MATCH',
+  PULL_PROFILE: 'PULL_PROFILE',
 };
 
 
@@ -76,6 +77,21 @@ export function editInterests(interests) {
       })
       .catch((error) => {
         console.log(`Cannot update interests: ${error.response.data}`);
+      });
+    });
+  };
+}
+
+export function pullProfile() {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.get(`${ROOT_URL}/userprofile`, { headers: { Authorization: User } }).then((response) => {
+        console.log(response.data);
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
+      })
+      .catch((error) => {
+        console.log(`Cannot get profile: ${error.response.data}`);
       });
     });
   };
