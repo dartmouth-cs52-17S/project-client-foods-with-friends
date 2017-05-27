@@ -19,6 +19,7 @@ class Match extends Component {
         initialRoute={{
           component: MatchPage,
           title: 'Get Matched',
+          translucent: 'false',
         }}
         style={{ flex: 1 }}
       />

@@ -108,6 +108,7 @@ class MatchHistoryPage extends Component {
     return (
       <View style={{ marginBottom: 150 }}>
         <ListView
+          removeClippedSubviews={false}
           dataSource={this.state.dataSource}
           renderRow={this.renderVideo.bind(this)}
           style={styles.listView}

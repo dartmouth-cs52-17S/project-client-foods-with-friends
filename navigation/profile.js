@@ -19,6 +19,7 @@ class Profile extends Component {
         initialRoute={{
           component: ProfilePage,
           title: 'My Profile',
+          translucent: 'false',
         }}
         style={{ flex: 1, alignSelf: 'stretch' }}
       />
