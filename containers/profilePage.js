@@ -71,6 +71,7 @@ class ProfilePage extends Component {
   edit() {
     this.props.navigator.push({
       title: 'Edit Interests',
+      leftButtonTitle: ' ',
       component: EditProfile,
     });
   }

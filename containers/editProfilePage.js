@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
 import MunchBuddyTabs from '../navigation/tab';
 import ProfilePage from './profilePage';
-import { editInterests } from '../actions';
+import { editInterests, pullProfile } from '../actions';
 
 const styles = StyleSheet.create({
   label: {
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 
 const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
   'volunteering', 'education', 'finance', 'reading', 'nightlife', 'fitness', 'tech',
-  'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues'];
+  'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues', 'gaming'];
 
 class EditProfile extends Component {
 
@@ -96,34 +96,47 @@ class EditProfile extends Component {
     this.state = {
       email: '',
       password: '',
-      interests: [],
+      interests: this.props.user[0].interests,
     };
-    this.updateEmail = this.updateEmail.bind(this);
-    this.updatePassword = this.updatePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.renderPage = this.renderPage.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
     this.renderInterests = this.renderInterests.bind(this);
     this.handleInterest = this.handleInterest.bind(this);
-  }
-
-  updateEmail(text) {
-    this.setState({
-      email: text,
-    });
-  }
-
-  updatePassword(text) {
-    this.setState({
-      password: text,
-    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
     this.props.addInterests(this.state.interests);
-    this.props.navigator.push({
+    this.props.pullProfile();
+    this.props.navigator.pop({
       title: 'My Profile',
+      leftButtonTitle: ' ',
       component: ProfilePage,
+      rightButtonTitle: 'Edit',
+      onRightButtonPress: () => {
+        this.refs.nav.push({
+          title: 'Edit Interests',
+          leftButtonTitle: ' ',
+          component: EditProfile,
+        });
+      },
+    });
+  }
+
+  handleCancel(event) {
+    event.preventDefault();
+    this.props.navigator.pop({
+      title: 'My Profile',
+      leftButtonTitle: ' ',
+      component: ProfilePage,
+      rightButtonTitle: 'Edit',
+      onRightButtonPress: () => {
+        this.refs.nav.push({
+          title: 'Edit Interests',
+          leftButtonTitle: ' ',
+          component: EditProfile,
+        });
+      },
     });
   }
 
@@ -161,20 +174,6 @@ class EditProfile extends Component {
     );
   }
 
-  renderPage() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.label}>Edit interests!</Text>
-        {this.renderInterests()}
-        <View style={styles.buttonBox}>
-          <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
-            <Text style={styles.buttonText}> Ok! </Text>
-          </TouchableHighlight>
-        </View>
-      </View>
-    );
-  }
-
   render(props) {
     return (
       <View style={styles.container}>
@@ -183,6 +182,9 @@ class EditProfile extends Component {
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
             <Text style={styles.buttonText}> Ok! </Text>
+          </TouchableHighlight>
+          <TouchableHighlight style={styles.button} onPress={this.handleCancel}>
+            <Text style={styles.buttonText}> Cancel </Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -199,6 +201,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     addInterests: interestList => dispatch(editInterests(interestList)),
+    pullProfile: () => dispatch(pullProfile()),
   }
 );
 
