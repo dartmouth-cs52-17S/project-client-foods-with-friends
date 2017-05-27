@@ -45,7 +45,6 @@ class MatchLoading extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.description}>Finding your match... Check back shortly!</Text>
-
         <TouchableHighlight onPress={() => {
           this.props.navigator.push({
             title: 'Match',

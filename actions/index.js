@@ -86,6 +86,7 @@ export function getMatchResult() {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.get(`${ROOT_URL}/getMatchResult`, { headers: { Authorization: User } }).then((response) => {
+        console.log(response.data);
         if (response.data.InstaMatchedWith !== '') {
           console.log('matched!');
           dispatch({ type: ActionTypes.RECEIVE_MATCH, payload: { match: response.data.InstaMatchedWith } });
@@ -121,6 +122,7 @@ export function postMatch({ start_time, end_time, topic, loc }) {
       console.log(result);
       const User = result;
       axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { Authorization: User } }).then((response) => {
+        console.log(response.data);
         console.log('posted successfully to match request');
         dispatch({ type: ActionTypes.POST_MATCH });
       })
