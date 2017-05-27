@@ -107,7 +107,7 @@ class MatchHistoryPage extends Component {
       return this.renderLoadingView();
     }
     return (
-      <View style={{ marginBottom: 150 }}>
+      <View style={{ marginBottom: 60 }}>
         <ListView
           removeClippedSubviews={false}
           dataSource={this.state.dataSource}
