@@ -1,9 +1,12 @@
 // loading screen that says "Finding your match..." when user presses Match me!
 // maybe include a spinny loady thing
 
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import MatchPage from '../containers/matchPage';
+
+import { getMatchResult, clearMatch } from '../actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -22,23 +25,53 @@ const styles = StyleSheet.create({
   },
 });
 
-const matchLoading = (props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.description}>Finding your match... Check back shortly!</Text>
+class MatchLoading extends Component {
+  constructor(props) {
+    super(props);
 
-      <TouchableHighlight onPress={() => {
-        props.navigator.push({
-          title: 'Match',
-          leftButtonTitle: ' ',
-          component: MatchPage,
-        });
-      }}
-      >
-        <Text style={styles.topicLabel}>OK!</Text>
-      </TouchableHighlight>
-    </View>
-  );
-};
+    const timer = setInterval(this.props.getMatchResult, 10000);
 
-export default matchLoading;
+    this.state = { timerid: timer };
+  }
+
+  componentDidMount() {
+    if (this.props.match !== null) {
+      clearInterval(this.state.timerid);
+      this.props.clearMatch();
+    }
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.description}>Finding your match... Check back shortly!</Text>
+
+        <TouchableHighlight onPress={() => {
+          this.props.navigator.push({
+            title: 'Match',
+            leftButtonTitle: ' ',
+            component: MatchPage,
+          });
+        }}
+        >
+          <Text style={styles.topicLabel}>OK!</Text>
+        </TouchableHighlight>
+      </View>
+    );
+  }
+}
+
+const mapStateToProps = state => (
+  {
+    match: state.match.receivedMatch,
+  }
+);
+
+const mapDispatchToProps = dispatch => (
+  {
+    getMatchResult: () => dispatch(getMatchResult()),
+    clearMatch: () => dispatch(clearMatch()),
+  }
+);
+
+export default (connect(mapStateToProps, mapDispatchToProps)(MatchLoading));

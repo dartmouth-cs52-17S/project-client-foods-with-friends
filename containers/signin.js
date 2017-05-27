@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { StyleSheet, Text, TextInput, View, TouchableHighlight } from 'react-native';
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class SignIn extends React.Component {
+class SignIn extends Component {
 
   constructor(props) {
     super(props);
