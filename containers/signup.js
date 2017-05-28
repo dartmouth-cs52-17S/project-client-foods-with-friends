@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { StyleSheet, Text, TextInput, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, AlertIOS, Text, TextInput, View, TouchableHighlight } from 'react-native';
 
 import { signupUser, clearError, goToSignin } from '../actions';
 
@@ -20,11 +20,15 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
   },
+  font: {
+    fontFamily: 'Avenir Next',
+  },
   label: {
     marginTop: '50%',
     fontSize: 30,
     fontWeight: 'bold',
     marginBottom: 30,
+    fontFamily: 'Avenir Next',
   },
   container: {
     flex: 1,
@@ -52,7 +56,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    marginTop: -150,
     backgroundColor: '#519bdd',
     borderRadius: 5,
     borderWidth: 2,
@@ -73,7 +76,6 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
   },
   signin: {
-    marginTop: -100,
     alignSelf: 'center',
   },
   signinText: {
@@ -89,10 +91,12 @@ class SignUp extends Component {
       fullname: '',
       email: '',
       password: '',
+      retypePassword: ''
     };
     this.updateEmail = this.updateEmail.bind(this);
     this.updateFullname = this.updateFullname.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
+    this.updateRetypePassword = this.updateRetypePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSignin = this.handleSignin.bind(this);
@@ -117,15 +121,44 @@ class SignUp extends Component {
     });
   }
 
+  updateRetypePassword(text) {
+    this.setState({
+      retypePassword: text,
+    });
+  }
+
+  validateFields(){
+    const regexpNum = /\d+/;
+    const regExpChar = /@/;
+    if (this.state.password !== this.state.retypePassword) {
+      AlertIOS.alert("Passwords don\'t match! Try again. ");
+      return false;
+    }
+    // checks for any occurance of a number in user's name
+    if (this.state.fullname.match(regexpNum)) {
+      AlertIOS.alert("Your full name cannot contain numbers! Try again. ");
+      return false;
+    }
+    // checks if user's email address has a @ symbol
+     if (this.state.email.match(regExpChar) === null) {
+       AlertIOS.alert("You must input a valid email address. Try again!");
+       return false;
+     }
+    return true;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    const user = {
-      fullname: this.state.fullname,
-      email: this.state.email.toLowerCase(),
-      password: this.state.password,
-    };
-    this.props.signupUser(user);
-  }
+    if (this.validateFields()) {
+      const user = {
+        fullname: this.state.fullname,
+        email: this.state.email.toLowerCase(),
+        password: this.state.password,
+      };
+      this.props.signupUser(user);
+    }
+    }
+
 
   handleCancel(event) {
     event.preventDefault();
@@ -133,6 +166,7 @@ class SignUp extends Component {
       email: '',
       password: '',
       fullname: '',
+      retypePassword: '',
     });
   }
 
@@ -155,20 +189,21 @@ class SignUp extends Component {
         <View style={styles.error}>
           {this.renderError()}
         </View>
-        <Text style={styles.label}>Munch Buddy</Text>
+        <Text style={[styles.font, styles.label]}>Munch Buddy</Text>
         <View style={styles.inputs}>
-          <TextInput style={styles.TextInput} placeholder={'Full Name'} onChangeText={this.updateFullname} value={this.state.fullname} />
-          <TextInput style={styles.TextInput} placeholder={'Email'} autoCapitalize="none" onChangeText={this.updateEmail} value={this.state.email} />
-          <TextInput style={styles.TextInput} placeholder={'Password'} secureTextEntry onChangeText={this.updatePassword} value={this.state.password} />
+          <TextInput style={[styles.font, styles.TextInput]} placeholder={'Full Name'} onChangeText={this.updateFullname} value={this.state.fullname} />
+          <TextInput style={[styles.font, styles.TextInput]} placeholder={'Email'} autoCapitalize="none" onChangeText={this.updateEmail} value={this.state.email} />
+          <TextInput style={[styles.font, styles.TextInput]} placeholder={'Password'} secureTextEntry onChangeText={this.updatePassword} value={this.state.password} />
+            <TextInput style={[styles.font, styles.TextInput]} placeholder={'Retype Password'} secureTextEntry onChangeText={this.updateRetypePassword} value={this.state.retypePassword} />
         </View>
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
-            <Text style={styles.buttonText}> Sign Up </Text>
+            <Text style={[styles.font, styles.buttonText]}> Sign Up </Text>
           </TouchableHighlight>
         </View>
         <View style={styles.signinBox}>
           <TouchableHighlight style={styles.signin} onPress={this.handleSignin}>
-            <Text style={styles.signinText}> Already have an account? Sign in here </Text>
+            <Text style={[styles.signinText, styles.font]}> Already have an account? Sign in here </Text>
           </TouchableHighlight>
         </View>
       </View>
