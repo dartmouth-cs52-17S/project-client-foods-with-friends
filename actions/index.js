@@ -82,12 +82,25 @@ export function editInterests(interests) {
   };
 }
 
+export function editName(name) {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.put(`${ROOT_URL}/updatename`, { fullname: name }, { headers: { Authorization: User } }).then((response) => {
+        console.log('posted successfully to update name!');
+      })
+      .catch((error) => {
+        console.log(`Cannot update name: ${error.response.data}`);
+      });
+    });
+  };
+}
+
 export function pullProfile() {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.get(`${ROOT_URL}/userprofile`, { headers: { Authorization: User } }).then((response) => {
-        console.log(response.data);
         dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
       })
       .catch((error) => {
