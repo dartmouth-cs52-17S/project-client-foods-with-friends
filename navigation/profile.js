@@ -21,7 +21,7 @@ class Profile extends Component {
         initialRoute={{
           component: ProfilePage,
           title: 'My Profile',
-          translucent: 'false',
+          translucent: false,
           rightButtonTitle: 'Edit',
           onRightButtonPress: () => {
             this.refs.nav.push({

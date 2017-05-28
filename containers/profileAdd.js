@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 import MunchBuddyTabs from '../navigation/tab';
 import { goToSignin, editInterests } from '../actions';
@@ -11,9 +11,18 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     textAlign: 'center',
-    fontSize: 35,
-    fontWeight: 'bold',
-    marginBottom: 20,
+    fontSize: 30,
+    marginBottom: 8,
+    color: '#253e47',
+  },
+  explanation: {
+    marginTop: 0,
+    marginLeft: '10%',
+    marginRight: '10%',
+    textAlign: 'center',
+    fontSize: 17,
+    marginBottom: 22,
+    color: '#253e47',
   },
   container: {
     flex: 1,
@@ -30,21 +39,25 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   button: {
-    marginTop: -110,
-    backgroundColor: '#519bdd',
+    marginTop: -108,
+    backgroundColor: '#299aff',
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: '#519bdd',
+    borderColor: '#299aff',
     width: '80%',
     height: 45,
     alignSelf: 'center',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
+    shadowOpacity: 0.8,
   },
   buttonText: {
     fontSize: 20,
-    fontWeight: 'bold',
+    color: '#ffffff',
   },
   interests: {
     display: 'flex',
@@ -55,10 +68,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   checked: {
-    backgroundColor: '#219e27',
+    backgroundColor: '#06c010',
     borderWidth: 2,
     borderRadius: 6,
-    borderColor: '#219e27',
+    borderColor: '#06c010',
     height: 35,
     minWidth: 20,
     paddingLeft: 10,
@@ -67,12 +80,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 3,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 0.3,
+    shadowOpacity: 0.4,
   },
   unchecked: {
-    backgroundColor: '#a5a6a8',
+    backgroundColor: '#9299a3',
     borderWidth: 2,
     borderRadius: 6,
-    borderColor: '#a5a6a8',
+    borderColor: '#9299a3',
     height: 35,
     minWidth: 20,
     paddingLeft: 10,
@@ -81,6 +98,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 3,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 0.3,
+    shadowOpacity: 0.4,
+  },
+  interestText: {
+    color: '#ffffff',
   },
 });
 
@@ -140,15 +164,15 @@ class ProfileAdd extends Component {
     const interestItems = interests.map((interest) => {
       if (this.state.interests.includes(interest)) {
         return (
-          <TouchableHighlight style={styles.checked} key={interest} onPress={() => { this.handleInterest(interest); }}>
-            <Text>{interest}</Text>
-          </TouchableHighlight>
+          <TouchableOpacity style={styles.checked} key={interest} onPress={() => { this.handleInterest(interest); }}>
+            <Text style={styles.interestText}>{interest}</Text>
+          </TouchableOpacity>
         );
       } else {
         return (
-          <TouchableHighlight style={styles.unchecked} key={interest} onPress={() => { this.handleInterest(interest); }}>
-            <Text>{interest}</Text>
-          </TouchableHighlight>
+          <TouchableOpacity style={styles.unchecked} key={interest} onPress={() => { this.handleInterest(interest); }}>
+            <Text style={styles.interestText}>{interest}</Text>
+          </TouchableOpacity>
         );
       }
     });
@@ -163,12 +187,13 @@ class ProfileAdd extends Component {
     if (this.props.page) {
       return (
         <View style={styles.container}>
-          <Text style={styles.label}>Choose some interests!</Text>
+          <Text style={styles.label}>Add some interests!</Text>
+          <Text style={styles.explanation}>Your interests will appear on your profile for other MunchBuddies to see</Text>
           {this.renderInterests()}
           <View style={styles.buttonBox}>
-            <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
+            <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
               <Text style={styles.buttonText}> Ok! </Text>
-            </TouchableHighlight>
+            </TouchableOpacity>
           </View>
         </View>
       );
