@@ -1,9 +1,15 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import React, { Component } from 'react';
+
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    WebView,
+  } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 75,
     alignItems: 'center',
   },
   image: {
@@ -11,18 +17,28 @@ const styles = StyleSheet.create({
     height: 165,
     padding: 10,
   },
+  description: {
+    padding: 10,
+    fontSize: 15,
+    color: '#656565',
+  },
 });
 
-const MatchProfile = (props) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.description}>Finding your match... Check back shortly!</Text>
+class MatchProfile extends Component {
+  render() {
+    const video = this.props.video;
+    const description = video.snippet.description || '';
+    const vidId = video.id.videoId;
+    return (
+      <WebView
+        style={styles.frame}
+        source={{ uri: `https://www.youtube.com/watch?v=${vidId}` }}
+        renderLoading={this.renderLoading}
+        renderError={this.renderError}
+        automaticallyAdjustContentInsets={false}
+      />
+    );
+  }
+}
 
-      <TouchableHighlight onPress={this.beenMatchedButon}>
-        <Text style={styles.topicLabel}>OK!</Text>
-      </TouchableHighlight>
-    </View>
-  );
-};
-
-export default MatchProfile;
+module.exports = MatchProfile;

@@ -1,25 +1,41 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, FlatList, ScrollView, NavigatorIOS } from 'react-native';
-
+import { connect } from 'react-redux';
+import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableHighlight, NavigatorIOS, ListView } from 'react-native';
 import MatchProfile from '../components/matchProfile';
+import { getMatchHistory } from '../actions';
+
 
 const styles = StyleSheet.create({
-  body: {
+  container: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    backgroundColor: 'white',
+    padding: 10,
+  },
+  thumbnail: {
+    width: 80,
+    height: 80,
+    marginRight: 10,
+  },
+  rightContainer: {
     flex: 1,
   },
-  username: {
-    marginTop: 25,
-    fontSize: 30,
-    textAlign: 'center',
-    color: '#519bdd',
+  title: {
+    fontSize: 16,
     fontWeight: 'bold',
-    fontFamily: 'Avenir Next',
+    marginBottom: 3,
   },
-  text: {
-    textAlign: 'center',
-    marginTop: 7,
-    fontSize: 14,
-    fontFamily: 'Avenir Next',
+  subtitle: {
+    fontSize: 12,
+  },
+  separator: {
+    height: 1,
+    backgroundColor: '#dddddd',
+  },
+  listView: {
+    backgroundColor: 'white',
   },
 });
 
@@ -27,31 +43,88 @@ class MatchHistoryPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      query: 'cat',
+      isLoading: true,
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      }),
     };
   }
 
-  matchButton = () => {
-    console.log('matchButtonPressed!');
-    this.validateDates();
+  componentDidMount() {
+    this.props.getMatchHistory();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const history = nextProps.history;
+    console.log(`Component will receive: ${history}`);
+    console.log(history);
+    if (history) {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(history),
+      });
+    }
+  }
+
+  showProfileDetail(item) {
     this.props.navigator.push({
-      title: '!',
+      translucent: 'false',
+      title: '',
       component: MatchProfile,
+      passProps: { item },
     });
-  };
+  }
+
+  renderCell(item) {
+    console.log(this.props.history);
+    return (
+      <TouchableHighlight onPress={() => { this.showProfileDetail(item); }} underlayColor="#dddddd">
+        <View>
+          <View style={styles.container}>
+            <View style={styles.rightContainer}>
+              <Text style={styles.title}>{item.history[0].user}</Text>
+            </View>
+          </View>
+          <View style={styles.separator} />
+        </View>
+      </TouchableHighlight>
+    );
+  }
 
   render() {
-    return (
-      <ScrollView>
-        <View style={styles.body}>
-          <Text style={styles.username}>Match History</Text>
-          <FlatList
-            data={[{ title: 'June 21, 4:00pm' }, { title: 'June 22, 5:30pm' }]}
-            renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
+    console.log('pay attention this ME');
+    console.log(this.props.history);
+    console.log(this.state.dataSource);
+    if (this.props.history === null) {
+      return (
+        <View><Text>Hi</Text></View>
+      );
+    } else {
+      return (
+        <View style={{ marginBottom: 60 }}>
+          <ListView
+            removeClippedSubviews={false}
+            dataSource={this.state.dataSource}
+            renderRow={this.renderCell.bind(this)}
+            style={styles.listView}
           />
         </View>
-      </ScrollView>
-    );
+      );
+    }
   }
 }
 
-export default MatchHistoryPage;
+const mapStateToProps = state => (
+  {
+    history: state.match.receivedHistory,
+  }
+);
+
+// const mapDispatchToProps = dispatch => (
+//   {
+//     getMatchHistory: () => dispatch(getMatchHistory()),
+//   }
+// );
+
+export default (connect(mapStateToProps,
+  { getMatchHistory })(MatchHistoryPage));
