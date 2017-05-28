@@ -18,7 +18,7 @@ class MatchHistory extends Component {
         initialRoute={{
           component: MatchHistoryPage,
           title: 'Match History',
-          translucent: 'false',
+          translucent: false,
         }}
         style={{ flex: 1 }}
       />

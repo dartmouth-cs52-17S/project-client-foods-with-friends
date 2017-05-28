@@ -22,11 +22,10 @@ import { postMatch } from '../actions';
 const styles = StyleSheet.create({
   title: {
     marginTop: 30,
-    fontSize: 30,
+    fontSize: 20,
     textAlign: 'center',
   },
   dateLabel: {
-    marginTop: 25,
     fontSize: 20,
     textAlign: 'center',
   },
@@ -46,6 +45,20 @@ const styles = StyleSheet.create({
     padding: 4,
     marginBottom: 4,
     marginTop: 15,
+  },
+  timeButton: {
+    marginTop: 15,
+    marginBottom: 10,
+    alignSelf: 'center',
+    backgroundColor: '#519bdd',
+    width: 120,
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#519bdd',
+    borderRadius: 5,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
@@ -166,19 +179,17 @@ class MatchPage extends Component {
     return (
       <ScrollView>
         <View>
-          <Text style={styles.title}>Pick a time:</Text>
+          <Text style={styles.title}>Pick your ideal start time:</Text>
 
-          <TouchableOpacity onPress={this._showDateTimePicker1}>
-            <Text style={styles.topicLabel}>START TIME</Text>
+          <TouchableOpacity style={styles.timeButton} onPress={this._showDateTimePicker1}>
+            <Text style={styles.dateLabel}>{this.state.date1.format('hh:mm A').toString()}</Text>
           </TouchableOpacity>
 
-          <Text style={styles.dateLabel}>{this.state.date1.format('hh:mm A').toString()}</Text>
+          <Text style={styles.title}>Pick the latest time you can start:</Text>
 
-          <TouchableOpacity onPress={this._showDateTimePicker2}>
-            <Text style={styles.topicLabel}>END TIME</Text>
+          <TouchableOpacity style={styles.timeButton} onPress={this._showDateTimePicker2}>
+            <Text style={styles.dateLabel}>{this.state.date2.format('hh:mm A').toString()}</Text>
           </TouchableOpacity>
-
-          <Text style={styles.dateLabel}>{this.state.date2.format('hh:mm A').toString()}</Text>
 
           <DateTimePicker
             isVisible={this.state.isDateTimePicker1Visible}
