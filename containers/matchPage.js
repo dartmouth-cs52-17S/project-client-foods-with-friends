@@ -22,7 +22,15 @@ import { postMatch } from '../actions';
 const styles = StyleSheet.create({
   title: {
     marginTop: 25,
+    fontSize: 35,
+    textAlign: 'center',
+    color: '#253e47',
+  },
+  instructions: {
+    marginTop: 20,
     fontSize: 20,
+    marginLeft: '10%',
+    marginRight: '10%',
     textAlign: 'center',
     color: '#253e47',
   },
@@ -30,6 +38,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     color: '#ffffff',
+  },
+  times: {
+    marginTop: 10,
+    alignSelf: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  to: {
+    marginTop: 15,
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#253e47',
   },
   topic: {
     borderWidth: 0.5,
@@ -47,6 +68,8 @@ const styles = StyleSheet.create({
   },
   timeButton: {
     marginTop: 15,
+    marginRight: 15,
+    marginLeft: 15,
     alignSelf: 'center',
     backgroundColor: '#53c5bb',
     width: 120,
@@ -66,11 +89,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 10,
     alignSelf: 'center',
-    backgroundColor: '#299aff',
+    backgroundColor: '#3694e9',
     width: 120,
     height: 50,
     borderWidth: 2,
-    borderColor: '#299aff',
+    borderColor: '#3694e9',
     borderRadius: 5,
     display: 'flex',
     alignItems: 'center',
@@ -81,7 +104,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.8,
   },
   image: {
-    marginTop: 25,
+    marginTop: 30,
+    marginBottom: 10,
     alignSelf: 'center',
     display: 'flex',
     flexDirection: 'row',
@@ -212,17 +236,18 @@ class MatchPage extends Component {
     return (
       <ScrollView>
         <View>
-          <Text style={styles.title}>Pick your ideal start time:</Text>
+          <Text style={styles.title}>Grab a munch!</Text>
+          <Text style={styles.instructions}>Choose a time range in which you wish to begin your meal:</Text>
 
-          <TouchableOpacity style={styles.timeButton} onPress={this._showDateTimePicker1}>
-            <Text style={styles.dateLabel}>{this.state.date1.format('hh:mm A').toString()}</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.title}>Pick the latest time you can start:</Text>
-
-          <TouchableOpacity style={styles.timeButton} onPress={this._showDateTimePicker2}>
-            <Text style={styles.dateLabel}>{this.state.date2.format('hh:mm A').toString()}</Text>
-          </TouchableOpacity>
+          <View style={styles.times}>
+            <TouchableOpacity style={styles.timeButton} onPress={this._showDateTimePicker1}>
+              <Text style={styles.dateLabel}>{this.state.date1.format('hh:mm A').toString()}</Text>
+            </TouchableOpacity>
+            <Text style={styles.to}>to</Text>
+            <TouchableOpacity style={styles.timeButton} onPress={this._showDateTimePicker2}>
+              <Text style={styles.dateLabel}>{this.state.date2.format('hh:mm A').toString()}</Text>
+            </TouchableOpacity>
+          </View>
 
           <DateTimePicker
             isVisible={this.state.isDateTimePicker1Visible}
@@ -252,7 +277,7 @@ class MatchPage extends Component {
               source={require('../imgs/muffin2.png')}
             />
           </View>
-          <Text style={styles.title}>Pick a conversation topic:</Text>
+          <Text style={styles.instructions}>Choose a conversation topic:</Text>
           <TextInput
             placeholder="Enter topic"
             style={styles.topic}
