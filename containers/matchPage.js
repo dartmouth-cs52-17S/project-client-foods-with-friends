@@ -66,7 +66,7 @@ class MatchPage extends Component {
     this.onTopicChange = this.onTopicChange.bind(this);
     this.matchButton = this.matchButton.bind(this);
     this.sendEndpoint = this.sendEndpoint.bind(this);
-    this.validateDates = this.validateDates.bind(this);
+    this.validateInputs = this.validateInputs.bind(this);
     this._showDateTimePicker1 = this._showDateTimePicker1.bind(this);
     this._showDateTimePicker2 = this._showDateTimePicker2.bind(this);
     this._hideDateTimePicker1 = this._hideDateTimePicker1.bind(this);
@@ -101,28 +101,10 @@ class MatchPage extends Component {
     });
   }
 
-/*
   matchButton() {
-    if (this.validateDates()) {
-      this.getPosition()
-      .then((response) => {
-        this.sendEndpoint();
-      });
-      this.props.navigator.push({
-        title: 'Match Me!',
-        leftButtonTitle: ' ',
-        component: MatchLoading,
-      });
-    }
-  }
-  */
-  matchButton() {
-    if (this.validateDates()) {
+    if (this.validateInputs()) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          console.log('position:');
-          console.log(position);
-          console.log(position.coords);
           this.sendEndpoint([position.coords.latitude, position.coords.longitude]);
         });
       this.props.navigator.push({
@@ -133,24 +115,6 @@ class MatchPage extends Component {
     }
   }
 
-/*
-  sendEndpoint() {
-    /*
-    Need:
-    start time in ISO 8601 "start_time"
-    end time in ISO 8601 "end_time"
-    geolocation called "loc"
-    conversation topic "topic"
-    */
-    /*
-    const matchInfo = {
-      start_time: this.state.date1.toISOString(),
-      end_time: this.state.date2.toISOString(),
-      topic: this.state.topic,
-      loc: this.state.position,
-    };
-    this.props.postMatch(matchInfo);
-  } */
   sendEndpoint(location) {
     const matchInfo = {
       start_time: this.state.date1.toISOString(),
@@ -161,11 +125,15 @@ class MatchPage extends Component {
     this.props.postMatch(matchInfo);
   }
 
-  validateDates() {
+  validateInputs() {
     if (this.state.date2.isBefore(this.state.date1)) {
       AlertIOS.alert('That\'s not a valid meal time!');
       return false;
     } else {
+      if (this.state.topic === '') {
+        AlertIOS.alert('Please enter a conversation topic!');
+        return false;
+      }
       return true;
     }
   }
