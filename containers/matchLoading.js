@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
       width: 0,
       height: 1
     },
+    shadowRadius: 1,
+    shadowOpacity: 1.0,
   },
 buttonText: {
   fontSize: 20,
