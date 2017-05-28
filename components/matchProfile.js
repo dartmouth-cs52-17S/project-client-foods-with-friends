@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import YouTube from 'react-native-youtube';
 
 import {
     StyleSheet,
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
   },
 });
 
-class VideoDetail extends Component {
+class MatchProfile extends Component {
   render() {
     const video = this.props.video;
     const description = video.snippet.description || '';
@@ -42,4 +41,4 @@ class VideoDetail extends Component {
   }
 }
 
-module.exports = VideoDetail;
+module.exports = MatchProfile;
