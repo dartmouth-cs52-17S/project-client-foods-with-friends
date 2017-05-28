@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Image, TouchableHighlight, StyleSheet, Text, FlatList } from 'react-native';
 
-import Match from '../containers/match';
+import Match from '../containers/matchPage';
 
 const styles = StyleSheet.create({
   image: {

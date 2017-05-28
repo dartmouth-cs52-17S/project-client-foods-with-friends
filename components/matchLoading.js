@@ -7,6 +7,7 @@ import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import MatchPage from '../containers/matchPage';
 
 import { getMatchResult, clearMatch } from '../actions';
+import BeenMatched from '../components/beenMatched';
 
 const styles = StyleSheet.create({
   container: {
@@ -42,6 +43,9 @@ class MatchLoading extends Component {
   }
 
   render() {
+    if (this.props.match !== null) {
+      return <BeenMatched />;
+    }
     return (
       <View style={styles.container}>
         <Text style={styles.description}>Finding your match... Check back shortly!</Text>

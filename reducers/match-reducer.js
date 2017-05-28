@@ -2,7 +2,7 @@ import { ActionTypes } from '../actions';
 
 const initialState = {
   match: false,
-  receivedMatch: null,
+  receivedMatch: true,
 };
 
 const MatchReducer = (state = initialState, action) => {
