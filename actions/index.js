@@ -2,7 +2,6 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
 const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
-// const ROOT_URL = 'http://localhost:9090/api';
 
 export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
@@ -14,6 +13,7 @@ export const ActionTypes = {
   RECEIVE_MATCH: 'RECEIVE_MATCH',
   RECEIVE_HISTORY: 'RECEIVE_HISTORY',
   CLEAR_MATCH: 'CLEAR_MATCH',
+  PULL_PROFILE: 'PULL_PROFILE',
 };
 
 
@@ -74,10 +74,39 @@ export function editInterests(interests) {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.put(`${ROOT_URL}/interests`, { interests }, { headers: { Authorization: User } }).then((response) => {
-        console.log('posted successfully to update interests!');
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
       })
       .catch((error) => {
         console.log(`Cannot update interests: ${error.response.data}`);
+      });
+    });
+  };
+}
+
+export function editName(name) {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.put(`${ROOT_URL}/updatename`, { fullname: name }, { headers: { Authorization: User } }).then((response) => {
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
+        console.log('posted successfully to update name!');
+      })
+      .catch((error) => {
+        console.log(`Cannot update name: ${error.response.data}`);
+      });
+    });
+  };
+}
+
+export function pullProfile() {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.get(`${ROOT_URL}/userprofile`, { headers: { Authorization: User } }).then((response) => {
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data[0] } });
+      })
+      .catch((error) => {
+        console.log(`Cannot get profile: ${error.response.data}`);
       });
     });
   };
@@ -88,7 +117,6 @@ export function getMatchResult() {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.get(`${ROOT_URL}/getMatchResult`, { headers: { Authorization: User } }).then((response) => {
-        console.log(response.data);
         if (response.data.InstaMatchedWith !== '') {
           console.log('matched!');
           dispatch({ type: ActionTypes.RECEIVE_MATCH, payload: { match: response.data.InstaMatchedWith } });
@@ -134,16 +162,14 @@ export function postMatch({ start_time, end_time, topic, loc }) {
     end_time,
   };
   return (dispatch) => {
-    console.log(toPost);
+    console.log('beginning of dispatch');
     AsyncStorage.getItem('token').then((result) => {
       console.log('in getItem somewhere?');
       console.log(result);
       const User = result;
       axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { Authorization: User } }).then((response) => {
-        console.log(response.data);
         console.log('posted successfully to match request');
         dispatch({ type: ActionTypes.POST_MATCH });
-        // dispatch postMatch here
       })
       .catch((error) => {
         console.log(`cannot postMatch: ${error.response.data}`);
