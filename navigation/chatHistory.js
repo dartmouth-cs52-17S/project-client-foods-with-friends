@@ -18,6 +18,7 @@ class ChatHistory extends Component {
         initialRoute={{
           component: ChatHistoryPage,
           title: 'Chat',
+          translucent: 'false',
         }}
         style={{ flex: 1 }}
       />
