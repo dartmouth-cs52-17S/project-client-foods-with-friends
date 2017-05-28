@@ -80,6 +80,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000000',
+   shadowOffset: {
+     width: 0,
+     height: 1
+   },
+   shadowRadius: 1,
+   shadowOpacity: 1.0
   },
   buttonText: {
     fontSize: 20,
@@ -236,7 +243,7 @@ class SignUp extends Component {
         </View>
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
-            <Text style={[styles.font, styles.buttonText]}> Sign Up </Text>
+            <Text style={[styles.font, styles.buttonText]}> Sign Up! </Text>
           </TouchableHighlight>
         </View>
         <View style={styles.signinBox}>
