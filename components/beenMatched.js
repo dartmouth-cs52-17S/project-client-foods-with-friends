@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { View, Image, TouchableHighlight, StyleSheet, Text, FlatList } from 'react-native';
+import { View, NavigatorIOS, Image, Button, StyleSheet, Text, FlatList } from 'react-native';
 
-import Match from '../containers/matchPage';
+import Chat from '../containers/chatHistoryPage';
+import ChatHistory from '../navigation/chatHistory';
 
 const styles = StyleSheet.create({
   image: {
@@ -44,13 +45,14 @@ class BeenMatched extends Component {
     super(props);
     this.state = {
     };
-    this.onPressButton = this.onPressButton.bind(this);
+    this.beenMatchedButton = this.beenMatchedButton.bind(this);
   }
 
-  onPressButton() {
+
+  beenMatchedButton() {
+    console.log('beenMatchedButton Pressed!');
     this.props.navigator.push({
-      title: 'PROFILE',
-      component: Match,
+      title: 'CHAT',
       passProps: { },
     });
   }
@@ -69,9 +71,10 @@ class BeenMatched extends Component {
           renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
         />
 
-        <TouchableHighlight onPress={this.beenMatchedButon}>
-          <Text style={styles.topicLabel}>GO TO CHAT!</Text>
-        </TouchableHighlight>
+        <Button
+          title="GO TO CHAT!"
+          onPress={this.beenMatchedButton}
+        />
       </View>
     );
   }
