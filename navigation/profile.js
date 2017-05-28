@@ -7,11 +7,11 @@ import EditProfile from '../containers/editProfilePage';
 class Profile extends Component {
   static navigationOptions = {
     tabBarLabel: 'Profile',
-  //   tabBarIcon: ({ tintColor }) => (
-  //     <Image
-  //       source={require('../imgs/profile.png')}
-  //     />
-  //  ),
+    tabBarIcon: ({ tintColor }) => (
+      <Image
+        source={require('../imgs/avatar.png')}
+      />
+   ),
   };
   render() {
     return (

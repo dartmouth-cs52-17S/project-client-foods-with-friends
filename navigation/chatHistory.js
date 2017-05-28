@@ -6,11 +6,11 @@ import ChatHistoryPage from '../containers/chatHistoryPage';
 class ChatHistory extends Component {
   static navigationOptions = {
     tabBarLabel: 'Chat',
-  //   tabBarIcon: ({ tintColor }) => (
-  //     <Image
-  //       source={require('../imgs/chat.png')}
-  //     />
-  //  ),
+    tabBarIcon: ({ tintColor }) => (
+      <Image
+        source={require('../imgs/speech-bubble.png')}
+      />
+   ),
   };
   render() {
     return (

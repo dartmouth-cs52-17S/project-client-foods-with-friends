@@ -38,14 +38,11 @@ class MatchLoading extends Component {
       <View style={styles.container}>
         <Text style={styles.description}>Finding your match... Check back shortly!</Text>
         <TouchableHighlight onPress={() => {
-          this.props.navigator.push({
-            title: 'Match',
-            leftButtonTitle: ' ',
-            component: MatchPage,
-          });
+          this.props.navigator.pop();
+          // remove match request action
         }}
         >
-          <Text style={styles.topicLabel}>OK!</Text>
+          <Text style={styles.topicLabel}>Cancel</Text>
         </TouchableHighlight>
       </View>
     );

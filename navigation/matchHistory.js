@@ -5,12 +5,12 @@ import MatchHistoryPage from '../containers/matchHistoryPage';
 
 class MatchHistory extends Component {
   static navigationOptions = {
-    tabBarLabel: 'Match History',
-  //   tabBarIcon: ({ tintColor }) => (
-  //     <Image
-  //       source={require('../imgs/match-history.png')}
-  //     />
-  //  ),
+    tabBarLabel: 'My Matches',
+    tabBarIcon: ({ tintColor }) => (
+      <Image
+        source={require('../imgs/list-menu.png')}
+      />
+   ),
   };
   render() {
     return (
