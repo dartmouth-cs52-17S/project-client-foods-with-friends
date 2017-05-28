@@ -57,7 +57,6 @@ class MatchHistoryPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     const history = nextProps.history;
-    console.log(`Component will receive: ${history}`);
     console.log(history);
     if (history) {
       this.setState({
@@ -92,9 +91,6 @@ class MatchHistoryPage extends Component {
   }
 
   render() {
-    console.log('pay attention this ME');
-    console.log(this.props.history);
-    console.log(this.state.dataSource);
     if (this.props.history === null) {
       return (
         <View><Text>Hi</Text></View>

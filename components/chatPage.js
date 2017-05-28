@@ -27,7 +27,6 @@ const ChatPage = (props) => {
   return (
     <View>
       <Text>Hi</Text>
-
     </View>
   );
 };
