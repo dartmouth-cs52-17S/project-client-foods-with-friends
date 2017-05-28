@@ -5,7 +5,6 @@ import {
     Text,
     View,
     Image,
-    WebView,
   } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -24,21 +23,13 @@ const styles = StyleSheet.create({
   },
 });
 
-class MatchProfile extends Component {
-  render() {
-    const video = this.props.video;
-    const description = video.snippet.description || '';
-    const vidId = video.id.videoId;
-    return (
-      <WebView
-        style={styles.frame}
-        source={{ uri: `https://www.youtube.com/watch?v=${vidId}` }}
-        renderLoading={this.renderLoading}
-        renderError={this.renderError}
-        automaticallyAdjustContentInsets={false}
-      />
-    );
-  }
-}
+const MatchProfile = (props) => {
+  return (
+    <View>
+      <Text>Hi</Text>
+
+    </View>
+  );
+};
 
 module.exports = MatchProfile;

@@ -16,7 +16,7 @@ import {
 
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
-import MatchLoading from '../components/matchLoading';
+import MatchLoading from './matchLoading';
 import { postMatch } from '../actions';
 
 const styles = StyleSheet.create({
