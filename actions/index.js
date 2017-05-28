@@ -73,7 +73,7 @@ export function editInterests(interests) {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.put(`${ROOT_URL}/interests`, { interests }, { headers: { Authorization: User } }).then((response) => {
-        console.log('posted successfully to update interests!');
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
       })
       .catch((error) => {
         console.log(`Cannot update interests: ${error.response.data}`);
@@ -87,6 +87,7 @@ export function editName(name) {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.put(`${ROOT_URL}/updatename`, { fullname: name }, { headers: { Authorization: User } }).then((response) => {
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
         console.log('posted successfully to update name!');
       })
       .catch((error) => {

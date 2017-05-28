@@ -124,7 +124,6 @@ class EditProfile extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.addInterests(this.state.interests);
-    this.props.pullProfile();
     this.props.editName(this.state.name);
     this.props.navigator.pop({
       title: 'My Profile',

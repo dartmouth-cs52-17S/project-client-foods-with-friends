@@ -59,10 +59,7 @@ class ProfilePage extends Component {
   constructor(props) {
     super(props);
 
-    const pull = setInterval(this.props.pullProfile, 5000);
-
-    this.state = {
-    };
+    this.state = {};
 
     this.onPressButton = this.onPressButton.bind(this);
     this.edit = this.edit.bind(this);
@@ -72,10 +69,10 @@ class ProfilePage extends Component {
   componentDidMount() {
     this.props.pullProfile();
   }
-
-  componentWillUnmount() {
-    clearInterval(this.pull);
-  }
+  //
+  // componentWillUnmount() {
+  //   clearInterval(this.pull);
+  // }
 
   onPressButton() {
     this.props.signoutUser();
