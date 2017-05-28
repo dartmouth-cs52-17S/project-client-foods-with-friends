@@ -7,9 +7,9 @@ import {
   Text,
   TextInput,
   View,
-  Button,
   ScrollView,
   TouchableOpacity,
+  Image,
   NavigatorIOS,
   AlertIOS,
 } from 'react-native';
@@ -21,44 +21,77 @@ import { postMatch } from '../actions';
 
 const styles = StyleSheet.create({
   title: {
-    marginTop: 30,
+    marginTop: 25,
     fontSize: 20,
     textAlign: 'center',
+    color: '#253e47',
   },
   dateLabel: {
     fontSize: 20,
     textAlign: 'center',
-  },
-  topicLabel: {
-    marginTop: 25,
-    fontSize: 15,
-    textAlign: 'center',
+    color: '#ffffff',
   },
   topic: {
     borderWidth: 0.5,
-    borderRadius: 4,
+    borderRadius: 8,
     borderColor: '#0f0f0f',
+    color: '#253a41',
     flex: 1,
-    marginLeft: 50,
-    marginRight: 50,
+    marginLeft: '13%',
+    marginRight: '13%',
     height: 50,
-    padding: 4,
-    marginBottom: 4,
+    paddingLeft: 10,
+    marginBottom: 10,
     marginTop: 15,
+    fontSize: 25,
   },
   timeButton: {
     marginTop: 15,
-    marginBottom: 10,
     alignSelf: 'center',
-    backgroundColor: '#519bdd',
+    backgroundColor: '#53c5bb',
     width: 120,
     height: 50,
     borderWidth: 2,
-    borderColor: '#519bdd',
+    borderColor: '#53c5bb',
     borderRadius: 5,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
+    shadowOpacity: 0.8,
+  },
+  matchButton: {
+    marginTop: 20,
+    marginBottom: 10,
+    alignSelf: 'center',
+    backgroundColor: '#299aff',
+    width: 120,
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#299aff',
+    borderRadius: 5,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
+    shadowOpacity: 0.8,
+  },
+  image: {
+    marginTop: 25,
+    alignSelf: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  sideIcon: {
+    width: 40,
+    height: 40,
+    marginLeft: 20,
+    marginRight: 20,
   },
 });
 
@@ -206,17 +239,28 @@ class MatchPage extends Component {
             mode={'time'}
             titleIOS={'Pick an end time'}
           />
-
-          <Text style={styles.topicLabel}>Pick a conversation topic:</Text>
+          <View style={styles.image}>
+            <Image
+              style={styles.sideIcon}
+              source={require('../imgs/muffin.png')}
+            />
+            <Image
+              source={require('../imgs/cupcake.png')}
+            />
+            <Image
+              style={styles.sideIcon}
+              source={require('../imgs/muffin2.png')}
+            />
+          </View>
+          <Text style={styles.title}>Pick a conversation topic:</Text>
           <TextInput
             placeholder="Enter topic"
             style={styles.topic}
             onChange={this.onTopicChange}
           />
-          <Button
-            title="Match Me!"
-            onPress={this.matchButton}
-          />
+          <TouchableOpacity style={styles.matchButton} onPress={this.matchButton}>
+            <Text style={styles.dateLabel}>Match Me!</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );
