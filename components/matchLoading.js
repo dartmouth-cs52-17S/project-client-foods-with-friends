@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import MatchPage from '../containers/matchPage';
 
-import { getMatchResult, clearMatch } from '../actions';
+import { getMatchResult, clearMatchResult } from '../actions';
 import BeenMatched from '../components/beenMatched';
 
 const styles = StyleSheet.create({
@@ -38,11 +38,13 @@ class MatchLoading extends Component {
   componentDidMount() {
     if (this.props.match !== null) {
       clearInterval(this.state.timerid);
-      this.props.clearMatch();
+      this.props.clearMatchResult();
     }
   }
 
   render() {
+    console.log('state of this.props.match:');
+    console.log(this.props.match);
     if (this.props.match !== null) {
       return <BeenMatched />;
     }
@@ -74,7 +76,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     getMatchResult: () => dispatch(getMatchResult()),
-    clearMatch: () => dispatch(clearMatch()),
+    clearMatchResult: () => dispatch(clearMatchResult()),
   }
 );
 

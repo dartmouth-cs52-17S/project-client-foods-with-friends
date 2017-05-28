@@ -94,7 +94,7 @@ export function getMatchResult() {
         }
       })
       .catch((error) => {
-        console.log(`Error trying to receive match: ${error.response.data}`);
+        console.log(`Error trying to receive match: ${error}`);
       });
     });
   };
@@ -130,30 +130,6 @@ export function postMatch({ start_time, end_time, topic, loc }) {
     });
   };
 }
-/*
-export function postMatch({ start_time, end_time, topic, loc }) {
-  console.log('in postMatch function');
-  const toPost = {
-    start_time,
-    end_time,
-    topic,
-    loc,
-  };
-  return (dispatch) => {
-    console.log('beginning of dispatch');
-       axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { authorization: AsyncStorage.getItem('token') } }).then((response) => {
-        console.log('posted successfully to match request');
-        dispatch({ type: ActionTypes.POST_MATCH });
-      })
-      .catch((error) => {
-        console.log('error');
-        console.log(error);
-        dispatch(authError(`cannot postMatch: ${error.response.data}`));
-      });
-    });
-  };
-}
-*/
 
 
 export function signoutUser() {
