@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
+// const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
+const ROOT_URL = 'http://localhost:9090/api';
 
 export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
@@ -133,7 +134,7 @@ export function postMatch({ start_time, end_time, topic, loc }) {
     end_time,
   };
   return (dispatch) => {
-    console.log('beginning of dispatch');
+    console.log(toPost);
     AsyncStorage.getItem('token').then((result) => {
       console.log('in getItem somewhere?');
       console.log(result);

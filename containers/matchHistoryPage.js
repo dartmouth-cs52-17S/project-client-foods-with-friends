@@ -52,21 +52,18 @@ class MatchHistoryPage extends Component {
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.props.getMatchHistory();
   }
 
-  fetchData() {
-    const data = this.props.goToSignin();
-    this.setState({
-      dataSource: this.state.dataSource.cloneWithRows(data),
-    });
-    // getMatchHistory.then((responseData) => {
-    //   this.setState({
-    //     dataSource: this.state.dataSource.cloneWithRows(responseData),
-    //     isLoading: false,
-    //   });
-    // })
-    // .done();
+  componentWillReceiveProps(nextProps) {
+    const history = nextProps.history;
+    console.log(`Component will receive: ${history}`);
+    console.log(history);
+    if (history) {
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(history),
+      });
+    }
   }
 
   showProfileDetail(item) {
@@ -102,17 +99,18 @@ class MatchHistoryPage extends Component {
       return (
         <View><Text>Hi</Text></View>
       );
+    } else {
+      return (
+        <View style={{ marginBottom: 60 }}>
+          <ListView
+            removeClippedSubviews={false}
+            dataSource={this.state.dataSource}
+            renderRow={this.renderCell.bind(this)}
+            style={styles.listView}
+          />
+        </View>
+      );
     }
-    return (
-      <View style={{ marginBottom: 60 }}>
-        <ListView
-          removeClippedSubviews={false}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderCell.bind(this)}
-          style={styles.listView}
-        />
-      </View>
-    );
   }
 }
 
@@ -122,11 +120,11 @@ const mapStateToProps = state => (
   }
 );
 
-const mapDispatchToProps = dispatch => (
-  {
-    getMatchHistory: () => dispatch(getMatchHistory()),
-  }
-);
+// const mapDispatchToProps = dispatch => (
+//   {
+//     getMatchHistory: () => dispatch(getMatchHistory()),
+//   }
+// );
 
 export default (connect(mapStateToProps,
-  mapDispatchToProps)(MatchHistoryPage));
+  { getMatchHistory })(MatchHistoryPage));
