@@ -11,6 +11,7 @@ export const ActionTypes = {
   NEW_ACCOUNT: 'NEW_ACCOUNT',
   POST_MATCH: 'POST_MATCH',
   RECEIVE_MATCH: 'RECEIVE_MATCH',
+  RECEIVE_HISTORY: 'RECEIVE_HISTORY',
   CLEAR_MATCH: 'CLEAR_MATCH',
   PULL_PROFILE: 'PULL_PROFILE',
 };
@@ -102,7 +103,7 @@ export function pullProfile() {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.get(`${ROOT_URL}/userprofile`, { headers: { Authorization: User } }).then((response) => {
-        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data[0] } });
       })
       .catch((error) => {
         console.log(`Cannot get profile: ${error.response.data}`);
@@ -125,6 +126,22 @@ export function getMatchResult() {
       })
       .catch((error) => {
         console.log(`Error trying to receive match: ${error}`);
+      });
+    });
+  };
+}
+
+export function getMatchHistory() {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.get(`${ROOT_URL}/matchhistory`, { headers: { Authorization: User } }).then((response) => {
+        dispatch({ type: ActionTypes.RECEIVE_HISTORY, payload: { history: response.data } });
+        console.log('print meeeeee');
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(`Error trying to receive history: ${error.response.data}`);
       });
     });
   };

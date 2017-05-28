@@ -105,8 +105,8 @@ class EditProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: this.props.user[0].fullname,
-      interests: this.props.user[0].interests,
+      name: this.props.user.fullname,
+      interests: this.props.user.interests,
     };
     this.updateName = this.updateName.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -124,7 +124,9 @@ class EditProfile extends Component {
   handleSubmit(event) {
     event.preventDefault();
     this.props.addInterests(this.state.interests);
-    this.props.editName(this.state.name);
+    if (this.props.user.fullname !== this.state.name) {
+      this.props.editName(this.state.name);
+    }
     this.props.navigator.pop({
       title: 'My Profile',
       leftButtonTitle: ' ',

@@ -32,13 +32,7 @@ class MatchLoading extends Component {
 
     this.state = {};
   }
-  //
-  // componentDidMount() {
-  //   if (this.props.match !== null) {
-  //     clearInterval(this.state.timerid);
-  //     this.props.clearMatch();
-  //   }
-  // }
+
 
   render() {
     console.log('state of this.props.match:');
@@ -49,7 +43,6 @@ class MatchLoading extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.description}>Finding your match... Check back shortly!</Text>
-
         <TouchableHighlight onPress={() => {
           this.props.navigator.push({
             title: 'Match',
