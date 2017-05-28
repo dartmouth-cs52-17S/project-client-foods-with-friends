@@ -45,6 +45,9 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     paddingLeft: 8,
+    marginTop: 10,
+    marginBottom: 10,
+    borderRadius: 5,
   },
   buttonBox: {
     flex: 1,
@@ -54,7 +57,6 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   button: {
-    marginTop: -230,
     backgroundColor: '#519bdd',
     borderRadius: 5,
     borderWidth: 2,
@@ -69,18 +71,21 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: 'white',
   },
   signupBox: {
     flex: 1,
     alignSelf: 'stretch',
   },
   signup: {
-    marginTop: -140,
     alignSelf: 'center',
   },
   signupText: {
     textDecorationLine: 'underline',
   },
+  font: {
+    fontFamily: "Avenir Next",
+  }
 });
 
 class SignIn extends Component {
@@ -150,19 +155,19 @@ class SignIn extends Component {
         <View style={styles.error}>
           {this.renderError()}
         </View>
-        <Text style={styles.label}>Munch Buddy</Text>
+        <Text style={[styles.font, styles.label]}>Munch Buddy</Text>
         <View style={styles.inputs}>
-          <TextInput style={styles.TextInput} placeholder={'Email'} autoCapitalize="none" onChangeText={this.updateEmail} value={this.state.email} />
-          <TextInput style={styles.TextInput} placeholder={'Password'} secureTextEntry onChangeText={this.updatePassword} value={this.state.password} />
+          <TextInput style={[styles.font, styles.TextInput]} placeholder={'Email'} autoCapitalize="none" onChangeText={this.updateEmail} value={this.state.email} />
+          <TextInput style={[styles.font, styles.TextInput]} placeholder={'Password'} secureTextEntry onChangeText={this.updatePassword} value={this.state.password} />
         </View>
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
-            <Text style={styles.buttonText}> Log In </Text>
+            <Text style={[styles.font, styles.buttonText]}> Log In </Text>
           </TouchableHighlight>
         </View>
         <View style={styles.signupBox}>
           <TouchableHighlight style={styles.signup} onPress={this.handleSignup}>
-            <Text style={styles.signupText}> Need a new account? Sign up here </Text>
+            <Text style={[styles.font, styles.signupText]}> Need a new account? Sign up here </Text>
           </TouchableHighlight>
         </View>
       </View>
