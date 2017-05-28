@@ -3,7 +3,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Image, Animated, Easing} from 'react-native';
 import MatchPage from '../containers/matchPage';
 
 import { getMatchResult, clearMatchResult } from '../actions';
@@ -11,7 +11,10 @@ import BeenMatched from './beenMatched';
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 75,
+    flex: 1,
+    alignSelf: 'stretch',
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
   },
   image: {
@@ -20,10 +23,46 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   description: {
+    marginTop: 10,
     padding: 10,
     fontSize: 20,
     color: '#854af2',
   },
+  font: {
+    fontFamily: 'Avenir Next',
+  },
+  button: {
+    backgroundColor: '#bf4132',
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#bf4132',
+    width: '80%',
+    height: 45,
+    alignSelf: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: -40,
+    shadowOffset: {
+      width: 0,
+      height: 1
+    },
+  },
+buttonText: {
+  fontSize: 20,
+  color: 'white',
+  },
+  findingMatch: {
+    marginTop: 20,
+  },
+  buttonBox: {
+    flex: 1,
+    alignSelf: 'stretch',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginTop: 0,
+  },
+
 });
 
 class MatchLoading extends Component {
@@ -31,25 +70,64 @@ class MatchLoading extends Component {
     super(props);
 
     this.state = {};
+
+    this.spinValue = new Animated.Value(0);
+    this.spin = this.spin.bind(this);
+  }
+
+  componentDidMount () {
+  this.spin()
+}
+
+spin () {
+  this.spinValue.setValue(0)
+  Animated.timing(
+    this.spinValue,
+    {
+      toValue: 1,
+      duration: 4000,
+      easing: Easing.linear
+    }
+  ).start(() => this.spin())
+}
+
+  handleCancel() {
+    this.props.navigator.pop();
   }
 
 
   render() {
     console.log('state of this.props.match:');
     console.log(this.props.match);
+
+    const spin = this.spinValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg']
+    })
+
     if (this.props.match !== null) {
       return <BeenMatched />;
     }
     return (
       <View style={styles.container}>
-        <Text style={styles.description}>Finding your match... Check back shortly!</Text>
-        <TouchableHighlight onPress={() => {
-          this.props.navigator.pop();
-          // remove match request action
-        }}
-        >
-          <Text style={styles.topicLabel}>Cancel</Text>
-        </TouchableHighlight>
+        <View>
+         <Animated.Image
+          style={{
+            width: 128,
+            height: 128,
+            marginTop: '40%',
+            transform: [{rotate: spin}] }}
+          source={require('../imgs/pie.png')}
+        />
+        </View>
+        <View style={styles.findingMatch}>
+          <Text style={styles.description, styles.font}>Finding your match... Check back shortly!</Text>
+        </View>
+        <View style={styles.buttonBox}>
+          <TouchableHighlight style={styles.button} onPress={this.handleCancel}>
+            <Text style={[styles.font, styles.buttonText]}> Cancel my Match</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     );
   }
