@@ -39,6 +39,23 @@ const styles = StyleSheet.create({
   blue: {
     color: '#519bdd',
   },
+  cookies: {
+    width: 32,
+    height: 32,
+
+  },
+  rotate1: {
+      transform: [{ rotate: '72deg'}],
+  },
+  rotate2: {
+      transform: [{ rotate: '144deg'}],
+  },
+  rotate3: {
+      transform: [{ rotate: '216deg'}],
+  },
+  rotate4: {
+      transform: [{ rotate: '288deg'}],
+  },
   container: {
     flex: 1,
     alignSelf: 'stretch',
@@ -92,14 +109,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
-  },
-  donut: {
-    height: 64,
-    width: 64,
-  },
-  smallerDonut: {
-    height: 32,
-    width: 32,
   },
   signinBox: {
     flex: 1,
@@ -235,6 +244,23 @@ class SignUp extends Component {
         <Text style={[styles.font, styles.label, styles.pink]}>Munch</Text>
         <Text style={[styles.font, styles.label, styles.blue]}>Buddy</Text>
         </View>
+        <View style={styles.pictures}>
+        <Image style={[styles.cookies, styles.rotate]}
+          source={require('../imgs/cookie.png')}
+        />
+        <Image style={[styles.cookies, styles.rotate1]}
+          source={require('../imgs/cookie.png')}
+        />
+        <Image style={[styles.cookies, styles.rotate1]}
+          source={require('../imgs/cookie.png')}
+        />
+        <Image style={[styles.cookies, styles.rotate3]}
+          source={require('../imgs/cookie.png')}
+        />
+        <Image style={[styles.cookies, styles.rotate4]}
+          source={require('../imgs/cookie.png')}
+        />
+      </View>
         <View style={styles.inputs}>
           <TextInput style={[styles.font, styles.TextInput]} placeholder={'Full Name'} onChangeText={this.updateFullname} value={this.state.fullname} />
           <TextInput style={[styles.font, styles.TextInput]} placeholder={'Email'} autoCapitalize="none" onChangeText={this.updateEmail} value={this.state.email} />
