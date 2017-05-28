@@ -63,8 +63,8 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     paddingLeft: 8,
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 5,
+    marginBottom: 5,
     borderRadius: 5,
   },
   buttonBox: {
@@ -86,6 +86,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: -40,
+    shadowOffset: {
+  width: 0,
+  height: 1
+},
+shadowRadius: 1,
+shadowOpacity: 1.0,
   },
   buttonText: {
     fontSize: 20,
