@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, TouchableHighlight, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
+import { View, Image, TouchableHighlight, StyleSheet, Text, FlatList, ScrollView, List } from 'react-native';
 
 import { signoutUser, clearError, pullProfile } from '../actions';
 import EditProfile from './editProfilePage';
@@ -36,12 +36,6 @@ const styles = StyleSheet.create({
     marginTop: 10,
     fontSize: 20,
     fontFamily: 'Avenir Next',
-  },
-  interestList: {
-    // flexDirection: 'row',
-    // flexWrap: 'wrap',
-    marginLeft: 15,
-    marginRight: 15,
   },
   interest: {
     textAlign: 'center',
@@ -88,7 +82,7 @@ class ProfilePage extends Component {
   }
 
   renderProfile() {
-    if (this.props.user !== null) {
+    if (this.props.user && this.props.user !== null) {
       return (
         <View style={styles.body}>
           <View style={styles.imageView}>
@@ -96,12 +90,11 @@ class ProfilePage extends Component {
               style={styles.image}
               source={{ uri: 'https://image.freepik.com/free-icon/business-person-silhouette-wearing-tie_318-49988.jpg' }}
             />
-            <Text style={styles.username}>{this.props.user[0].fullname}</Text>
+            <Text style={styles.username}>{this.props.user.fullname}</Text>
             <Text style={styles.title}>Interests:</Text>
             <FlatList
               removeClippedSubviews={false}
-              data={this.props.user[0].interests}
-              style={styles.interestList}
+              data={this.props.user.interests}
               renderItem={({ item }) => <Text style={styles.interest}>{item}</Text>}
             />
             <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
@@ -114,9 +107,6 @@ class ProfilePage extends Component {
       return (
         <View style={styles.body}>
           <Text>Loading...</Text>
-          <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
-            <Text>Sign Out</Text>
-          </TouchableHighlight>
         </View>
       );
     }

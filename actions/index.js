@@ -102,7 +102,7 @@ export function pullProfile() {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.get(`${ROOT_URL}/userprofile`, { headers: { Authorization: User } }).then((response) => {
-        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data[0] } });
       })
       .catch((error) => {
         console.log(`Cannot get profile: ${error.response.data}`);
