@@ -8,7 +8,7 @@ class Match extends Component {
     tabBarLabel: 'Match',
     tabBarIcon: ({ tintColor }) => (
       <Image
-        source={require('../imgs/cutlery.png')}
+        source={require('../imgs/cutlery-crossed.png')}
       />
    ),
   };
