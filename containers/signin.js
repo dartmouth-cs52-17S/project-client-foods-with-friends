@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginRight: 40,
     marginTop: -40,
-    marginBottom: -40,
+    marginBottom: -20,
   }
 });
 
@@ -131,6 +131,7 @@ class SignIn extends Component {
     this.handleSignup = this.handleSignup.bind(this);
     this.renderError = this.renderError.bind(this);
     this.signin = this.signin.bind(this);
+
   }
 
 

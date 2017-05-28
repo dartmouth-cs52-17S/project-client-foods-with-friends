@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { StyleSheet, AlertIOS, Text, TextInput, View, TouchableHighlight, Image } from 'react-native';
+import { StyleSheet, AlertIOS, Text, TextInput, View, TouchableHighlight, Image, } from 'react-native';
 
 import { signupUser, clearError, goToSignin } from '../actions';
 
@@ -59,8 +59,8 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     paddingLeft: 8,
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 5,
+    marginBottom: 5,
     borderRadius: 5,
   },
   buttonBox: {
@@ -80,13 +80,13 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000000',
    shadowOffset: {
      width: 0,
      height: 1
    },
    shadowRadius: 1,
-   shadowOpacity: 1.0
+   shadowColor: '#60060b',
+   shadowOpacity: 1.0,
   },
   buttonText: {
     fontSize: 20,
@@ -252,6 +252,8 @@ class SignUp extends Component {
           </TouchableHighlight>
         </View>
       </View>
+
+
     );
   }
 }
