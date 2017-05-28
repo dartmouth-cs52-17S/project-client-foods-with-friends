@@ -119,7 +119,7 @@ shadowOpacity: 1.0,
     marginLeft: 40,
     marginRight: 40,
     marginTop: -40,
-    marginBottom: -40,
+    marginBottom: -20,
   }
 });
 
