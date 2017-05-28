@@ -152,8 +152,8 @@ class SignIn extends Component {
         </View>
         <Text style={styles.label}>Munch Buddy</Text>
         <View style={styles.inputs}>
-          <TextInput style={styles.TextInput} placeholder={'Email'} onChangeText={this.updateEmail} value={this.state.email} />
-          <TextInput style={styles.TextInput} placeholder={'Password'} onChangeText={this.updatePassword} value={this.state.password} />
+          <TextInput style={styles.TextInput} placeholder={'Email'} autoCapitalize="none" onChangeText={this.updateEmail} value={this.state.email} />
+          <TextInput style={styles.TextInput} placeholder={'Password'} secureTextEntry onChangeText={this.updatePassword} value={this.state.password} />
         </View>
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
