@@ -30,17 +30,15 @@ class MatchLoading extends Component {
   constructor(props) {
     super(props);
 
-    const timer = setInterval(this.props.getMatchResult, 10000);
-
-    this.state = { timerid: timer };
+    this.state = {};
   }
-
-  componentDidMount() {
-    if (this.props.match !== null) {
-      clearInterval(this.state.timerid);
-      this.props.clearMatchResult();
-    }
-  }
+  //
+  // componentDidMount() {
+  //   if (this.props.match !== null) {
+  //     clearInterval(this.state.timerid);
+  //     this.props.clearMatch();
+  //   }
+  // }
 
   render() {
     console.log('state of this.props.match:');

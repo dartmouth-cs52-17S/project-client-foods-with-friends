@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
 
 const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
   'volunteering', 'education', 'finance', 'reading', 'nightlife', 'fitness', 'tech',
-  'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues'];
+  'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues', 'gaming'];
 
 class ProfileAdd extends Component {
 

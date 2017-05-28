@@ -12,6 +12,7 @@ export const ActionTypes = {
   POST_MATCH: 'POST_MATCH',
   RECEIVE_MATCH: 'RECEIVE_MATCH',
   CLEAR_MATCH: 'CLEAR_MATCH',
+  PULL_PROFILE: 'PULL_PROFILE',
 };
 
 
@@ -72,10 +73,39 @@ export function editInterests(interests) {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.put(`${ROOT_URL}/interests`, { interests }, { headers: { Authorization: User } }).then((response) => {
-        console.log('posted successfully to update interests!');
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
       })
       .catch((error) => {
         console.log(`Cannot update interests: ${error.response.data}`);
+      });
+    });
+  };
+}
+
+export function editName(name) {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.put(`${ROOT_URL}/updatename`, { fullname: name }, { headers: { Authorization: User } }).then((response) => {
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
+        console.log('posted successfully to update name!');
+      })
+      .catch((error) => {
+        console.log(`Cannot update name: ${error.response.data}`);
+      });
+    });
+  };
+}
+
+export function pullProfile() {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.get(`${ROOT_URL}/userprofile`, { headers: { Authorization: User } }).then((response) => {
+        dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
+      })
+      .catch((error) => {
+        console.log(`Cannot get profile: ${error.response.data}`);
       });
     });
   };

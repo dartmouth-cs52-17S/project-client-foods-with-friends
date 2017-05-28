@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Image, TouchableHighlight, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
 
-import { signoutUser, clearError } from '../actions';
+import { signoutUser, clearError, pullProfile } from '../actions';
 import EditProfile from './editProfilePage';
 
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+    alignSelf: 'stretch',
   },
   image: {
     width: 250,
@@ -36,9 +37,15 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Avenir Next',
   },
-  text: {
+  interestList: {
+    // flexDirection: 'row',
+    // flexWrap: 'wrap',
+    marginLeft: 15,
+    marginRight: 15,
+  },
+  interest: {
     textAlign: 'center',
-    marginTop: 7,
+    margin: 3,
     fontSize: 14,
     fontFamily: 'Avenir Next',
   },
@@ -51,11 +58,21 @@ const styles = StyleSheet.create({
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
+
+    this.state = {};
+
     this.onPressButton = this.onPressButton.bind(this);
     this.edit = this.edit.bind(this);
+    this.renderProfile = this.renderProfile.bind(this);
   }
+
+  componentDidMount() {
+    this.props.pullProfile();
+  }
+  //
+  // componentWillUnmount() {
+  //   clearInterval(this.pull);
+  // }
 
   onPressButton() {
     this.props.signoutUser();
@@ -65,48 +82,69 @@ class ProfilePage extends Component {
   edit() {
     this.props.navigator.push({
       title: 'Edit Interests',
+      leftButtonTitle: ' ',
       component: EditProfile,
     });
   }
 
-  render() {
-    return (
-      <ScrollView>
+  renderProfile() {
+    if (this.props.user !== null) {
+      return (
         <View style={styles.body}>
           <View style={styles.imageView}>
             <Image
               style={styles.image}
               source={{ uri: 'https://image.freepik.com/free-icon/business-person-silhouette-wearing-tie_318-49988.jpg' }}
             />
-            <Text style={styles.username}>Users Name</Text>
-            <TouchableHighlight style={styles.button} onPress={this.edit}>
-              <Text>Edit</Text>
-            </TouchableHighlight>
+            <Text style={styles.username}>{this.props.user[0].fullname}</Text>
             <Text style={styles.title}>Interests:</Text>
             <FlatList
-              data={[{ title: 'Farming' }, { title: 'Dogs' }]}
-              renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
-            />
-            <Text style={styles.title}>Conversation Topics:</Text>
-            <FlatList
-              data={[{ title: 'The Human heart' }, { title: 'Banana Slugs' }]}
-              renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
+              removeClippedSubviews={false}
+              data={this.props.user[0].interests}
+              style={styles.interestList}
+              renderItem={({ item }) => <Text style={styles.interest}>{item}</Text>}
             />
             <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
               <Text>Sign Out</Text>
             </TouchableHighlight>
           </View>
         </View>
+      );
+    } else {
+      return (
+        <View style={styles.body}>
+          <Text>Loading...</Text>
+          <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
+            <Text>Sign Out</Text>
+          </TouchableHighlight>
+        </View>
+      );
+    }
+  }
+
+  render() {
+    return (
+      <ScrollView>
+        <View style={styles.body}>
+          {this.renderProfile()}
+        </View>
       </ScrollView>
     );
   }
 }
 
+const mapStateToProps = state => (
+  {
+    user: state.auth.user,
+  }
+);
+
 const mapDispatchToProps = dispatch => (
   {
     signoutUser: () => dispatch(signoutUser()),
     clearError: () => dispatch(clearError()),
+    pullProfile: () => dispatch(pullProfile()),
   }
 );
 
-export default (connect(null, mapDispatchToProps)(ProfilePage));
+export default (connect(mapStateToProps, mapDispatchToProps)(ProfilePage));
