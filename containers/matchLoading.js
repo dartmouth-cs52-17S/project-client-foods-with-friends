@@ -7,7 +7,7 @@ import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import MatchPage from '../containers/matchPage';
 
 import { getMatchResult, clearMatchResult } from '../actions';
-import BeenMatched from '../components/beenMatched';
+import BeenMatched from './beenMatched';
 
 const styles = StyleSheet.create({
   container: {
