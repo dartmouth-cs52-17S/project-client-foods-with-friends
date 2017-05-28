@@ -91,10 +91,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.4,
   },
   unchecked: {
-    backgroundColor: '#9299a3',
+    backgroundColor: '#a8b3bb',
     borderWidth: 2,
     borderRadius: 6,
-    borderColor: '#9299a3',
+    borderColor: '#a8b3bb',
     height: 35,
     minWidth: 20,
     paddingLeft: 10,

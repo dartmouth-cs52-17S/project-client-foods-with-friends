@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { StyleSheet, Text, TextInput, View, TouchableHighlight, Image} from 'react-native';
+import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
 
 import MatchPage from './matchPage';
 import { signinUser, signoutUser, clearError, goToSignup } from '../actions';
@@ -87,11 +87,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: -40,
     shadowOffset: {
-  width: 0,
-  height: 1
-},
-shadowRadius: 1,
-shadowOpacity: 1.0,
+      width: 0,
+      height: 1,
+    },
+    shadowRadius: 1,
+    shadowOpacity: 1.0,
   },
   buttonText: {
     fontSize: 20,
@@ -109,7 +109,7 @@ shadowOpacity: 1.0,
     textDecorationLine: 'underline',
   },
   font: {
-    fontFamily: "Avenir Next",
+    fontFamily: 'Avenir Next',
   },
   pictures: {
     flex: 1,
@@ -120,7 +120,7 @@ shadowOpacity: 1.0,
     marginRight: 40,
     marginTop: -40,
     marginBottom: -20,
-  }
+  },
 });
 
 class SignIn extends Component {
@@ -137,7 +137,6 @@ class SignIn extends Component {
     this.handleSignup = this.handleSignup.bind(this);
     this.renderError = this.renderError.bind(this);
     this.signin = this.signin.bind(this);
-
   }
 
 
@@ -193,33 +192,36 @@ class SignIn extends Component {
           {this.renderError()}
         </View>
         <View style={styles.titleContainer}>
-        <Text style={[styles.font, styles.label, styles.pink]}>Munch</Text>
-        <Text style={[styles.font, styles.label, styles.blue]}>Buddy</Text>
+          <Text style={[styles.font, styles.label, styles.pink]}>Munch</Text>
+          <Text style={[styles.font, styles.label, styles.blue]}>Buddy</Text>
         </View>
         <View style={styles.pictures}>
-        <Image style={styles.donut}
-          source={require('../imgs/sprinkleDonut.png')}
-        />
-        <Image style={styles.donut}
-          source={require('../imgs/donut.png')}
-        />
-        <Image style={styles.donut}
-          source={require('../imgs/pinkDonut.png')}
-        />
-      </View>
+          <Image
+            style={styles.donut}
+            source={require('../imgs/sprinkleDonut.png')}
+          />
+          <Image
+            style={styles.donut}
+            source={require('../imgs/donut.png')}
+          />
+          <Image
+            style={styles.donut}
+            source={require('../imgs/pinkDonut.png')}
+          />
+        </View>
         <View style={styles.inputs}>
           <TextInput style={[styles.font, styles.TextInput]} placeholder={'Email'} autoCapitalize="none" onChangeText={this.updateEmail} value={this.state.email} />
           <TextInput style={[styles.font, styles.TextInput]} placeholder={'Password'} secureTextEntry onChangeText={this.updatePassword} value={this.state.password} />
         </View>
         <View style={styles.buttonBox}>
-          <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
+          <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
             <Text style={[styles.font, styles.buttonText]}> Log In </Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
         <View style={styles.signupBox}>
-          <TouchableHighlight style={styles.signup} onPress={this.handleSignup}>
+          <TouchableOpacity style={styles.signup} onPress={this.handleSignup}>
             <Text style={[styles.font, styles.signupText]}> Need a new account? Sign up here! </Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </View>
     );
