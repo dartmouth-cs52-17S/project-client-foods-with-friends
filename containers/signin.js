@@ -131,7 +131,6 @@ class SignIn extends Component {
     this.handleSignup = this.handleSignup.bind(this);
     this.renderError = this.renderError.bind(this);
     this.signin = this.signin.bind(this);
-
   }
 
 
