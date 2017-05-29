@@ -48,12 +48,16 @@ export function authError(error) {
 }
 
 export function signupUser({ fullname, email, password }) {
+  console.log('in signupUser');
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, { fullname, email, password }).then((response) => {
+      console.log('made it through axios post');
       dispatch({ type: ActionTypes.AUTH_USER });
       AsyncStorage.setItem('token', response.data.token);
     })
     .catch((error) => {
+      console.log('signupUser failed');
+      console.log(error);
       dispatch(authError(`Sign up Failed: ${error.response.data}`));
     });
   };

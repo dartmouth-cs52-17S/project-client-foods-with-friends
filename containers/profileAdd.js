@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native';
 
 import MunchBuddyTabs from '../navigation/tab';
 import { goToSignin, editInterests } from '../actions';
 
 const styles = StyleSheet.create({
   label: {
-    marginTop: '30%',
     marginLeft: 20,
     marginRight: 20,
     textAlign: 'center',
@@ -114,6 +113,10 @@ const styles = StyleSheet.create({
   interestText: {
     color: '#ffffff',
   },
+  profiles: {
+    width: 50,
+    height: 50,
+  },
 });
 
 const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
@@ -121,9 +124,10 @@ const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
   'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues',
   'gaming'];
 
-const imgs = ['../imgs/avatar.png', '../imgs/cookie.png', '../imgs/cupcake.png',
- '../imgs/donut.png', '../imgs/muffin.png', '../imgs/pretzel.png'];
 
+const imgs2 = [require('../imgs/cookie.png'), require('../imgs/cupcake.png'),
+  require('../imgs/donut.png'), require('../imgs/muffin.png'),
+  require('../imgs/pretzel.png')];
 
 class ProfileAdd extends Component {
 
@@ -198,35 +202,44 @@ class ProfileAdd extends Component {
   }
 
   renderImage(item) {
+    console.log('item');
+    console.log(item.item);
+  //  console.log(this);
     return (
-      <Image
-        style={styles.donut}
-        source={require(item)}
-      />
+      <Image source={item.item} style={{ width: 40, height: 40 }} />
     );
   }
 
   renderPage() {
+    const imgs = ['../imgs/cookie.png', '../imgs/cupcake.png',
+      '../imgs/donut.png', '../imgs/muffin.png', '../imgs/pretzel.png'];
+
+
     if (this.props.page) {
       return (
-        <View style={styles.container}>
-          <Text style={styles.label}>Pick a profile picture!</Text>
-          <FlatList
-            removeClippedSubviews={false}
-            horiontal={true}
-            data={this.imgs}
-            renderItem={this.renderImage}
-          />
-          <Text style={styles.label2}>You can change your profile picture at any time.</Text>
-          <Text style={styles.label}>Add some interests!</Text>
-          <Text style={styles.explanation}>Your interests will appear on your profile for other MunchBuddies to see. </Text>
-          {this.renderInterests()}
-          <View style={styles.buttonBox}>
-            <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
-              <Text style={styles.buttonText}> Ok! </Text>
-            </TouchableOpacity>
+        <ScrollView>
+          <View style={styles.container}>
+            <View>
+              <Text style={styles.label}>Choose a photo!</Text>
+              <Text style={styles.label2}>You can change your profile picture at any time.</Text>
+            </View>
+            <FlatList
+              horizontal
+              data={imgs2}
+              renderItem={this.renderImage}
+            />
+            <View>
+              <Text style={styles.label}>Add some interests!</Text>
+              <Text style={styles.explanation}>Your interests will appear on your profile for other MunchBuddies to see. </Text>
+            </View>
+            {this.renderInterests()}
+            <View style={styles.buttonBox}>
+              <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
+                <Text style={styles.buttonText}> Ok! </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </ScrollView>
       );
     } else {
       return (
