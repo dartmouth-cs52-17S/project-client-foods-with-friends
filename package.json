@@ -17,6 +17,7 @@
     "react-native-accordion": "^1.0.1",
     "react-native-modal-datetime-picker": "^4.6.0",
     "react-native-redux-router": "^1.0.7",
+    "react-native-svg": "^5.1.8",
     "react-navigation": "^1.0.0-beta.9",
     "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",

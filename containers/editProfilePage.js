@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableHighlight, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 
 import MunchBuddyTabs from '../navigation/tab';
 import ProfilePage from './profilePage';
@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
     marginRight: 20,
     textAlign: 'center',
     fontSize: 25,
-    fontWeight: 'bold',
     marginBottom: 20,
+    color: '#253e47',
   },
   container: {
     flex: 1,
@@ -30,9 +30,11 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 40,
     width: '80%',
-    borderColor: 'gray',
+    borderColor: '#253a41',
     borderWidth: 1,
+    borderRadius: 7,
     paddingLeft: 8,
+    color: '#1f343c',
   },
   buttonBox: {
     flex: 1,
@@ -43,20 +45,24 @@ const styles = StyleSheet.create({
   },
   button: {
     marginTop: -90,
-    backgroundColor: '#519bdd',
+    backgroundColor: '#3694e9',
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: '#519bdd',
+    borderColor: '#3694e9',
     width: '80%',
     height: 45,
     alignSelf: 'center',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
+    shadowOpacity: 0.8,
   },
   buttonText: {
     fontSize: 20,
-    fontWeight: 'bold',
+    color: '#ffffff',
   },
   interests: {
     display: 'flex',
@@ -67,10 +73,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
   },
   checked: {
-    backgroundColor: '#219e27',
+    backgroundColor: '#53c5bb',
     borderWidth: 2,
     borderRadius: 6,
-    borderColor: '#219e27',
+    borderColor: '#53c5bb',
     height: 35,
     minWidth: 20,
     paddingLeft: 10,
@@ -79,12 +85,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 3,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 0.3,
+    shadowOpacity: 0.4,
   },
   unchecked: {
-    backgroundColor: '#a5a6a8',
+    backgroundColor: '#a8b3bb',
     borderWidth: 2,
     borderRadius: 6,
-    borderColor: '#a5a6a8',
+    borderColor: '#a8b3bb',
     height: 35,
     minWidth: 20,
     paddingLeft: 10,
@@ -93,6 +103,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 3,
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 0.3,
+    shadowOpacity: 0.4,
+  },
+  interestText: {
+    color: '#ffffff',
   },
 });
 
@@ -174,15 +191,15 @@ class EditProfile extends Component {
     const interestItems = interests.map((interest) => {
       if (this.state.interests.includes(interest)) {
         return (
-          <TouchableHighlight style={styles.checked} key={interest} onPress={() => { this.handleInterest(interest); }}>
-            <Text>{interest}</Text>
-          </TouchableHighlight>
+          <TouchableOpacity style={styles.checked} key={interest} onPress={() => { this.handleInterest(interest); }}>
+            <Text style={styles.interestText}>{interest}</Text>
+          </TouchableOpacity>
         );
       } else {
         return (
-          <TouchableHighlight style={styles.unchecked} key={interest} onPress={() => { this.handleInterest(interest); }}>
-            <Text>{interest}</Text>
-          </TouchableHighlight>
+          <TouchableOpacity style={styles.unchecked} key={interest} onPress={() => { this.handleInterest(interest); }}>
+            <Text style={styles.interestText}>{interest}</Text>
+          </TouchableOpacity>
         );
       }
     });
@@ -203,9 +220,9 @@ class EditProfile extends Component {
         <Text style={styles.label}>Edit your interests</Text>
         {this.renderInterests()}
         <View style={styles.buttonBox}>
-          <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
+          <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
             <Text style={styles.buttonText}> Ok! </Text>
-          </TouchableHighlight>
+          </TouchableOpacity>
         </View>
       </View>
     );

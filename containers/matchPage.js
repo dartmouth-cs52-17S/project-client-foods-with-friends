@@ -9,9 +9,9 @@ import {
   Text,
   TextInput,
   View,
-  Button,
   ScrollView,
   TouchableOpacity,
+  Image,
   NavigatorIOS,
   AlertIOS,
 } from 'react-native';
@@ -23,31 +23,101 @@ import { postMatch } from '../actions';
 
 const styles = StyleSheet.create({
   title: {
-    marginTop: 30,
-    fontSize: 30,
+    marginTop: 25,
+    fontSize: 35,
     textAlign: 'center',
+    color: '#253e47',
+  },
+  instructions: {
+    marginTop: 20,
+    fontSize: 20,
+    marginLeft: '10%',
+    marginRight: '10%',
+    textAlign: 'center',
+    color: '#253e47',
   },
   dateLabel: {
-    marginTop: 25,
     fontSize: 20,
     textAlign: 'center',
+    color: '#ffffff',
   },
-  topicLabel: {
-    marginTop: 25,
-    fontSize: 15,
+  times: {
+    marginTop: 10,
+    alignSelf: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  to: {
+    marginTop: 15,
+    fontSize: 20,
     textAlign: 'center',
+    color: '#253e47',
   },
   topic: {
     borderWidth: 0.5,
-    borderRadius: 4,
+    borderRadius: 8,
     borderColor: '#0f0f0f',
+    color: '#253a41',
     flex: 1,
-    marginLeft: 50,
-    marginRight: 50,
+    marginLeft: '13%',
+    marginRight: '13%',
     height: 50,
-    padding: 4,
-    marginBottom: 4,
+    paddingLeft: 10,
+    marginBottom: 10,
     marginTop: 15,
+    fontSize: 25,
+  },
+  timeButton: {
+    marginTop: 15,
+    marginRight: 15,
+    marginLeft: 15,
+    alignSelf: 'center',
+    backgroundColor: '#53c5bb',
+    width: 120,
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#53c5bb',
+    borderRadius: 5,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 1,
+    shadowOpacity: 1,
+  },
+  matchButton: {
+    marginTop: 20,
+    marginBottom: 10,
+    alignSelf: 'center',
+    backgroundColor: '#3694e9',
+    width: 120,
+    height: 50,
+    borderWidth: 2,
+    borderColor: '#3694e9',
+    borderRadius: 5,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowRadius: 1,
+    shadowOpacity: 1,
+  },
+  image: {
+    marginTop: 30,
+    marginBottom: 10,
+    alignSelf: 'center',
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  sideIcon: {
+    width: 40,
+    height: 40,
+    marginLeft: 20,
+    marginRight: 20,
   },
 });
 
@@ -193,19 +263,18 @@ class MatchPage extends Component {
     return (
       <ScrollView>
         <View>
-          <Text style={styles.title}>Pick a time:</Text>
+          <Text style={styles.title}>Grab a munch!</Text>
+          <Text style={styles.instructions}>Choose a time range in which you wish to begin your meal:</Text>
 
-          <TouchableOpacity onPress={this._showDateTimePicker1}>
-            <Text style={styles.topicLabel}>START TIME</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.dateLabel}>{this.state.date1.format('hh:mm A').toString()}</Text>
-
-          <TouchableOpacity onPress={this._showDateTimePicker2}>
-            <Text style={styles.topicLabel}>END TIME</Text>
-          </TouchableOpacity>
-
-          <Text style={styles.dateLabel}>{this.state.date2.format('hh:mm A').toString()}</Text>
+          <View style={styles.times}>
+            <TouchableOpacity style={styles.timeButton} onPress={this._showDateTimePicker1}>
+              <Text style={styles.dateLabel}>{this.state.date1.format('hh:mm A').toString()}</Text>
+            </TouchableOpacity>
+            <Text style={styles.to}>to</Text>
+            <TouchableOpacity style={styles.timeButton} onPress={this._showDateTimePicker2}>
+              <Text style={styles.dateLabel}>{this.state.date2.format('hh:mm A').toString()}</Text>
+            </TouchableOpacity>
+          </View>
 
           <DateTimePicker
             isVisible={this.state.isDateTimePicker1Visible}
@@ -222,17 +291,28 @@ class MatchPage extends Component {
             mode={'time'}
             titleIOS={'Pick an end time'}
           />
-
-          <Text style={styles.topicLabel}>Pick a conversation topic:</Text>
+          <View style={styles.image}>
+            <Image
+              style={styles.sideIcon}
+              source={require('../imgs/muffin.png')}
+            />
+            <Image
+              source={require('../imgs/cupcake.png')}
+            />
+            <Image
+              style={styles.sideIcon}
+              source={require('../imgs/muffin2.png')}
+            />
+          </View>
+          <Text style={styles.instructions}>Choose a conversation topic:</Text>
           <TextInput
             placeholder="Enter topic"
             style={styles.topic}
             onChange={this.onTopicChange}
           />
-          <Button
-            title="Match Me!"
-            onPress={this.matchButton}
-          />
+          <TouchableOpacity style={styles.matchButton} onPress={this.matchButton}>
+            <Text style={styles.dateLabel}>Match Me!</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     );

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { StyleSheet, Text, TextInput, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, AlertIOS, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
 
 import { signupUser, clearError, goToSignin } from '../actions';
 
@@ -20,11 +20,41 @@ const styles = StyleSheet.create({
     marginLeft: 15,
     marginRight: 15,
   },
+  font: {
+    fontFamily: 'Avenir Next',
+  },
   label: {
-    marginTop: '50%',
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginBottom: 30,
+    fontSize: 45,
+  },
+  titleContainer: {
+    marginTop: '42%',
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  pink: {
+    color: '#f4424b',
+    fontWeight: 'normal',
+  },
+  blue: {
+    color: '#519bdd',
+  },
+  cookies: {
+    width: 32,
+    height: 32,
+
+  },
+  rotate1: {
+    transform: [{ rotate: '72deg' }],
+  },
+  rotate2: {
+    transform: [{ rotate: '144deg' }],
+  },
+  rotate3: {
+    transform: [{ rotate: '216deg' }],
+  },
+  rotate4: {
+    transform: [{ rotate: '288deg' }],
   },
   container: {
     flex: 1,
@@ -36,6 +66,8 @@ const styles = StyleSheet.create({
   inputs: {
     flex: 1,
     alignSelf: 'stretch',
+    height: 1200,
+    marginBottom: 100,
   },
   TextInput: {
     alignSelf: 'center',
@@ -44,6 +76,9 @@ const styles = StyleSheet.create({
     borderColor: 'gray',
     borderWidth: 1,
     paddingLeft: 8,
+    marginTop: 5,
+    marginBottom: 5,
+    borderRadius: 5,
   },
   buttonBox: {
     flex: 1,
@@ -52,32 +87,48 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   button: {
-    marginTop: -150,
-    backgroundColor: '#519bdd',
+    backgroundColor: '#f4424b',
     borderRadius: 5,
     borderWidth: 2,
-    borderColor: '#519bdd',
+    borderColor: '#f4424b',
     width: '80%',
     height: 45,
     alignSelf: 'center',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowRadius: 1,
+    shadowColor: '#60060b',
+    shadowOpacity: 1.0,
   },
   buttonText: {
     fontSize: 20,
     fontWeight: 'bold',
+    color: 'white',
   },
   signinBox: {
     flex: 1,
     alignSelf: 'stretch',
   },
   signin: {
-    marginTop: -100,
     alignSelf: 'center',
   },
   signinText: {
     textDecorationLine: 'underline',
+  },
+  pictures: {
+    flex: 1,
+    flexDirection: 'row',
+    alignSelf: 'stretch',
+    justifyContent: 'space-around',
+    marginLeft: 40,
+    marginRight: 40,
+    marginTop: -40,
+    marginBottom: -40,
   },
 });
 
@@ -89,10 +140,12 @@ class SignUp extends Component {
       fullname: '',
       email: '',
       password: '',
+      retypePassword: '',
     };
     this.updateEmail = this.updateEmail.bind(this);
     this.updateFullname = this.updateFullname.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
+    this.updateRetypePassword = this.updateRetypePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
     this.handleSignin = this.handleSignin.bind(this);
@@ -117,15 +170,46 @@ class SignUp extends Component {
     });
   }
 
+  updateRetypePassword(text) {
+    this.setState({
+      retypePassword: text,
+    });
+  }
+
+  validateFields() {
+    const regexpNum = /\d+/;
+    const regExpChar = /@/;
+    if (this.state.password !== this.state.retypePassword) {
+      AlertIOS.alert('Passwords don\'t match! Try again. ');
+      return false;
+    }
+    // checks for any occurance of a number in user's name
+    // borrowed heavily from w3schools.com
+    if (this.state.fullname.match(regexpNum)) {
+      AlertIOS.alert('Your full name cannot contain numbers! Try again. ');
+      return false;
+    }
+    // checks if user's email address has a @ symbol
+    // borrowed heavily from w3schools.com
+    if (this.state.email.match(regExpChar) === null) {
+      AlertIOS.alert('You must input a valid email address. Try again!');
+      return false;
+    }
+    return true;
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    const user = {
-      fullname: this.state.fullname,
-      email: this.state.email.toLowerCase(),
-      password: this.state.password,
-    };
-    this.props.signupUser(user);
+    if (this.validateFields()) {
+      const user = {
+        fullname: this.state.fullname,
+        email: this.state.email.toLowerCase(),
+        password: this.state.password,
+      };
+      this.props.signupUser(user);
+    }
   }
+
 
   handleCancel(event) {
     event.preventDefault();
@@ -133,6 +217,7 @@ class SignUp extends Component {
       email: '',
       password: '',
       fullname: '',
+      retypePassword: '',
     });
   }
 
@@ -155,23 +240,51 @@ class SignUp extends Component {
         <View style={styles.error}>
           {this.renderError()}
         </View>
-        <Text style={styles.label}>Munch Buddy</Text>
+        <View style={styles.titleContainer}>
+          <Text style={[styles.font, styles.label, styles.pink]}>Munch</Text>
+          <Text style={[styles.font, styles.label, styles.blue]}>Buddy</Text>
+        </View>
+        <View style={styles.pictures}>
+          <Image
+            style={[styles.cookies, styles.rotate]}
+            source={require('../imgs/cookie.png')}
+          />
+          <Image
+            style={[styles.cookies, styles.rotate1]}
+            source={require('../imgs/cookie.png')}
+          />
+          <Image
+            style={[styles.cookies, styles.rotate1]}
+            source={require('../imgs/cookie.png')}
+          />
+          <Image
+            style={[styles.cookies, styles.rotate3]}
+            source={require('../imgs/cookie.png')}
+          />
+          <Image
+            style={[styles.cookies, styles.rotate4]}
+            source={require('../imgs/cookie.png')}
+          />
+        </View>
         <View style={styles.inputs}>
-          <TextInput style={styles.TextInput} placeholder={'Full Name'} onChangeText={this.updateFullname} value={this.state.fullname} />
-          <TextInput style={styles.TextInput} placeholder={'Email'} autoCapitalize="none" onChangeText={this.updateEmail} value={this.state.email} />
-          <TextInput style={styles.TextInput} placeholder={'Password'} secureTextEntry onChangeText={this.updatePassword} value={this.state.password} />
+          <TextInput style={[styles.font, styles.TextInput]} placeholder={'Full Name'} onChangeText={this.updateFullname} value={this.state.fullname} />
+          <TextInput style={[styles.font, styles.TextInput]} placeholder={'Email'} autoCapitalize="none" onChangeText={this.updateEmail} value={this.state.email} />
+          <TextInput style={[styles.font, styles.TextInput]} placeholder={'Password'} secureTextEntry onChangeText={this.updatePassword} value={this.state.password} />
+          <TextInput style={[styles.font, styles.TextInput]} placeholder={'Retype Password'} secureTextEntry onChangeText={this.updateRetypePassword} value={this.state.retypePassword} />
         </View>
         <View style={styles.buttonBox}>
-          <TouchableHighlight style={styles.button} onPress={this.handleSubmit}>
-            <Text style={styles.buttonText}> Sign Up </Text>
-          </TouchableHighlight>
+          <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
+            <Text style={[styles.font, styles.buttonText]}> Sign Up! </Text>
+          </TouchableOpacity>
         </View>
         <View style={styles.signinBox}>
-          <TouchableHighlight style={styles.signin} onPress={this.handleSignin}>
-            <Text style={styles.signinText}> Already have an account? Sign in here </Text>
-          </TouchableHighlight>
+          <TouchableOpacity style={styles.signin} onPress={this.handleSignin}>
+            <Text style={[styles.signinText, styles.font]}> Already have an account? Sign in here </Text>
+          </TouchableOpacity>
         </View>
       </View>
+
+
     );
   }
 }
