@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native';
 
 import MunchBuddyTabs from '../navigation/tab';
 import { goToSignin, editInterests } from '../actions';
 
 const styles = StyleSheet.create({
   label: {
-    marginTop: '30%',
     marginLeft: 20,
     marginRight: 20,
+    marginTop: 30,
+    marginBottom: 30,
     textAlign: 'center',
     fontSize: 30,
-    marginBottom: 8,
     color: '#253e47',
   },
   explanation: {
@@ -36,10 +36,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 0,
   },
   button: {
-    marginTop: -108,
+    marginTop: 15,
     backgroundColor: '#3694e9',
     borderRadius: 5,
     borderWidth: 2,
@@ -106,11 +105,32 @@ const styles = StyleSheet.create({
   interestText: {
     color: '#ffffff',
   },
+  profiles: {
+    width: 80,
+    height: 80,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  chosenProfile: {
+    borderWidth: 2,
+    borderRadius: 5,
+    borderColor: '#3694e9',
+  },
+  profileFlat: {
+    marginTop: 10,
+    marginBottom: 10,
+  },
 });
 
 const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
   'volunteering', 'education', 'finance', 'reading', 'nightlife', 'fitness', 'tech',
-  'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues', 'gaming'];
+  'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues',
+  'gaming'];
+
+
+const imgs2 = [require('../imgs/cookie.png'), require('../imgs/cupcake.png'),
+  require('../imgs/donut.png'), require('../imgs/muffin.png'),
+  require('../imgs/pretzel.png')];
 
 class ProfileAdd extends Component {
 
@@ -120,6 +140,7 @@ class ProfileAdd extends Component {
       email: '',
       password: '',
       interests: [],
+      profile: '',
     };
     this.updateEmail = this.updateEmail.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
@@ -127,6 +148,8 @@ class ProfileAdd extends Component {
     this.renderPage = this.renderPage.bind(this);
     this.renderInterests = this.renderInterests.bind(this);
     this.handleInterest = this.handleInterest.bind(this);
+    this.renderImage = this.renderImage.bind(this);
+    this.handleProfile = this.handleProfile.bind(this);
   }
 
   updateEmail(text) {
@@ -143,7 +166,7 @@ class ProfileAdd extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.addInterests(this.state.interests);
+    this.props.addInterests(this.state.interests, this.state.profile);
     this.props.goToSignin();
   }
 
@@ -157,6 +180,26 @@ class ProfileAdd extends Component {
       console.log(newstate);
     } else {
       this.setState({ interests: [...this.state.interests, interest] });
+    }
+  }
+
+  handleProfile(profile1) {
+    console.log('profile checked!');
+    console.log(profile1);
+    console.log('this.state.profile:');
+    console.log(this.state.profile);
+    console.log(typeof this.state.profile);
+
+    if (this.state.profile === profile1) {
+      console.log('in me!');
+      this.setState({
+        profile: '',
+      });
+    } else {
+      console.log('not in me!');
+      this.setState({
+        profile: profile1,
+      });
     }
   }
 
@@ -183,19 +226,52 @@ class ProfileAdd extends Component {
     );
   }
 
+  renderImage(item) {
+    console.log('item');
+    console.log(item.item);
+    let style;
+    if (this.state.profile === item) {
+      style = [styles.profiles, styles.chosenProfile];
+    } else {
+      style = [styles.profiles];
+    }
+    return (
+      <TouchableOpacity key={item.item} onPress={(profile) => { this.handleProfile(item.item); }}>
+        <Image source={item.item} style={style} />
+      </TouchableOpacity>
+    );
+  }
+
   renderPage() {
+    const imgs = ['../imgs/cookie.png', '../imgs/cupcake.png',
+      '../imgs/donut.png', '../imgs/muffin.png', '../imgs/pretzel.png'];
+
     if (this.props.page) {
       return (
-        <View style={styles.container}>
-          <Text style={styles.label}>Add some interests!</Text>
-          <Text style={styles.explanation}>Your interests will appear on your profile for other MunchBuddies to see</Text>
-          {this.renderInterests()}
-          <View style={styles.buttonBox}>
-            <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
-              <Text style={styles.buttonText}> Ok! </Text>
-            </TouchableOpacity>
+        <ScrollView>
+          <View style={styles.container}>
+            <View>
+              <Text style={styles.label}>Choose a photo!</Text>
+              <Text style={styles.explanation}>You can change your profile picture at any time.</Text>
+            </View>
+            <FlatList
+              horizontal
+              data={imgs2}
+              style={styles.profileFlat}
+              renderItem={this.renderImage}
+            />
+            <View>
+              <Text style={styles.label}>Add some interests!</Text>
+              <Text style={styles.explanation}>Your interests will appear on your profile for other MunchBuddies to see. </Text>
+            </View>
+            {this.renderInterests()}
+            <View style={styles.buttonBox}>
+              <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
+                <Text style={styles.buttonText}> Ok! </Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
+        </ScrollView>
       );
     } else {
       return (

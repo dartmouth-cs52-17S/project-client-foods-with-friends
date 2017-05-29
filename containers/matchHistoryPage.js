@@ -80,15 +80,15 @@ class MatchHistoryPage extends Component {
     });
   }
 
-  renderCell() {
-    console.log('PRINTING HISTORY');
+  renderCell(person) {
     console.log(this.props.history);
+    console.log(person.User);
     return (
-      <TouchableHighlight onPress={() => { this.showProfileDetail(item); }} underlayColor="#dddddd">
+      <TouchableHighlight onPress={() => { this.showProfileDetail(person); }} underlayColor="#dddddd">
         <View>
           <View style={styles.container}>
             <View style={styles.rightContainer}>
-              <Text style={styles.title}>{this.props.history[0].User}</Text>
+              <Text style={styles.title}>Hey</Text>
             </View>
           </View>
           <View style={styles.separator} />
@@ -109,7 +109,7 @@ class MatchHistoryPage extends Component {
           <ListView
             removeClippedSubviews={false}
             dataSource={this.state.dataSource}
-            renderRow={this.renderCell}
+            renderRow={(person) => { this.renderCell(person); }}
             style={styles.listView}
           />
         </View>

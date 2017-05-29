@@ -48,12 +48,16 @@ export function authError(error) {
 }
 
 export function signupUser({ fullname, email, password }) {
+  console.log('in signupUser');
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, { fullname, email, password }).then((response) => {
+      console.log('made it through axios post');
       dispatch({ type: ActionTypes.AUTH_USER });
       AsyncStorage.setItem('token', response.data.token);
     })
     .catch((error) => {
+      console.log('signupUser failed');
+      console.log(error);
       dispatch(authError(`Sign up Failed: ${error.response.data}`));
     });
   };
@@ -71,11 +75,17 @@ export function signinUser({ email, password }) {
   };
 }
 
-export function editInterests(interests) {
+export function editInterests(interests, profile) {
+  let newProfile;
+  if (profile === '' || profile === null) {
+    newProfile = '1';
+  } else {
+    newProfile = profile;
+  }
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
-      axios.put(`${ROOT_URL}/interests`, { interests }, { headers: { Authorization: User } }).then((response) => {
+      axios.put(`${ROOT_URL}/interests`, { interests, newProfile }, { headers: { Authorization: User } }).then((response) => {
         dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
       })
       .catch((error) => {
@@ -109,6 +119,20 @@ export function pullProfile() {
       })
       .catch((error) => {
         console.log(`Cannot get profile: ${error.response.data}`);
+      });
+    });
+  };
+}
+
+export function removeRequest() {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.get(`${ROOT_URL}/removeMatchRequest`, { headers: { Authorization: User } }).then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(`Cannot remove match request: ${error.response.data}`);
       });
     });
   };
@@ -170,7 +194,7 @@ export function postMatch({ start_time, end_time, topic, loc }) {
       console.log(result);
       const User = result;
       axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { Authorization: User } }).then((response) => {
-        console.log('posted successfully to match request');
+        console.log(response.data);
         dispatch({ type: ActionTypes.POST_MATCH });
       })
       .catch((error) => {

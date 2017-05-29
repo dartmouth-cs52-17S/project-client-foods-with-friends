@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { View, NavigatorIOS, Image, Button, StyleSheet, Text } from 'react-native';
+import { connect } from 'react-redux';
 
 import Chat from '../containers/chatHistoryPage';
 import ChatHistory from '../navigation/chatHistory';
+import Match from './matchPage';
+import { clearMatchResult, removeRequest } from '../actions';
+
 
 const styles = StyleSheet.create({
   image: {
@@ -47,6 +51,15 @@ class BeenMatched extends Component {
     };
   }
 
+  beenMatchedButton() {
+    console.log('beenMatchedButton Pressed!');
+    this.props.clearMatchResult();
+    this.props.removeMatchRequest();
+    this.props.navigator.push({
+      title: 'Match',
+      component: Match,
+    });
+  }
   render() {
     return (
       <View style={styles.imageView}>
@@ -62,4 +75,11 @@ class BeenMatched extends Component {
   }
 }
 
-export default BeenMatched;
+const mapDispatchToProps = dispatch => (
+  {
+    clearMatchResult: () => dispatch(clearMatchResult()),
+    removeMatchResult: () => dispatch(removeRequest()),
+  }
+);
+
+export default (connect(null, mapDispatchToProps)(BeenMatched));
