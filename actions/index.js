@@ -170,7 +170,7 @@ export function postMatch({ start_time, end_time, topic, loc }) {
       console.log(result);
       const User = result;
       axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { Authorization: User } }).then((response) => {
-        console.log('posted successfully to match request');
+        console.log(response.data);
         dispatch({ type: ActionTypes.POST_MATCH });
       })
       .catch((error) => {
