@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableHighlight, NavigatorIOS, ListView } from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView, TouchableHighlight, NavigatorIOS, ListView } from 'react-native';
 import MatchProfile from '../components/matchProfile';
 import { getMatchHistory } from '../actions';
 
@@ -49,6 +49,9 @@ class MatchHistoryPage extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
     };
+
+    this.showProfileDetail = this.showProfileDetail.bind(this);
+    this.renderCell = this.renderCell.bind(this);
   }
 
   componentDidMount() {
@@ -68,24 +71,24 @@ class MatchHistoryPage extends Component {
     }
   }
 
-  showProfileDetail(item) {
+  showProfileDetail(history) {
     this.props.navigator.push({
       translucent: 'false',
       title: '',
       component: MatchProfile,
-      passProps: { item },
+      passProps: { props: this.props.history },
     });
   }
 
-  renderCell(item) {
-    console.log('hihihi');
+  renderCell() {
+    console.log('PRINTING HISTORY');
     console.log(this.props.history);
     return (
       <TouchableHighlight onPress={() => { this.showProfileDetail(item); }} underlayColor="#dddddd">
         <View>
           <View style={styles.container}>
             <View style={styles.rightContainer}>
-              <Text style={styles.title}>{item.history[0].user}</Text>
+              <Text style={styles.title}>{this.props.history[0].User}</Text>
             </View>
           </View>
           <View style={styles.separator} />

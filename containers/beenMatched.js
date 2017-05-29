@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, NavigatorIOS, Image, Button, StyleSheet, Text, FlatList } from 'react-native';
+import { View, NavigatorIOS, Image, Button, StyleSheet, Text } from 'react-native';
 
 import Chat from '../containers/chatHistoryPage';
 import ChatHistory from '../navigation/chatHistory';
@@ -57,10 +57,6 @@ class BeenMatched extends Component {
         />
 
         <Text style={styles.title}>Your meal buddys conversation topic was: </Text>
-        <FlatList
-          data={[{ title: 'Basketweaving' }]}
-          renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
-        />
       </View>
     );
   }

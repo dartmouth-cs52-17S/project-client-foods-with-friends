@@ -113,6 +113,7 @@ class ProfilePage extends Component {
           <View style={styles.info}>
             <Text style={styles.title}>Interests:</Text>
             <FlatList
+              key={this.props.user.interests}
               removeClippedSubviews={false}
               data={this.props.user.interests}
               renderItem={({ item }) => <Text style={styles.interest}>{item}</Text>}
