@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import SocketIOClient from 'socket.io-client';
+import { AsyncStorage } from 'react-native';
 
 import {
   StyleSheet,
@@ -143,6 +145,31 @@ class MatchPage extends Component {
     this._hideDateTimePicker2 = this._hideDateTimePicker2.bind(this);
     this._handleDate1Picked = this._handleDate1Picked.bind(this);
     this._handleDate2Picked = this._handleDate2Picked.bind(this);
+
+    this.socket = SocketIOClient('http://localhost:9090');
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('token').then((response) => {
+      console.log(`in match page socket io token = ${response}`);
+      if (response !== null) {
+        const User = response;
+        this.socket.on('connect', () => {
+          this.socket
+              .emit('hello', 'HELLO FROM CLIENT')
+              .emit('authenticate', { token: User }) // send the jwt token
+              .on('authenticated', () => {
+                console.log('Yo, i am authorized!');
+              })
+              .on('unauthorized', (msg) => {
+                console.log(`unauthorized: ${JSON.stringify(msg.data)}`);
+                throw new Error(msg.data.type);
+              });
+        });
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
   onDate1Change(date1) {
