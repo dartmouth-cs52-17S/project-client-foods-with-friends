@@ -7,7 +7,7 @@ import ChatPage from '../components/chatPage';
 class ChatHistory extends Component {
   static navigationOptions = {
     tabBarLabel: 'Chat',
-    tabBarVisible: false,
+    // tabBarVisible: false,
     tabBarIcon: ({ tintColor }) => (
       <Image
         source={require('../imgs/speech-bubble.png')}

@@ -6,7 +6,9 @@ import { GiftedChat } from 'react-native-gifted-chat';
 const styles = StyleSheet.create({
   chat: {
     flex: 1,
-    marginBottom: 300,
+    backgroundColor: 'rgb(242, 105, 84)',
+    height: 200,
+    marginBottom: 71,
   },
 });
 
@@ -154,14 +156,15 @@ class ChatPage extends React.Component {
     // const user = AsyncStorage.getItem('token');
 
     return (
-      <GiftedChat
-        style={styles.chat}
-        messages={this.state.messages}
-        onSend={this.onSend}
-        user={{
-          _id: this.myUserID,
-        }}
-      />
+      <View style={styles.chat}>
+        <GiftedChat
+          messages={this.state.messages}
+          onSend={this.onSend}
+          user={{
+            _id: this.myUserID,
+          }}
+        />
+      </View>
     );
   }
 

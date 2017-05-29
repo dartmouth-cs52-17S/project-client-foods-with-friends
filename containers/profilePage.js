@@ -10,27 +10,29 @@ const styles = StyleSheet.create({
     flex: 1,
     alignSelf: 'stretch',
   },
-  image: {
-    width: 250,
-    height: 250,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    borderWidth: 1,
-    borderColor: '#000000',
-    borderRadius: 125,
-  },
-  imageView: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-  },
   username: {
     marginTop: 5,
     fontSize: 30,
     color: '#519bdd',
     fontWeight: 'bold',
     fontFamily: 'Avenir Next',
+  },
+  header: {
+    height: 220,
+    backgroundColor: 'rgb(178, 247, 235)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 3, height: 4 },
+    shadowRadius: 1,
+    shadowOpacity: 0.3,
+  },
+  info: {
+    height: 250,
+    width: 200,
+    backgroundColor: 'rgb(214, 105, 169)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   title: {
     marginTop: 10,
@@ -43,16 +45,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Avenir Next',
   },
+  image: {
+    width: 90,
+    height: 90,
+    borderColor: 'rgb(255, 255, 255)',
+    borderWidth: 4,
+    borderRadius: 45,
+  },
   button: {
     marginTop: 15,
-    marginRight: 15,
-    marginLeft: 15,
     alignSelf: 'center',
     backgroundColor: '#c65353',
-    width: 100,
-    height: 40,
+    width: 70,
+    height: 30,
     borderWidth: 2,
-    borderColor: '#c66153',
+    borderColor: '#823429',
     borderRadius: 5,
     display: 'flex',
     alignItems: 'center',
@@ -78,10 +85,6 @@ class ProfilePage extends Component {
   componentDidMount() {
     this.props.pullProfile();
   }
-  //
-  // componentWillUnmount() {
-  //   clearInterval(this.pull);
-  // }
 
   onPressButton() {
     this.props.signoutUser();
@@ -100,22 +103,24 @@ class ProfilePage extends Component {
     if (this.props.user && this.props.user !== null) {
       return (
         <View style={styles.body}>
-          <View style={styles.imageView}>
+          <View style={styles.header}>
             <Image
               style={styles.image}
-              source={{ uri: 'https://image.freepik.com/free-icon/business-person-silhouette-wearing-tie_318-49988.jpg' }}
+              source={require('../imgs/user-1.png')}
             />
             <Text style={styles.username}>{this.props.user.fullname}</Text>
+          </View>
+          <View style={styles.info}>
             <Text style={styles.title}>Interests:</Text>
             <FlatList
               removeClippedSubviews={false}
               data={this.props.user.interests}
               renderItem={({ item }) => <Text style={styles.interest}>{item}</Text>}
             />
-            <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
-              <Text>Sign Out</Text>
-            </TouchableHighlight>
           </View>
+          <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
+            <Text>Sign Out</Text>
+          </TouchableHighlight>
         </View>
       );
     } else {
