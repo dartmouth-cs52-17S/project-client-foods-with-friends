@@ -53,10 +53,13 @@ class MatchHistoryPage extends Component {
 
   componentDidMount() {
     this.props.getMatchHistory();
+    console.log('oohwee look at me');
+    console.log(this.state.dataSource);
   }
 
   componentWillReceiveProps(nextProps) {
     const history = nextProps.history;
+    console.log('oohwee look at meees');
     console.log(history);
     if (history) {
       this.setState({
@@ -75,6 +78,7 @@ class MatchHistoryPage extends Component {
   }
 
   renderCell(item) {
+    console.log('hihihi');
     console.log(this.props.history);
     return (
       <TouchableHighlight onPress={() => { this.showProfileDetail(item); }} underlayColor="#dddddd">
@@ -98,10 +102,11 @@ class MatchHistoryPage extends Component {
     } else {
       return (
         <View style={{ marginBottom: 60 }}>
+          <Text>HHHHHHi</Text>
           <ListView
             removeClippedSubviews={false}
             dataSource={this.state.dataSource}
-            renderRow={this.renderCell.bind(this)}
+            renderRow={this.renderCell}
             style={styles.listView}
           />
         </View>

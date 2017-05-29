@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
 const MatchProfile = (props) => {
   return (
     <View>
+      <Text>{props.}
       <Text>Hi</Text>
     </View>
   );
