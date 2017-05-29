@@ -318,7 +318,7 @@ class MatchPage extends Component {
           <TextInput
             placeholder="Enter topic"
             style={styles.topic}
-            onChange={this.onTopicChange}
+            onChangeText={this.onTopicChange}
           />
           <TouchableOpacity style={styles.matchButton} onPress={this.matchButton}>
             <Text style={styles.dateLabel}>Match Me!</Text>
