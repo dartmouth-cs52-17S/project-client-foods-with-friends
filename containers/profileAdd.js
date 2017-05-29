@@ -9,17 +9,10 @@ const styles = StyleSheet.create({
   label: {
     marginLeft: 20,
     marginRight: 20,
+    marginTop: 30,
+    marginBottom: 30,
     textAlign: 'center',
     fontSize: 30,
-    marginBottom: 8,
-    color: '#253e47',
-  },
-  label2: {
-    marginLeft: 20,
-    marginRight: 20,
-    textAlign: 'center',
-    fontSize: 20,
-    marginBottom: 8,
     color: '#253e47',
   },
   explanation: {
@@ -43,10 +36,9 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 0,
   },
   button: {
-    marginTop: -108,
+    marginTop: 15,
     backgroundColor: '#3694e9',
     borderRadius: 5,
     borderWidth: 2,
@@ -114,8 +106,19 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   profiles: {
-    width: 50,
-    height: 50,
+    width: 80,
+    height: 80,
+    marginLeft: 10,
+    marginRight: 10,
+  },
+  chosenProfile: {
+    borderWidth: 2,
+    borderRadius: 5,
+    borderColor: '#3694e9',
+  },
+  profileFlat: {
+    marginTop: 10,
+    marginBottom: 10,
   },
 });
 
@@ -137,6 +140,7 @@ class ProfileAdd extends Component {
       email: '',
       password: '',
       interests: [],
+      profile: '',
     };
     this.updateEmail = this.updateEmail.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
@@ -145,6 +149,7 @@ class ProfileAdd extends Component {
     this.renderInterests = this.renderInterests.bind(this);
     this.handleInterest = this.handleInterest.bind(this);
     this.renderImage = this.renderImage.bind(this);
+    this.handleProfile = this.handleProfile.bind(this);
   }
 
   updateEmail(text) {
@@ -178,6 +183,25 @@ class ProfileAdd extends Component {
     }
   }
 
+  handleProfile(profile1) {
+    console.log('profile checked!');
+    console.log(profile1);
+    console.log('this.state.profile:');
+    console.log(this.state.profile);
+
+    if (this.state.profile === profile1) {
+      console.log('in me!');
+      this.setState({
+        profile: '',
+      });
+    } else {
+      console.log('not in me!');
+      this.setState({
+        profile: profile1,
+      });
+    }
+  }
+
   renderInterests() {
     const interestItems = interests.map((interest) => {
       if (this.state.interests.includes(interest)) {
@@ -204,9 +228,16 @@ class ProfileAdd extends Component {
   renderImage(item) {
     console.log('item');
     console.log(item.item);
-  //  console.log(this);
+    let style;
+    if (this.state.profile === item) {
+      style = [styles.profiles, styles.chosenProfile];
+    } else {
+      style = [styles.profiles];
+    }
     return (
-      <Image source={item.item} style={{ width: 40, height: 40 }} />
+      <TouchableOpacity key={item.item} onPress={(profile) => { this.handleProfile(item.item); }}>
+        <Image source={item.item} style={style} />
+      </TouchableOpacity>
     );
   }
 
@@ -214,18 +245,18 @@ class ProfileAdd extends Component {
     const imgs = ['../imgs/cookie.png', '../imgs/cupcake.png',
       '../imgs/donut.png', '../imgs/muffin.png', '../imgs/pretzel.png'];
 
-
     if (this.props.page) {
       return (
         <ScrollView>
           <View style={styles.container}>
             <View>
               <Text style={styles.label}>Choose a photo!</Text>
-              <Text style={styles.label2}>You can change your profile picture at any time.</Text>
+              <Text style={styles.explanation}>You can change your profile picture at any time.</Text>
             </View>
             <FlatList
               horizontal
               data={imgs2}
+              style={styles.profileFlat}
               renderItem={this.renderImage}
             />
             <View>
