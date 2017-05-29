@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { NavigatorIOS, Image } from 'react-native';
 
 import ChatHistoryPage from '../containers/chatHistoryPage';
+import ChatPage from '../components/chatPage';
 
 class ChatHistory extends Component {
   static navigationOptions = {
@@ -16,7 +17,7 @@ class ChatHistory extends Component {
     return (
       <NavigatorIOS
         initialRoute={{
-          component: ChatHistoryPage,
+          component: ChatPage,
           title: 'Chat',
           translucent: false,
         }}
