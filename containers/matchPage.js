@@ -39,7 +39,7 @@ const styles = StyleSheet.create({
   dateLabel: {
     fontSize: 20,
     textAlign: 'center',
-    color: '#ffffff',
+    color: 'rgb(255, 255, 255)',
   },
   times: {
     marginTop: 10,
@@ -146,7 +146,7 @@ class MatchPage extends Component {
     this._handleDate1Picked = this._handleDate1Picked.bind(this);
     this._handleDate2Picked = this._handleDate2Picked.bind(this);
 
-    this.socket = SocketIOClient('http://localhost:9090');
+    this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
   }
 
   componentDidMount() {

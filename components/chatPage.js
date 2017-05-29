@@ -1,34 +1,174 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { StyleSheet, View, ScrollView, Text, AsyncStorage } from 'react-native';
+import SocketIOClient from 'socket.io-client';
+import { GiftedChat } from 'react-native-gifted-chat';
 
-import {
-    StyleSheet,
-    Text,
-    View,
-    Image,
-  } from 'react-native';
+const USER_ID = '@userId';
 
 const styles = StyleSheet.create({
-  container: {
-    alignItems: 'center',
-  },
-  image: {
-    width: 107,
-    height: 165,
-    padding: 10,
-  },
-  description: {
-    padding: 10,
-    fontSize: 15,
-    color: '#656565',
+  chat: {
+    flex: 1,
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
   },
 });
 
-const ChatPage = (props) => {
-  return (
-    <View>
-      <Text>Hi</Text>
-    </View>
-  );
-};
+class ChatPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      messages: [{ text: 'hi', user: '1' }],
+      userId: '1',
+    };
 
-module.exports = ChatPage;
+    // this.determineUser = this.determineUser.bind(this);
+    this.onReceivedMessage = this.onReceivedMessage.bind(this);
+    this.onSend = this.onSend.bind(this);
+    this._storeMessages = this._storeMessages.bind(this);
+
+    this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
+    this.socket.on('message', this.onReceivedMessage);
+    // this.determineUser();
+  }
+
+  // Event listeners
+  /**
+   * When the server sends a message to this.
+   */
+  onReceivedMessage(messages) {
+    this._storeMessages(messages);
+  }
+
+  /**
+   * When a message is sent, send the message to the server
+   * and store it in this component's state.
+   */
+  onSend(messages = []) {
+    // this.socket.emit('message', messages[0]);
+    this.socket.emit('hello', messages[0]);
+    this._storeMessages(messages);
+  }
+
+  componentDidMount() {
+    AsyncStorage.getItem('token').then((response) => {
+      console.log(`in match page socket io token = ${response}`);
+      if (response !== null) {
+        const User = response;
+        this.socket.on('connect', () => {
+          this.socket
+              .emit('hello', 'HELLO FROM CLIENT')
+              .emit('authenticate', { token: User }) // send the jwt token
+              .on('authenticated', () => {
+                console.log('Yo, i am authorized!');
+              })
+              .on('unauthorized', (msg) => {
+                console.log(`unauthorized: ${JSON.stringify(msg.data)}`);
+                throw new Error(msg.data.type);
+              });
+        });
+      }
+    }).catch((err) => {
+      console.log(err);
+    });
+  }
+  /**
+   * When a user joins the chatroom, check if they are an existing user.
+   * If they aren't, then ask the server for a userId.
+  //  * Set the userId to the component's state.
+  //  */
+  // determineUser() {
+  //   AsyncStorage.getItem(USER_ID)
+  //     .then((userId) => {
+  //       // If there isn't a stored userId, then fetch one from the server.
+  //       if (!userId) {
+  //         this.socket.emit('userJoined', null);
+  //         this.socket.on('userJoined', (userId) => {
+  //           AsyncStorage.setItem(USER_ID, userId);
+  //           this.setState({ userId });
+  //         });
+  //       } else {
+  //         this.socket.emit('userJoined', userId);
+  //         this.setState({ userId });
+  //       }
+  //     })
+  //     .catch(e => alert(e));
+  // }
+
+
+  // Helper functions
+  _storeMessages(messages) {
+    this.setState((previousState) => {
+      return {
+        messages: GiftedChat.append(previousState.messages, messages),
+      };
+    });
+  }
+
+  render() {
+    const user = AsyncStorage.getItem('token');
+
+    return (
+      <GiftedChat
+        style={styles.chat}
+        messages={this.state.messages}
+        onSend={this.onSend}
+        user={{
+          _id: 1,
+        }}
+      />
+    );
+  }
+
+
+}
+
+export default ChatPage;
+
+// import { GiftedChat } from 'react-native-gifted-chat';
+//
+// class ChatPage extends React.Component {
+//   constructor(props) {
+//     super(props);
+//     this.state = { messages: [] };
+//     this.onSend = this.onSend.bind(this);
+//   }
+//   componentWillMount() {
+//     this.setState({
+//       messages: [
+//         {
+//           _id: 1,
+//           text: 'Hello developer',
+//           createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
+//           user: {
+//             _id: 2,
+//             name: 'React Native',
+//             avatar: 'https://facebook.github.io/react/img/logo_og.png',
+//           },
+//         },
+//       ],
+//     });
+//   }
+//   onSend(messages = []) {
+//     this.setState((previousState) => {
+//       return {
+//         messages: GiftedChat.append(previousState.messages, messages),
+//       };
+//     });
+//   }
+//   render() {
+//     return (
+//
+//       <GiftedChat
+//         messages={this.state.messages}
+//         onSend={this.onSend}
+//         user={{
+//           _id: 1,
+//         }}
+//       />
+//     );
+//   }
+// }
+//
+// export default ChatPage;
