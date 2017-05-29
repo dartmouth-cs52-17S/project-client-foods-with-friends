@@ -114,6 +114,17 @@ export function pullProfile() {
   };
 }
 
+export function pullOtherProfile(id) {
+  return (dispatch) => {
+    axios.get(`${ROOT_URL}/user/${id}`).then((response) => {
+      dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data[0] } });
+    })
+    .catch((error) => {
+      console.log(`Cannot get profile: ${error.response.data}`);
+    });
+  };
+}
+
 export function removeRequest() {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
