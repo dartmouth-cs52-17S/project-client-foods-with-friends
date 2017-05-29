@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Text, ScrollView, NavigatorIOS, ListItem, List, FlatList } from 'react-native';
+import { View, StyleSheet, Text, NavigatorIOS, ListItem, List, FlatList } from 'react-native';
 
 const styles = StyleSheet.create({
   body: {
