@@ -46,7 +46,8 @@ class ChatPage extends React.Component {
    * and store it in this component's state.
    */
   onSend(messages = []) {
-    this.socket.emit('message', messages[0]);
+    // this.socket.emit('message', messages[0]);
+    this.socket.emit('hello', messages[0]);
     this._storeMessages(messages);
   }
 
