@@ -2,6 +2,8 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
 const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
+// NOTE: Change this ROOT_URL when testing with local server
+// const ROOT_URL = 'http://localhost:9090/api';
 
 export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
