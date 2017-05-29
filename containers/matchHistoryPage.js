@@ -49,6 +49,9 @@ class MatchHistoryPage extends Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
     };
+
+    this.showProfileDetail = this.showProfileDetail.bind(this);
+    this.renderCell = this.renderCell.bind(this);
   }
 
   componentDidMount() {
@@ -57,7 +60,6 @@ class MatchHistoryPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     const history = nextProps.history;
-    console.log(history);
     if (history) {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(history),
@@ -74,14 +76,14 @@ class MatchHistoryPage extends Component {
     });
   }
 
-  renderCell(item) {
+  renderCell() {
     console.log(this.props.history);
     return (
       <TouchableHighlight onPress={() => { this.showProfileDetail(item); }} underlayColor="#dddddd">
         <View>
           <View style={styles.container}>
             <View style={styles.rightContainer}>
-              <Text style={styles.title}>{item.history[0].user}</Text>
+              <Text style={styles.title}>{this.props.history[0].User}</Text>
             </View>
           </View>
           <View style={styles.separator} />
@@ -101,7 +103,7 @@ class MatchHistoryPage extends Component {
           <ListView
             removeClippedSubviews={false}
             dataSource={this.state.dataSource}
-            renderRow={this.renderCell.bind(this)}
+            renderRow={this.renderCell}
             style={styles.listView}
           />
         </View>

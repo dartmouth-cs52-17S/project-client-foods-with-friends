@@ -1,12 +1,13 @@
 import React from 'react';
-import { StyleSheet, View, ScrollView, Text, AsyncStorage } from 'react-native';
+import { StyleSheet, View, ScrollView, AsyncStorage, TextInput } from 'react-native';
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
 
 const styles = StyleSheet.create({
-  chat: {
+  container: {
     flex: 1,
-    marginBottom: 300,
+    alignSelf: 'stretch',
+    marginBottom: 10,
   },
 });
 
@@ -154,14 +155,16 @@ class ChatPage extends React.Component {
     // const user = AsyncStorage.getItem('token');
 
     return (
-      <GiftedChat
-        style={styles.chat}
-        messages={this.state.messages}
-        onSend={this.onSend}
-        user={{
-          _id: this.myUserID,
-        }}
-      />
+      <View style={styles.container}>
+        <GiftedChat
+          style={styles.chat}
+          messages={this.state.messages}
+          onSend={this.onSend}
+          user={{
+            _id: this.myUserID,
+          }}
+        />
+      </View>
     );
   }
 
