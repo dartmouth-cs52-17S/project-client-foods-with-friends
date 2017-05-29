@@ -7,6 +7,7 @@ const USER_ID = '@userId';
 
 const styles = StyleSheet.create({
   chat: {
+    flex: 1,
     marginBottom: 300,
   },
 });
