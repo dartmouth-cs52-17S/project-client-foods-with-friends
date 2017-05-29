@@ -15,6 +15,14 @@ const styles = StyleSheet.create({
     marginBottom: 8,
     color: '#253e47',
   },
+  label2: {
+    marginLeft: 20,
+    marginRight: 20,
+    textAlign: 'center',
+    fontSize: 20,
+    marginBottom: 8,
+    color: '#253e47',
+  },
   explanation: {
     marginTop: 0,
     marginLeft: '10%',
@@ -110,7 +118,12 @@ const styles = StyleSheet.create({
 
 const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
   'volunteering', 'education', 'finance', 'reading', 'nightlife', 'fitness', 'tech',
-  'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues', 'gaming'];
+  'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues',
+  'gaming'];
+
+const imgs = ['../imgs/avatar.png', '../imgs/cookie.png', '../imgs/cupcake.png',
+ '../imgs/donut.png', '../imgs/muffin.png', '../imgs/pretzel.png'];
+
 
 class ProfileAdd extends Component {
 
@@ -127,6 +140,7 @@ class ProfileAdd extends Component {
     this.renderPage = this.renderPage.bind(this);
     this.renderInterests = this.renderInterests.bind(this);
     this.handleInterest = this.handleInterest.bind(this);
+    this.renderImage = this.renderImage.bind(this);
   }
 
   updateEmail(text) {
@@ -183,12 +197,29 @@ class ProfileAdd extends Component {
     );
   }
 
+  renderImage(item) {
+    return (
+      <Image
+        style={styles.donut}
+        source={require(item)}
+      />
+    );
+  }
+
   renderPage() {
     if (this.props.page) {
       return (
         <View style={styles.container}>
+          <Text style={styles.label}>Pick a profile picture!</Text>
+          <FlatList
+            removeClippedSubviews={false}
+            horiontal={true}
+            data={this.imgs}
+            renderItem={this.renderImage}
+          />
+          <Text style={styles.label2}>You can change your profile picture at any time.</Text>
           <Text style={styles.label}>Add some interests!</Text>
-          <Text style={styles.explanation}>Your interests will appear on your profile for other MunchBuddies to see</Text>
+          <Text style={styles.explanation}>Your interests will appear on your profile for other MunchBuddies to see. </Text>
           {this.renderInterests()}
           <View style={styles.buttonBox}>
             <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
