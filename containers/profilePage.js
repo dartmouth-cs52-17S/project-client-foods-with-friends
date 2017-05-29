@@ -122,6 +122,9 @@ class ProfilePage extends Component {
       return (
         <View style={styles.body}>
           <Text>Loading...</Text>
+          <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
+            <Text>Sign Out</Text>
+          </TouchableHighlight>
         </View>
       );
     }

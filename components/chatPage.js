@@ -7,11 +7,7 @@ const USER_ID = '@userId';
 
 const styles = StyleSheet.create({
   chat: {
-    flex: 1,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
+    marginBottom: 300,
   },
 });
 
@@ -19,8 +15,18 @@ class ChatPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [{ text: 'hi', user: '1' }],
-      userId: '1',
+      messages: [
+        {
+          _id: 1,
+          text: 'Hello developer',
+          createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
+          user: {
+            _id: 2,
+            name: 'React Native',
+            avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          },
+        },
+      ],
     };
 
     // this.determineUser = this.determineUser.bind(this);
@@ -28,7 +34,10 @@ class ChatPage extends React.Component {
     this.onSend = this.onSend.bind(this);
     this._storeMessages = this._storeMessages.bind(this);
 
-    this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
+
+    this.socket = SocketIOClient('http://localhost:9090');
+
+    // this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
     this.socket.on('message', this.onReceivedMessage);
     // this.determineUser();
   }
@@ -47,13 +56,13 @@ class ChatPage extends React.Component {
    */
   onSend(messages = []) {
     // this.socket.emit('message', messages[0]);
-    this.socket.emit('hello', messages[0]);
+    this.socket.emit('hello', 'messages[0]');
     this._storeMessages(messages);
   }
 
   componentDidMount() {
     AsyncStorage.getItem('token').then((response) => {
-      console.log(`in match page socket io token = ${response}`);
+      console.log(`in chat page socket io token = ${response}`);
       if (response !== null) {
         const User = response;
         this.socket.on('connect', () => {
@@ -61,7 +70,7 @@ class ChatPage extends React.Component {
               .emit('hello', 'HELLO FROM CLIENT')
               .emit('authenticate', { token: User }) // send the jwt token
               .on('authenticated', () => {
-                console.log('Yo, i am authorized!');
+                console.log('Yo, i am authorized in chat page!');
               })
               .on('unauthorized', (msg) => {
                 console.log(`unauthorized: ${JSON.stringify(msg.data)}`);
@@ -115,7 +124,7 @@ class ChatPage extends React.Component {
         messages={this.state.messages}
         onSend={this.onSend}
         user={{
-          _id: 1,
+          _id: 4,
         }}
       />
     );
@@ -125,50 +134,3 @@ class ChatPage extends React.Component {
 }
 
 export default ChatPage;
-
-// import { GiftedChat } from 'react-native-gifted-chat';
-//
-// class ChatPage extends React.Component {
-//   constructor(props) {
-//     super(props);
-//     this.state = { messages: [] };
-//     this.onSend = this.onSend.bind(this);
-//   }
-//   componentWillMount() {
-//     this.setState({
-//       messages: [
-//         {
-//           _id: 1,
-//           text: 'Hello developer',
-//           createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-//           user: {
-//             _id: 2,
-//             name: 'React Native',
-//             avatar: 'https://facebook.github.io/react/img/logo_og.png',
-//           },
-//         },
-//       ],
-//     });
-//   }
-//   onSend(messages = []) {
-//     this.setState((previousState) => {
-//       return {
-//         messages: GiftedChat.append(previousState.messages, messages),
-//       };
-//     });
-//   }
-//   render() {
-//     return (
-//
-//       <GiftedChat
-//         messages={this.state.messages}
-//         onSend={this.onSend}
-//         user={{
-//           _id: 1,
-//         }}
-//       />
-//     );
-//   }
-// }
-//
-// export default ChatPage;
