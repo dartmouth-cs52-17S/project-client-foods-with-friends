@@ -166,7 +166,7 @@ class ProfileAdd extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.addInterests(this.state.interests);
+    this.props.addInterests(this.state.interests, this.state.profile);
     this.props.goToSignin();
   }
 
@@ -188,6 +188,7 @@ class ProfileAdd extends Component {
     console.log(profile1);
     console.log('this.state.profile:');
     console.log(this.state.profile);
+    console.log(typeof this.state.profile);
 
     if (this.state.profile === profile1) {
       console.log('in me!');
