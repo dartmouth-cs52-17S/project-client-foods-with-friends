@@ -44,8 +44,9 @@ const styles = StyleSheet.create({
     fontFamily: 'Avenir Next',
   },
   button: {
-    borderWidth: 1,
-    borderColor: '#000000',
+    fontSize: 20,
+    textAlign: 'center',
+    color: '#ffffff',
   },
 });
 

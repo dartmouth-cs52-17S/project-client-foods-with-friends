@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   dateLabel: {
     fontSize: 20,
     textAlign: 'center',
-    color: '#ffffff',
+    color: 'rgb(255, 255, 255)',
   },
   times: {
     marginTop: 10,
