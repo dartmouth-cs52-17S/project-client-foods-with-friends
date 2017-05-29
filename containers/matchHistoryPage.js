@@ -77,14 +77,14 @@ class MatchHistoryPage extends Component {
   }
 
   renderCell(person) {
-    console.log(person);
+    console.log(this.props.history);
     console.log(person.User);
     return (
       <TouchableHighlight onPress={() => { this.showProfileDetail(person); }} underlayColor="#dddddd">
         <View>
           <View style={styles.container}>
             <View style={styles.rightContainer}>
-              <Text style={styles.title}>{person.User}</Text>
+              <Text style={styles.title}>Hey</Text>
             </View>
           </View>
           <View style={styles.separator} />

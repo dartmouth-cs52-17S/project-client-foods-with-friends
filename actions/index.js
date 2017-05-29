@@ -114,6 +114,20 @@ export function pullProfile() {
   };
 }
 
+export function removeRequest() {
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.get(`${ROOT_URL}/removeMatchRequest`, { headers: { Authorization: User } }).then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.log(`Cannot remove match request: ${error.response.data}`);
+      });
+    });
+  };
+}
+
 export function getMatchResult() {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {

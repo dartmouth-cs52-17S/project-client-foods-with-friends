@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableHighlight, Image, Animated, Easing, AlertIOS } from 'react-native';
 import MatchPage from '../containers/matchPage';
 
-import { getMatchResult, clearMatchResult } from '../actions';
+import { getMatchResult, clearMatchResult, removeRequest } from '../actions';
 import BeenMatched from './beenMatched';
 
 const styles = StyleSheet.create({
@@ -80,6 +80,7 @@ class MatchLoading extends Component {
 
   componentDidMount() {
     this.spin();
+    this.props.getMatchResult();
   }
 
   spin() {
@@ -99,7 +100,7 @@ class MatchLoading extends Component {
      'Are you sure you want to cancel your match request?',
      'Requests normally expire when you reach your designated meal time.',
       [
-       { text: 'Yes, cancel my request', onPress: () => this.props.navigator.pop() },
+       { text: 'Yes, cancel my request', onPress: () => { this.props.navigator.pop(); this.props.removeMatchResult(); } },
        { text: 'No, I\'ve changed my mind', onPress: () => console.log('noCancel pressed') },
       ],
     );
@@ -153,6 +154,7 @@ const mapDispatchToProps = dispatch => (
   {
     getMatchResult: () => dispatch(getMatchResult()),
     clearMatchResult: () => dispatch(clearMatchResult()),
+    removeMatchResult: () => dispatch(removeRequest()),
   }
 );
 
