@@ -3,7 +3,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableHighlight, Image, Animated, Easing, AlertIOS} from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight, Image, Animated, Easing, AlertIOS } from 'react-native';
 import MatchPage from '../containers/matchPage';
 
 import { getMatchResult, clearMatchResult } from '../actions';
@@ -45,14 +45,14 @@ const styles = StyleSheet.create({
     marginTop: -40,
     shadowOffset: {
       width: 0,
-      height: 1
+      height: 1,
     },
     shadowRadius: 1,
     shadowOpacity: 1.0,
   },
-buttonText: {
-  fontSize: 20,
-  color: 'white',
+  buttonText: {
+    fontSize: 20,
+    color: 'white',
   },
   findingMatch: {
     marginTop: 20,
@@ -78,30 +78,30 @@ class MatchLoading extends Component {
     this.handleCancel = this.handleCancel.bind(this);
   }
 
-  componentDidMount () {
-  this.spin()
-}
+  componentDidMount() {
+    this.spin();
+  }
 
-spin () {
-  this.spinValue.setValue(0)
-  Animated.timing(
+  spin() {
+    this.spinValue.setValue(0);
+    Animated.timing(
     this.spinValue,
-    {
-      toValue: 1,
-      duration: 4000,
-      easing: Easing.linear
-    }
-  ).start(() => this.spin())
-}
+      {
+        toValue: 1,
+        duration: 4000,
+        easing: Easing.linear,
+      },
+  ).start(() => this.spin());
+  }
 
-  handleCancel(){
+  handleCancel() {
     AlertIOS.alert(
      'Are you sure you want to cancel your match request?',
      'Requests normally expire when you reach your designated meal time.',
-     [
-       {text: 'Yes, cancel my request', onPress: () => this.props.navigator.pop()},
-       {text: 'No, I\'ve changed my mind', onPress: () => console.log('noCancel pressed')},
-     ],
+      [
+       { text: 'Yes, cancel my request', onPress: () => this.props.navigator.pop() },
+       { text: 'No, I\'ve changed my mind', onPress: () => console.log('noCancel pressed') },
+      ],
     );
   }
 
@@ -112,8 +112,8 @@ spin () {
 
     const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
-      outputRange: ['0deg', '360deg']
-    })
+      outputRange: ['0deg', '360deg'],
+    });
 
     if (this.props.match !== null) {
       return <BeenMatched />;
@@ -121,14 +121,14 @@ spin () {
     return (
       <View style={styles.container}>
         <View>
-         <Animated.Image
-          style={{
-            width: 128,
-            height: 128,
-            marginTop: '40%',
-            transform: [{rotate: spin}] }}
-          source={require('../imgs/pie.png')}
-        />
+          <Animated.Image
+            style={{
+              width: 128,
+              height: 128,
+              marginTop: '40%',
+              transform: [{ rotate: spin }] }}
+            source={require('../imgs/pie.png')}
+          />
         </View>
         <View style={styles.findingMatch}>
           <Text style={styles.description, styles.font}>Finding your match... Check back shortly!</Text>
