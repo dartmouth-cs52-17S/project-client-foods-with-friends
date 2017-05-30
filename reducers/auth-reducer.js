@@ -5,6 +5,7 @@ const initialState = {
   message: '',
   page: false,
   user: null,
+  otherUser: null,
 };
 
 const AuthReducer = (state = initialState, action) => {
@@ -33,6 +34,10 @@ const AuthReducer = (state = initialState, action) => {
     case ActionTypes.PULL_PROFILE:
       return Object.assign({}, state, {
         user: action.payload.user,
+      });
+    case ActionTypes.PULL_OTHER_PROFILE:
+      return Object.assign({}, state, {
+        otherUser: action.payload.otherUser,
       });
     default:
       return state;

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { StyleSheet, View, ScrollView, AsyncStorage, TextInput } from 'react-native';
 import SocketIOClient from 'socket.io-client';
 import { GiftedChat } from 'react-native-gifted-chat';
@@ -16,19 +17,7 @@ class ChatPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      messages: [
-        {
-          _id: 1,
-          text: 'Hello developer',
-          createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://facebook.github.io/react/img/logo_og.png',
-          },
-          roomID: 1,
-        },
-      ],
+      messages: [],
     };
 
   // NOTE: Hard code a matched person here.
@@ -44,9 +33,9 @@ class ChatPage extends React.Component {
     this.onReceivedExistingMessage = this.onReceivedExistingMessage.bind(this);
     this.convertUserFormat = this.convertUserFormat.bind(this);
 
-    this.socket = SocketIOClient('http://localhost:9090');
+    // this.socket = SocketIOClient('http://localhost:9090');
 
-    // this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
+    this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
     this.socket.on('message', this.onReceivedMessage);
     this.socket.on('exisitingMsgsResult', this.onReceivedExistingMessage);
   }
@@ -81,17 +70,17 @@ class ChatPage extends React.Component {
 
   // Event listeners
   onReceivedExistingMessage(result) {
-    console.log(`onReceivedExistingMessage ${JSON.stringify(result)}`);
     this.roomID = result.roomID;
 
-    this.onReceivedMessage(this.convertUserFormat(result.messages));
+    this.onReceivedMessage(result.messages);
   }
   /**
    * When the server sends a message to this.
    */
   onReceivedMessage(messages) {
-    console.log(`onReceivedMessage ${JSON.stringify(messages)}`);
-    this._storeMessages(messages);
+    const convertedMsg = this.convertUserFormat(messages);
+    console.log(`storing message: ${JSON.stringify(convertedMsg)}`);
+    this._storeMessages(convertedMsg);
   }
 
   /**
@@ -114,7 +103,7 @@ class ChatPage extends React.Component {
   convertUserFormat(messages) {
     const convertedMsg = messages;
     for (let i = 0; i < convertedMsg.length; i += 1) {
-      convertedMsg[i].user = { _id: messages[i].user };
+      convertedMsg[i].user = { _id: messages[i].user, name: 'Hello', avatar: 'https://cdn1.iconfinder.com/data/icons/fruitix-circular/125/apple-256.png' };
     }
     console.log(`roomID = ${this.roomID}, convertedMsg = ${JSON.stringify(convertedMsg)}`);
     return convertedMsg;

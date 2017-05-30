@@ -147,8 +147,8 @@ class MatchPage extends Component {
     this._handleDate2Picked = this._handleDate2Picked.bind(this);
 
     this.onMatchResultFound = this.onMatchResultFound.bind(this);
-    // this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
-    this.socket = SocketIOClient('http://localhost:9090');
+    this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
+    // this.socket = SocketIOClient('http://localhost:9090');
   }
 
   componentDidMount() {

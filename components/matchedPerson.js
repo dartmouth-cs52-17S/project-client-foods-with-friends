@@ -24,6 +24,9 @@ const styles = StyleSheet.create({
   rightContainer: {
     flex: 1,
   },
+  leftContainer: {
+    marginRight: 10,
+  },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
@@ -37,6 +40,10 @@ const styles = StyleSheet.create({
     width: 22,
     height: 22,
   },
+  leftIcon: {
+    width: 40,
+    height: 40,
+  },
   separator: {
     height: 1,
     backgroundColor: '#dddddd',
@@ -46,7 +53,7 @@ const styles = StyleSheet.create({
 class MemberTemplate extends Component {
   constructor(props) {
     super(props);
-    this.state = { fullname: null, time: moment() };
+    this.state = { fullname: null, time: moment(), image: '' };
 
     this.renderUser = this.renderUser.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -54,9 +61,9 @@ class MemberTemplate extends Component {
 
   // use axios call to access member location from the latitude and longitude given in the json file
   componentDidMount() {
-    axios.get(`http://localhost:9090/api/user/${this.props.userid}`).then((response) => {
+    axios.get(`https://munchbuddy.herokuapp.com/api/user/${this.props.userid}`).then((response) => {
       console.log(response.data);
-      this.setState({ fullname: response.data.fullname });
+      this.setState({ fullname: response.data.fullname, image: response.data.profile_image });
       const temp = moment(this.props.time);
       this.setState({ time: temp });
     })
@@ -72,6 +79,12 @@ class MemberTemplate extends Component {
       return (
         <View style={styles.view}>
           <View style={styles.container}>
+            <View style={styles.leftContainer}>
+              <Image
+                style={styles.leftIcon}
+                source={this.state.image}
+              />
+            </View>
             <View style={styles.rightContainer}>
               <Text style={styles.title}>{this.state.fullname}</Text>
               <Text style={styles.info}>{`Matched on ${this.state.time.format('MM/DD/YY, hh:mm A').toString()}`}</Text>

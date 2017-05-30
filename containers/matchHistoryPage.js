@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
 import ChatPage from '../components/chatPage';
 import MatchedPerson from '../components/matchedPerson';
-import BeenMatched from '../containers/beenMatched';
+import MatchProfile from '../containers/matchProfile';
 import { getMatchHistory } from '../actions';
 
 
@@ -51,8 +51,9 @@ class MatchHistoryPage extends Component {
     this.state = {
       query: 'cat',
       isLoading: true,
+      history: [],
       dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
+        rowHasChanged: () => true,
       }),
     };
 
@@ -65,7 +66,6 @@ class MatchHistoryPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('hey');
     const historyReverse = [...nextProps.history];
     const history = historyReverse.reverse();
     const check = [];
@@ -76,9 +76,10 @@ class MatchHistoryPage extends Component {
         check.push(history[i].User);
       }
     }
+    this.setState({ history: people });
     if (history) {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(people),
+        dataSource: this.state.dataSource.cloneWithRows(this.state.history),
       });
     }
   }
@@ -95,9 +96,10 @@ class MatchHistoryPage extends Component {
       onRightButtonPress: () => {
         this.props.navigator.push({
           translucent: 'false',
-          title: 'hello',
-          component: BeenMatched,
+          title: '',
+          component: MatchProfile,
           tabBarVisible: false,
+          passProps: person,
         });
       },
     });
@@ -112,7 +114,9 @@ class MatchHistoryPage extends Component {
   }
 
   render() {
-    if (this.props.history === null) {
+    const ds = new ListView.DataSource({ rowHasChanged: () => true });
+    if (this.state.history === null) {
+      console.log(this.state.history);
       return (
         <View><Text>Hi</Text></View>
       );
@@ -121,7 +125,7 @@ class MatchHistoryPage extends Component {
         <View style={styles.view}>
           <ListView
             removeClippedSubviews={false}
-            dataSource={this.state.dataSource}
+            dataSource={ds.cloneWithRows(this.state.history)}
             renderRow={person => <View>{this.renderCell(person)}</View>}
             style={styles.listView}
           />
