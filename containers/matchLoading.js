@@ -126,7 +126,13 @@ class MatchLoading extends Component {
     });
 
     if (this.props.match !== null) {
-      return <BeenMatched navigator={this.props.navigator} />;
+      console.log('this.props.match is not null');
+      console.log(typeof this.props.match);
+      this.props.navigator.push({
+        component: BeenMatched,
+        title: 'Your Match',
+        passProps: { match: this.props.match },
+      });
     }
     return (
       <View style={styles.container}>
