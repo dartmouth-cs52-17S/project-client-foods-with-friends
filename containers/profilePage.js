@@ -101,12 +101,14 @@ class ProfilePage extends Component {
 
   renderProfile() {
     if (this.props.user && this.props.user !== null) {
+      console.log('render Profile');
+      console.log(this.props.user);
       return (
         <View style={styles.body}>
           <View style={styles.header}>
             <Image
               style={styles.image}
-              source={require('../imgs/user-1.png')}
+              source={this.props.user.profile_image}
             />
             <Text style={styles.username}>{this.props.user.fullname}</Text>
           </View>
