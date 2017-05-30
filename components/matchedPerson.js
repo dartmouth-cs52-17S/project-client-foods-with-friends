@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    alignItems: 'center',
     backgroundColor: 'white',
     padding: 10,
   },
@@ -28,6 +28,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 3,
+  },
+  info: {
+    fontSize: 12,
+    marginBottom: 3,
+  },
+  sideIcon: {
+    width: 22,
+    height: 22,
   },
   separator: {
     height: 1,
@@ -65,14 +73,20 @@ class MemberTemplate extends Component {
           <View style={styles.container}>
             <View style={styles.rightContainer}>
               <Text style={styles.title}>{this.state.fullname}</Text>
-              <Text style={styles.title}>{`Matched on ${this.state.time.format('MM/DD/YY').toString()}`}</Text>
+              <Text style={styles.info}>{`Matched on ${this.state.time.format('MM/DD/YY, hh:mm A').toString()}`}</Text>
+            </View>
+            <View style={styles.rightIcon}>
+              <Image
+                style={styles.sideIcon}
+                source={require('../imgs/right-arrow.png')}
+              />
             </View>
           </View>
           <View style={styles.separator} />
         </View>
       );
     } else {
-      return <View><Text>Loading</Text></View>;
+      return <View><Text>Loading...</Text></View>;
     }
   }
 
