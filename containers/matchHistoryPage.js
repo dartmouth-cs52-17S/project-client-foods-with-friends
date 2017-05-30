@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableHighlight, NavigatorIOS, ListView } from 'react-native';
+import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
 import MatchProfile from '../components/matchProfile';
+import MatchedPerson from '../components/matchedPerson';
 import { getMatchHistory } from '../actions';
 
 
 const styles = StyleSheet.create({
+  view: {
+    flex: 1,
+  },
   container: {
     flex: 1,
+    alignSelf: 'stretch',
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
@@ -60,9 +66,13 @@ class MatchHistoryPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     const history = nextProps.history;
+    // let people = [];
+    // for (let i = 0; i < history.length; i += 1) {
+    //   if (people.length > 0 || people.includes(history[x]))
+    // }
     if (history) {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(history),
+        dataSource: this.state.dataSource.cloneWithRows(history.reverse()),
       });
     }
   }
@@ -77,19 +87,10 @@ class MatchHistoryPage extends Component {
   }
 
   renderCell(person) {
-    console.log(this.props.history);
-    console.log(person.User);
     return (
-      <TouchableHighlight onPress={() => { this.showProfileDetail(person); }} underlayColor="#dddddd">
-        <View>
-          <View style={styles.container}>
-            <View style={styles.rightContainer}>
-              <Text style={styles.title}>Hey</Text>
-            </View>
-          </View>
-          <View style={styles.separator} />
-        </View>
-      </TouchableHighlight>
+      <TouchableOpacity onPress={() => { this.showProfileDetail(person); }} underlayColor="#dddddd">
+        <MatchedPerson userid={person.User} time={person.match_time} />
+      </TouchableOpacity>
     );
   }
 
@@ -100,11 +101,11 @@ class MatchHistoryPage extends Component {
       );
     } else {
       return (
-        <View style={{ marginBottom: 60 }}>
+        <View style={styles.view}>
           <ListView
             removeClippedSubviews={false}
             dataSource={this.state.dataSource}
-            renderRow={(person) => { this.renderCell(person); }}
+            renderRow={person => <View>{this.renderCell(person)}</View>}
             style={styles.listView}
           />
         </View>
@@ -119,11 +120,11 @@ const mapStateToProps = state => (
   }
 );
 
-// const mapDispatchToProps = dispatch => (
-//   {
-//     getMatchHistory: () => dispatch(getMatchHistory()),
-//   }
-// );
+const mapDispatchToProps = dispatch => (
+  {
+    getMatchHistory: () => dispatch(getMatchHistory()),
+  }
+);
 
 export default (connect(mapStateToProps,
-  { getMatchHistory })(MatchHistoryPage));
+  mapDispatchToProps)(MatchHistoryPage));
