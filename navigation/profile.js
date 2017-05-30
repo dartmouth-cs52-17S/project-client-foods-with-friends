@@ -22,11 +22,10 @@ class Profile extends Component {
           component: ProfilePage,
           title: 'My Profile',
           translucent: false,
-          rightButtonTitle: 'Edit',
+          rightButtonIcon: require('../imgs/editUser.png'),
           onRightButtonPress: () => {
             this.refs.nav.push({
               title: 'Edit Interests',
-              leftButtonTitle: ' ',
               component: EditProfile,
             });
           },
