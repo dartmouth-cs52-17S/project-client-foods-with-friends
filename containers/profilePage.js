@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: 'rgb(199, 197, 237)',
+    backgroundColor: 'rgb(245, 245, 245)',
   },
   username: {
     marginTop: 5,
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 220,
-    backgroundColor: 'rgb(178, 247, 235)',
+    backgroundColor: 'rgb(187, 158, 218)',
     alignItems: 'center',
     justifyContent: 'center',
     borderColor: 'rgb(165, 236, 223)',
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   },
   info: {
     height: 250,
-    backgroundColor: 'rgb(255, 255, 255)',
+    backgroundColor: 'rgb(87, 157, 196)',
     justifyContent: 'center',
     alignItems: 'center',
     textAlign: 'center',
@@ -40,6 +40,7 @@ const styles = StyleSheet.create({
   },
   title: {
     marginTop: 10,
+    color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
     fontFamily: 'Avenir Next',
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 3,
     fontSize: 14,
+    color: 'white',
     fontFamily: 'Avenir Next',
   },
   image: {
@@ -73,6 +75,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 1,
     shadowOpacity: 1,
+  },
+  list: {
+    margin: 20,
   },
 });
 
@@ -122,6 +127,7 @@ class ProfilePage extends Component {
             <Text style={styles.title}>Interests:</Text>
             <ScrollView>
               <FlatList
+                style={styles.list}
                 key={this.props.user.interests}
                 removeClippedSubviews={false}
                 data={this.props.user.interests}

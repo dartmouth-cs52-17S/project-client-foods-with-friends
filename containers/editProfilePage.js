@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     textAlign: 'center',
-    fontSize: 25,
+    fontSize: 20,
     marginBottom: 10,
     color: '#253e47',
   },
@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     borderRadius: 7,
     paddingLeft: 8,
     color: '#1f343c',
+    marginBottom: 10,
   },
   buttonBox: {
     flex: 1,
@@ -128,7 +129,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
+const interests = ['animals', 'sports', 'cooking', 'arts', 'traveling',
   'volunteering', 'education', 'finance', 'reading', 'nightlife', 'fitness', 'tech',
   'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues', 'gaming'];
 
@@ -259,11 +260,10 @@ class EditProfile extends Component {
             dataSource={ds.cloneWithRows(profile)}
             renderRow={this.renderImage}
           />
-          <Text style={styles.label}>Edit your MunchBuddy name</Text>
+          <Text style={styles.label}>Edit your name and interests</Text>
           <View style={styles.inputs}>
             <TextInput style={styles.TextInput} onChangeText={this.updateName} value={this.state.name} />
           </View>
-          <Text style={styles.label}>Edit your interests</Text>
           {this.renderInterests()}
           <View style={styles.buttonBox}>
             <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
