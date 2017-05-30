@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Image, TouchableOpacity, StyleSheet, Text, FlatList, ScrollView, AlertIOS } from 'react-native';
 
-import { signoutUser, clearError, pullProfile } from '../actions';
+import { pullOtherProfile } from '../actions';
 import EditProfile from './editProfilePage';
 
 const styles = StyleSheet.create({
@@ -57,26 +57,6 @@ const styles = StyleSheet.create({
     borderWidth: 4,
     borderRadius: 45,
   },
-  button: {
-    marginTop: 25,
-    alignSelf: 'center',
-    backgroundColor: '#da2a29',
-    width: 100,
-    height: 45,
-    borderWidth: 2,
-    borderColor: '#da2a29',
-    borderRadius: 5,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowRadius: 1,
-    shadowOpacity: 1,
-  },
-  buttonText: {
-    color: '#ffffff',
-  },
   list: {
     margin: 20,
   },
@@ -89,18 +69,14 @@ class ProfilePage extends Component {
     this.state = {
     };
 
-    this.onPressButton = this.onPressButton.bind(this);
     this.edit = this.edit.bind(this);
     this.renderProfile = this.renderProfile.bind(this);
   }
 
   componentDidMount() {
-    this.props.pullProfile();
-  }
-
-  onPressButton() {
-    this.props.signoutUser();
-    this.props.clearError();
+    console.log(this.props.User);
+    this.props.pullProfile(this.props.User);
+    console.log(this.props.user);
   }
 
   edit() {
@@ -136,18 +112,12 @@ class ProfilePage extends Component {
               />
             </ScrollView>
           </View>
-          <TouchableOpacity style={styles.button} onPress={this.onPressButton}>
-            <Text style={styles.buttonText}>Sign Out</Text>
-          </TouchableOpacity>
         </View>
       );
     } else {
       return (
         <View style={styles.body}>
           <Text>Loading...</Text>
-          <TouchableOpacity style={styles.button} onPress={this.onPressButton}>
-            <Text style={styles.buttonText}>Sign Out</Text>
-          </TouchableOpacity>
         </View>
       );
     }
@@ -164,15 +134,13 @@ class ProfilePage extends Component {
 
 const mapStateToProps = state => (
   {
-    user: state.auth.user,
+    user: state.auth.otherUser,
   }
 );
 
 const mapDispatchToProps = dispatch => (
   {
-    signoutUser: () => dispatch(signoutUser()),
-    clearError: () => dispatch(clearError()),
-    pullProfile: () => dispatch(pullProfile()),
+    pullProfile: id => dispatch(pullOtherProfile(id)),
   }
 );
 

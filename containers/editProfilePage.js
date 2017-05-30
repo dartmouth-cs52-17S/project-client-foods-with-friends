@@ -146,7 +146,7 @@ class EditProfile extends Component {
     this.state = {
       name: this.props.user.fullname,
       interests: this.props.user.interests,
-      profile: this.props.user.profileImage,
+      profile: this.props.user.profile_image,
       dataSource: ds.cloneWithRows(profile),
     };
     this.updateName = this.updateName.bind(this);
@@ -226,13 +226,6 @@ class EditProfile extends Component {
   }
 
   renderImage(item) {
-    console.log('in renderImage!');
-    console.log('item');
-    console.log(item);
-    console.log(item.item);
-    console.log('this.state.profile:');
-    console.log(this.state.profile);
-    console.log(this.state);
     if (this.state.profile === item) {
       return (
         <TouchableOpacity key={item} onPress={(event) => { this.handleImage(item); }}>
@@ -248,7 +241,7 @@ class EditProfile extends Component {
     }
   }
 
-  render(props) {
+  render() {
     const ds = new ListView.DataSource({ rowHasChanged: () => true });
     return (
       <ScrollView>
@@ -262,7 +255,7 @@ class EditProfile extends Component {
           />
           <Text style={styles.label}>Edit your name and interests</Text>
           <View style={styles.inputs}>
-            <TextInput style={styles.TextInput} onChangeText={this.updateName} value={this.state.name} />
+            <TextInput style={styles.TextInput} onChangeText={this.updateName} defaultValue={this.state.name} />
           </View>
           {this.renderInterests()}
           <View style={styles.buttonBox}>

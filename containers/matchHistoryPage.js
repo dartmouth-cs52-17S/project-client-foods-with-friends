@@ -51,8 +51,9 @@ class MatchHistoryPage extends Component {
     this.state = {
       query: 'cat',
       isLoading: true,
+      history: [],
       dataSource: new ListView.DataSource({
-        rowHasChanged: (row1, row2) => row1 !== row2,
+        rowHasChanged: () => true,
       }),
       history: [],
     };
@@ -96,9 +97,10 @@ class MatchHistoryPage extends Component {
       onRightButtonPress: () => {
         this.props.navigator.push({
           translucent: 'false',
-          title: 'hello',
+          title: '',
           component: MatchProfile,
           tabBarVisible: false,
+          passProps: person,
         });
       },
     });
@@ -113,7 +115,9 @@ class MatchHistoryPage extends Component {
   }
 
   render() {
-    if (this.props.history === null) {
+    const ds = new ListView.DataSource({ rowHasChanged: () => true });
+    if (this.state.history === null) {
+      console.log(this.state.history);
       return (
         <View><Text>Hi</Text></View>
       );
@@ -122,7 +126,7 @@ class MatchHistoryPage extends Component {
         <View style={styles.view}>
           <ListView
             removeClippedSubviews={false}
-            dataSource={this.state.dataSource}
+            dataSource={ds.cloneWithRows(this.state.history)}
             renderRow={person => <View>{this.renderCell(person)}</View>}
             style={styles.listView}
           />

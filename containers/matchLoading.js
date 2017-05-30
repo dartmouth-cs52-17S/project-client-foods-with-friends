@@ -80,7 +80,10 @@ class MatchLoading extends Component {
 
   componentDidMount() {
     this.spin();
-    this.props.getMatchResult();
+    setInterval(() => {
+      this.props.getMatchResult();
+      console.log('I do not leak!');
+    }, 20000);
   }
 
   componentWillUnmount() {
