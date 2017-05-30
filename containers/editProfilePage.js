@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
   },
   button: {
-    marginTop: -90,
+    marginTop: 15,
     backgroundColor: '#3694e9',
     borderRadius: 5,
     borderWidth: 2,
@@ -112,13 +112,13 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   checkedImage: {
-    width: 100,
-    height: 100,
+    width: 70,
+    height: 70,
     margin: 5,
     marginTop: 10,
     borderColor: 'rgb(0, 0, 0)',
-    borderRadius: 30,
-    borderWidth: 5,
+    borderRadius: 35,
+    borderWidth: 2,
   },
   uncheckedImage: {
     width: 70,
@@ -164,7 +164,7 @@ class EditProfile extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.editInterests(this.state.interests, this.state.profileImage);
+    this.props.editInterests(this.state.interests, this.state.profile);
     if (this.props.user.fullname !== this.state.name) {
       this.props.editName(this.state.name);
     }
@@ -183,20 +183,9 @@ class EditProfile extends Component {
     });
   }
 
-  componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
-    this.setState({
-      profile: nextProps.profile,
-    });
-  }
-
   handleImage(image) {
     console.log('in handleImage');
-    this.setState({ profile: image }, () => {
-      console.log('set the state!');
-      console.log(`image: ${image}`);
-      console.log(`this.state.profile: ${this.state.profile}`);
-//      this.forceUpdate();
+    this.setState({ profile: image,
     });
     console.log(image);
   }
@@ -244,14 +233,12 @@ class EditProfile extends Component {
     console.log(this.state.profile);
     console.log(this.state);
     if (this.state.profile === item) {
-      console.log('APPLE');
       return (
         <TouchableOpacity key={item} onPress={(event) => { this.handleImage(item); }}>
           <Image style={styles.checkedImage} source={item} />
         </TouchableOpacity>
       );
     } else {
-      console.log('BANANA');
       return (
         <TouchableOpacity key={item} onPress={(event) => { this.handleImage(item); }}>
           <Image style={styles.uncheckedImage} source={item} />
