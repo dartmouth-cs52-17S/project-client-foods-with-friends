@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, ScrollView, Image, FlatList, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, ScrollView, Image, FlatList, Text, View, ListView, TouchableOpacity, TextInput } from 'react-native';
 
 import MunchBuddyTabs from '../navigation/tab';
 import ProfilePage from './profilePage';
@@ -112,19 +112,19 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   checkedImage: {
-    width: 70,
-    height: 70,
+    width: 100,
+    height: 100,
     margin: 5,
     marginTop: 10,
+    borderColor: 'rgb(0, 0, 0)',
+    borderRadius: 30,
+    borderWidth: 5,
   },
   uncheckedImage: {
     width: 70,
     height: 70,
     margin: 5,
     marginTop: 10,
-    borderColor: 'rgb(0, 0, 0)',
-    borderRadius: 30,
-    borderWidth: 5,
   },
 });
 
@@ -141,10 +141,12 @@ class EditProfile extends Component {
 
   constructor(props) {
     super(props);
+    const ds = new ListView.DataSource({ rowHasChanged: () => true });
     this.state = {
       name: this.props.user.fullname,
       interests: this.props.user.interests,
       profile: this.props.user.profileImage,
+      dataSource: ds.cloneWithRows(profile),
     };
     this.updateName = this.updateName.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -181,8 +183,21 @@ class EditProfile extends Component {
     });
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    this.setState({
+      profile: nextProps.profile,
+    });
+  }
+
   handleImage(image) {
-    this.setState(profile: image);
+    console.log('in handleImage');
+    this.setState({ profile: image }, () => {
+      console.log('set the state!');
+      console.log(`image: ${image}`);
+      console.log(`this.state.profile: ${this.state.profile}`);
+//      this.forceUpdate();
+    });
     console.log(image);
   }
 
@@ -221,31 +236,43 @@ class EditProfile extends Component {
   }
 
   renderImage(item) {
-    if (this.state.profile !== null) {
+    console.log('in renderImage!');
+    console.log('item');
+    console.log(item);
+    console.log(item.item);
+    console.log('this.state.profile:');
+    console.log(this.state.profile);
+    console.log(this.state);
+    if (this.state.profile === item) {
       console.log('APPLE');
       return (
-        <TouchableOpacity key={item.item} onPress={(event) => { this.handleImage(item.item); }}>
-          <Image style={styles.checkedImage} source={`${item.item}`} />
+        <TouchableOpacity key={item} onPress={(event) => { this.handleImage(item); }}>
+          <Image style={styles.checkedImage} source={item} />
         </TouchableOpacity>
       );
     } else {
       console.log('BANANA');
       return (
-        <TouchableOpacity key={item.item} onPress={(event) => { this.handleImage(item.item); }}>
-          <Image style={styles.uncheckedImage} source={`${item.item}`} />
+        <TouchableOpacity key={item} onPress={(event) => { this.handleImage(item); }}>
+          <Image style={styles.uncheckedImage} source={item} />
         </TouchableOpacity>
       );
     }
   }
 
   render(props) {
+    console.log('render');
+    console.log(this.state.profile);
+    const ds = new ListView.DataSource({ rowHasChanged: () => true });
     return (
       <ScrollView>
+        <Text style={styles.label}>Choose a new profile picture</Text>
         <View style={styles.container}>
-          <FlatList
+          <ListView
             horizontal
-            data={profile}
-            renderItem={this.renderImage}
+            removeClippedSubviews={false}
+            dataSource={ds.cloneWithRows(profile)}
+            renderRow={this.renderImage}
           />
           <Text style={styles.label}>Edit your MealBuddy name</Text>
           <View style={styles.inputs}>
