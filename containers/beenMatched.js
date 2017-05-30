@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import { View, NavigatorIOS, Image, Button, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
-import { View, NavigatorIOS, Image, Button, StyleSheet, Text, FlatList } from 'react-native';
 
 import Chat from '../containers/chatHistoryPage';
 import ChatHistory from '../navigation/chatHistory';
@@ -10,8 +10,8 @@ import { clearMatchResult, removeRequest } from '../actions';
 
 const styles = StyleSheet.create({
   image: {
-    width: 250,
-    height: 250,
+    width: 100,
+    height: 100,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start',
@@ -49,9 +49,7 @@ class BeenMatched extends Component {
     super(props);
     this.state = {
     };
-    this.beenMatchedButton = this.beenMatchedButton.bind(this);
   }
-
 
   beenMatchedButton() {
     console.log('beenMatchedButton Pressed!');
@@ -72,15 +70,6 @@ class BeenMatched extends Component {
         />
 
         <Text style={styles.title}>Your meal buddys conversation topic was: </Text>
-        <FlatList
-          data={[{ title: 'Basketweaving' }]}
-          renderItem={({ item }) => <Text style={styles.text}>{item.title}</Text>}
-        />
-
-        <Button
-          title="GO TO CHAT!"
-          onPress={this.beenMatchedButton}
-        />
       </View>
     );
   }

@@ -85,7 +85,7 @@ export function editInterests(interests, profile) {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
-      axios.put(`${ROOT_URL}/interests`, { interests, newProfile }, { headers: { Authorization: User } }).then((response) => {
+      axios.put(`${ROOT_URL}/interests`, { interests, profileImage: newProfile }, { headers: { Authorization: User } }).then((response) => {
         dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
       })
       .catch((error) => {

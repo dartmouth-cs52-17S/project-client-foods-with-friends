@@ -63,6 +63,8 @@ class MatchHistoryPage extends Component {
 
   componentDidMount() {
     this.props.getMatchHistory();
+    console.log('oohwee look at me');
+    console.log(this.state.dataSource);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -87,7 +89,7 @@ class MatchHistoryPage extends Component {
     }
   }
 
-  showProfileDetail(item) {
+  showProfileDetail(history) {
     this.props.navigator.push({
       translucent: 'false',
       title: '',
@@ -100,7 +102,7 @@ class MatchHistoryPage extends Component {
         });
       },
       component: MatchProfile,
-      passProps: { item },
+      passProps: { props: this.props.history },
     });
   }
 

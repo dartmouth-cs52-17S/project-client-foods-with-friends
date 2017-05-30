@@ -6,8 +6,10 @@ import { GiftedChat } from 'react-native-gifted-chat';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'rgb(242, 105, 84)',
+    height: 200,
+    marginBottom: 71,
     alignSelf: 'stretch',
-    marginBottom: 10,
   },
 });
 
@@ -157,7 +159,6 @@ class ChatPage extends React.Component {
     return (
       <View style={styles.container}>
         <GiftedChat
-          style={styles.chat}
           messages={this.state.messages}
           onSend={this.onSend}
           user={{

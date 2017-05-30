@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, ScrollView, Image, FlatList, Text, View, TouchableOpacity, TextInput } from 'react-native';
 
 import MunchBuddyTabs from '../navigation/tab';
 import ProfilePage from './profilePage';
@@ -111,11 +111,31 @@ const styles = StyleSheet.create({
   interestText: {
     color: '#ffffff',
   },
+  checkedImage: {
+    width: 70,
+    height: 70,
+    margin: 5,
+    marginTop: 10,
+  },
+  uncheckedImage: {
+    width: 70,
+    height: 70,
+    margin: 5,
+    marginTop: 10,
+    borderColor: 'rgb(0, 0, 0)',
+    borderRadius: 30,
+    borderWidth: 5,
+  },
 });
 
 const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
   'volunteering', 'education', 'finance', 'reading', 'nightlife', 'fitness', 'tech',
   'politics', 'music', 'dancing', 'Tim Tregubov', 'beauty', 'fashion', 'global issues', 'gaming'];
+
+const profile = [require('../imgs/user-1.png'), require('../imgs/user-2.png'),
+  require('../imgs/user-3.png'), require('../imgs/user-4.png'),
+  require('../imgs/user-5.png'), require('../imgs/user-6.png'), require('../imgs/user-7.png'), require('../imgs/user-8.png'),
+  require('../imgs/user-9.png'), require('../imgs/user-10.png'), require('../imgs/user-11.png')];
 
 class EditProfile extends Component {
 
@@ -124,11 +144,13 @@ class EditProfile extends Component {
     this.state = {
       name: this.props.user.fullname,
       interests: this.props.user.interests,
+      profile: this.props.user.profileImage,
     };
     this.updateName = this.updateName.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleCancel = this.handleCancel.bind(this);
+    this.handleImage = this.handleImage.bind(this);
     this.renderInterests = this.renderInterests.bind(this);
+    this.renderImage = this.renderImage.bind(this);
     this.handleInterest = this.handleInterest.bind(this);
   }
 
@@ -140,7 +162,7 @@ class EditProfile extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.addInterests(this.state.interests);
+    this.props.editInterests(this.state.interests, this.state.profileImage);
     if (this.props.user.fullname !== this.state.name) {
       this.props.editName(this.state.name);
     }
@@ -158,23 +180,11 @@ class EditProfile extends Component {
       },
     });
   }
-  //
-  // handleCancel(event) {
-  //   event.preventDefault();
-  //   this.props.navigator.pop({
-  //     title: 'My Profile',
-  //     leftButtonTitle: ' ',
-  //     component: ProfilePage,
-  //     rightButtonTitle: 'Edit',
-  //     onRightButtonPress: () => {
-  //       this.refs.nav.push({
-  //         title: 'Edit Interests',
-  //         leftButtonTitle: ' ',
-  //         component: EditProfile,
-  //       });
-  //     },
-  //   });
-  // }
+
+  handleImage(image) {
+    this.setState(profile: image);
+    console.log(image);
+  }
 
   handleInterest(interest) {
     if (this.state.interests.includes(interest)) {
@@ -210,21 +220,46 @@ class EditProfile extends Component {
     );
   }
 
+  renderImage(item) {
+    if (this.state.profile !== null) {
+      console.log('APPLE');
+      return (
+        <TouchableOpacity key={item.item} onPress={(event) => { this.handleImage(item.item); }}>
+          <Image style={styles.checkedImage} source={`${item.item}`} />
+        </TouchableOpacity>
+      );
+    } else {
+      console.log('BANANA');
+      return (
+        <TouchableOpacity key={item.item} onPress={(event) => { this.handleImage(item.item); }}>
+          <Image style={styles.uncheckedImage} source={`${item.item}`} />
+        </TouchableOpacity>
+      );
+    }
+  }
+
   render(props) {
     return (
-      <View style={styles.container}>
-        <Text style={styles.label}>Edit your MealBuddy name</Text>
-        <View style={styles.inputs}>
-          <TextInput style={styles.TextInput} onChangeText={this.updateName} value={this.state.name} />
+      <ScrollView>
+        <View style={styles.container}>
+          <FlatList
+            horizontal
+            data={profile}
+            renderItem={this.renderImage}
+          />
+          <Text style={styles.label}>Edit your MealBuddy name</Text>
+          <View style={styles.inputs}>
+            <TextInput style={styles.TextInput} onChangeText={this.updateName} value={this.state.name} />
+          </View>
+          <Text style={styles.label}>Edit your interests</Text>
+          {this.renderInterests()}
+          <View style={styles.buttonBox}>
+            <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
+              <Text style={styles.buttonText}> Ok! </Text>
+            </TouchableOpacity>
+          </View>
         </View>
-        <Text style={styles.label}>Edit your interests</Text>
-        {this.renderInterests()}
-        <View style={styles.buttonBox}>
-          <TouchableOpacity style={styles.button} onPress={this.handleSubmit}>
-            <Text style={styles.buttonText}> Ok! </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -237,7 +272,7 @@ const mapStateToProps = state => (
 
 const mapDispatchToProps = dispatch => (
   {
-    addInterests: interestList => dispatch(editInterests(interestList)),
+    editInterests: (interestList, profileImage) => dispatch(editInterests(interestList, profileImage)),
     pullProfile: () => dispatch(pullProfile()),
     editName: name => dispatch(editName(name)),
   }
