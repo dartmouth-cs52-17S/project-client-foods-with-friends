@@ -274,6 +274,12 @@ class MatchPage extends Component {
       <ScrollView>
         <View>
           <Text style={styles.title}>Grab a munch!</Text>
+          <Text style={styles.instructions}>Choose a conversation topic:</Text>
+          <TextInput
+            placeholder="Enter topic"
+            style={styles.topic}
+            onChangeText={this.onTopicChange}
+          />
           <Text style={styles.instructions}>Choose a time range in which you wish to begin your meal:</Text>
 
           <View style={styles.times}>
@@ -314,12 +320,6 @@ class MatchPage extends Component {
               source={require('../imgs/muffin2.png')}
             />
           </View>
-          <Text style={styles.instructions}>Choose a conversation topic:</Text>
-          <TextInput
-            placeholder="Enter topic"
-            style={styles.topic}
-            onChangeText={this.onTopicChange}
-          />
           <TouchableOpacity style={styles.matchButton} onPress={this.matchButton}>
             <Text style={styles.dateLabel}>Match Me!</Text>
           </TouchableOpacity>

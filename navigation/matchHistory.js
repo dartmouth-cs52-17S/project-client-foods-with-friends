@@ -24,6 +24,7 @@ class MatchHistory extends Component {
         }}
         style={{ flex: 1 }}
         tintColor="#008888"
+        barTintColor="#f3f3f3"
       />
     );
   }
