@@ -71,11 +71,14 @@ class MatchLoading extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      other_id: '',
+    };
 
     this.spinValue = new Animated.Value(0);
     this.spin = this.spin.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
+    this.handleOtherID = this.handleOtherID.bind(this);
   }
 
   componentDidMount() {
@@ -115,6 +118,10 @@ class MatchLoading extends Component {
     );
   }
 
+  handleOtherID(id) {
+    this.setState({ other_id: id, });
+  }
+
 
   render() {
     console.log('state of this.props.match:');
@@ -126,7 +133,39 @@ class MatchLoading extends Component {
     });
 
     if (this.props.match !== null) {
-      return <BeenMatched navigator={this.props.navigator} />;
+      console.log('this.props.match is not null');
+      console.log(typeof this.props.match);
+    //    return <BeenMatched navigator={this.props.navigator} />;
+        this.props.navigator.push({
+          component: BeenMatched,
+          title: 'Your Match',
+          passProps: {match: this.props.match},
+        })
+
+    //   this.handleOtherID(this.props.match)
+       /*
+      .then((result) => {
+        console.log(`result: ${result}`);
+        console.log('found match');
+        console.log(this.props.match);
+        console.log(typeof this.props.match);
+        console.log(typeof JSON.parse(this.props.match));
+        */
+        /*
+        this.props.navigator.push({
+          component: BeenMatched,
+          title: 'Your Match',
+          passProps: this.state.other_id,
+        })
+        */
+
+    /*  })
+      .catch((error) => {
+        console.log('somewhere errored in render');
+        console.log(error);
+      });
+      */
+
     }
     return (
       <View style={styles.container}>

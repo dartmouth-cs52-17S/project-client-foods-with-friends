@@ -3,7 +3,7 @@ import { View, NavigatorIOS, Image, Button, StyleSheet, Text, TouchableOpacity }
 import { connect } from 'react-redux';
 
 import Match from './matchPage';
-import { clearMatchResult, removeRequest } from '../actions';
+import { clearMatchResult, removeRequest, pullOtherProfile, getMatchHistory } from '../actions';
 
 
 const styles = StyleSheet.create({
@@ -33,6 +33,8 @@ const styles = StyleSheet.create({
     borderColor: '#3694e9',
     borderWidth: 4,
     borderRadius: 75,
+    marginTop: -10,
+    marginBottom: -10,
   },
   label: {
     marginLeft: 20,
@@ -44,18 +46,18 @@ const styles = StyleSheet.create({
     color: '#253e47',
   },
   title: {
-    marginLeft: 20,
-    marginRight: 20,
+    marginLeft: 5,
+    marginRight: 5,
     marginTop: '20%',
     marginBottom: 30,
     textAlign: 'center',
     fontSize: 35,
-    color: '#f4424b',
+    color: '#53c5bb',
   },
   explanation: {
     marginTop: 0,
-    marginLeft: '10%',
-    marginRight: '10%',
+    marginLeft: 10,
+    marginRight: 10,
     textAlign: 'center',
     fontSize: 17,
     marginBottom: 22,
@@ -88,6 +90,7 @@ class BeenMatched extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      otherUser: '',
     };
 
     this.beenMatchedButton = this.beenMatchedButton.bind(this);
@@ -99,12 +102,40 @@ class BeenMatched extends Component {
     this.props.removeMatchResult();
   }
 
+  componentDidMount() {
+    console.log('in componentDidMount');
+    this.props.getMatchHistory();
+    /*
+    this.props.getMatchHistory().then(() => {
+      console.log(`this.state.otherUser is: ${this.state.otherUser}`);
+      this.props.pullOtherProfile(this.state.otherUser);
+    });
+    */
+  }
+/*
+  componentWillMount(){
+    console.log('in componentDidMount');
+    console.log(`in BeenMatched. this.props.match is: ${this.props.match}`);
+    this.props.pullOtherProfile(this.props.match);
+  }
+  */
+  componentWillReceiveProps(nextProps) {
+    const historyReverse = [...nextProps.history];
+    const history = historyReverse.reverse();
+    const check = [];
+    const people = [];
+
+
+    this.setState({ otherUser: history[0].User });
+  }
+
   beenMatchedButton() {
     console.log('beenMatchedButton Pressed!');
     this.props.clearMatchResult();
     this.props.removeMatchResult();
     this.props.navigator.pop();
   }
+
   render() {
     return (
       <View style={styles.container}>
@@ -114,7 +145,8 @@ class BeenMatched extends Component {
           source={require('../imgs/user-1.png')}
         />
         <Text style={styles.label}>Your MunchBuddy wants to talk about: </Text>
-        <Text style={styles.explanation}>You can chat with your new MunchBuddy by tapping the MatchHistory page. </Text>
+        <Text style={styles.explanation}>You can chat with your new MunchBuddy by
+        tapping the MatchHistory page. </Text>
         <TouchableOpacity style={styles.button} onPress={() => { this.beenMatchedButton(); }}>
           <Text style={styles.buttonText}>Ok!</Text>
         </TouchableOpacity>
@@ -128,6 +160,16 @@ const mapDispatchToProps = dispatch => (
   {
     clearMatchResult: () => dispatch(clearMatchResult()),
     removeMatchResult: () => dispatch(removeRequest()),
+    pullOtherProfile: id => dispatch(pullOtherProfile(id)),
+    getMatchHistory: () => dispatch(getMatchHistory()),
+  }
+);
+
+
+const mapStateToProps = state => (
+  {
+    receiveMatch: state.match.receivedMatch,
+    history: state.match.receivedHistory,
   }
 );
 
