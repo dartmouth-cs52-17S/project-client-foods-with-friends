@@ -44,9 +44,9 @@ class ChatPage extends React.Component {
     this.onReceivedExistingMessage = this.onReceivedExistingMessage.bind(this);
     this.convertUserFormat = this.convertUserFormat.bind(this);
 
-    this.socket = SocketIOClient('http://localhost:9090');
+    // this.socket = SocketIOClient('http://localhost:9090');
 
-    // this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
+    this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
     this.socket.on('message', this.onReceivedMessage);
     this.socket.on('exisitingMsgsResult', this.onReceivedExistingMessage);
   }

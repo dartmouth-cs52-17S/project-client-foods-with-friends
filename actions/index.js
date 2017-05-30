@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-// const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
+const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
 // NOTE: Change this ROOT_URL when testing with local server
-const ROOT_URL = 'http://localhost:9090/api';
+// const ROOT_URL = 'http://localhost:9090/api';
 
 export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
@@ -16,6 +16,7 @@ export const ActionTypes = {
   RECEIVE_HISTORY: 'RECEIVE_HISTORY',
   CLEAR_MATCH: 'CLEAR_MATCH',
   PULL_PROFILE: 'PULL_PROFILE',
+  PULL_OTHER_PROFILE: 'PULL_OTHER_PROFILE',
 };
 
 
@@ -118,7 +119,7 @@ export function pullProfile() {
 export function pullOtherProfile(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/user/${id}`).then((response) => {
-      dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data[0] } });
+      dispatch({ type: ActionTypes.PULL_OTHER_PROFILE, payload: { otherUser: response.data } });
     })
     .catch((error) => {
       console.log(`Cannot get profile: ${error.response.data}`);

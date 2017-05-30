@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
 import ChatPage from '../components/chatPage';
 import MatchedPerson from '../components/matchedPerson';
-import BeenMatched from '../containers/beenMatched';
+import MatchProfile from '../containers/matchProfile';
 import { getMatchHistory } from '../actions';
 
 
@@ -95,9 +95,10 @@ class MatchHistoryPage extends Component {
       onRightButtonPress: () => {
         this.props.navigator.push({
           translucent: 'false',
-          title: 'hello',
-          component: BeenMatched,
+          title: '',
+          component: MatchProfile,
           tabBarVisible: false,
+          passProps: person,
         });
       },
     });
