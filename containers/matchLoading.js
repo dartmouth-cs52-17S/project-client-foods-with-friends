@@ -83,6 +83,12 @@ class MatchLoading extends Component {
     this.props.getMatchResult();
   }
 
+  componentWillUnmount() {
+    console.log('yay it works as well!');
+    this.props.clearMatchResult();
+    this.props.removeMatchResult();
+  }
+
   spin() {
     this.spinValue.setValue(0);
     Animated.timing(
@@ -117,7 +123,7 @@ class MatchLoading extends Component {
     });
 
     if (this.props.match !== null) {
-      return <BeenMatched />;
+      return <BeenMatched navigator={this.props.navigator} />;
     }
     return (
       <View style={styles.container}>

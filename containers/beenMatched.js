@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, NavigatorIOS, Image, Button, StyleSheet, Text } from 'react-native';
+import { View, NavigatorIOS, Image, Button, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 
 import Match from './matchPage';
@@ -47,16 +47,21 @@ class BeenMatched extends Component {
     super(props);
     this.state = {
     };
+
+    this.beenMatchedButton = this.beenMatchedButton.bind(this);
+  }
+
+  componentWillUnmount() {
+    console.log('yay it works!');
+    this.props.clearMatchResult();
+    this.props.removeMatchResult();
   }
 
   beenMatchedButton() {
     console.log('beenMatchedButton Pressed!');
     this.props.clearMatchResult();
-    this.props.removeMatchRequest();
-    this.props.navigator.push({
-      title: 'Match',
-      component: Match,
-    });
+    this.props.removeMatchResult();
+    this.props.navigator.pop();
   }
   render() {
     return (
@@ -66,7 +71,9 @@ class BeenMatched extends Component {
           style={styles.image}
           source={{ uri: 'https://image.freepik.com/free-icon/business-person-silhouette-wearing-tie_318-49988.jpg' }}
         />
-
+        <TouchableOpacity onPress={() => { this.beenMatchedButton(); }}>
+          <Text>Ok!</Text>
+        </TouchableOpacity>
         <Text style={styles.title}>Your meal buddys conversation topic was: </Text>
       </View>
     );

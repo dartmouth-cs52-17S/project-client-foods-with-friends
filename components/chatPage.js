@@ -6,7 +6,6 @@ import { GiftedChat } from 'react-native-gifted-chat';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'rgb(242, 105, 84)',
     height: 200,
     marginBottom: 63,
     alignSelf: 'stretch',
@@ -34,7 +33,8 @@ class ChatPage extends React.Component {
 
   // NOTE: Hard code a matched person here.
   // HACK: Please fill in the matchedUserID here
-    this.matchedUserID = '5928deae7cb4d4216ad6580e';
+    console.log(this.props.User);
+    this.matchedUserID = this.props.User;
     this.myUserID = '';
     this.roomID = '';
     // this.determineUser = this.determineUser.bind(this);
