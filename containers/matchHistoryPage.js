@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
 import ChatPage from '../components/chatPage';
 import MatchedPerson from '../components/matchedPerson';
-import BeenMatched from '../containers/beenMatched';
+import MatchProfile from '../components/matchProfile';
 import { getMatchHistory } from '../actions';
 
 
@@ -54,6 +54,7 @@ class MatchHistoryPage extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
+      history: [],
     };
 
     this.showProfileDetail = this.showProfileDetail.bind(this);
@@ -76,9 +77,10 @@ class MatchHistoryPage extends Component {
         check.push(history[i].User);
       }
     }
+    this.setState({ history: people });
     if (history) {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(people),
+        dataSource: this.state.dataSource.cloneWithRows(this.state.history),
       });
     }
   }
@@ -96,7 +98,7 @@ class MatchHistoryPage extends Component {
         this.props.navigator.push({
           translucent: 'false',
           title: 'hello',
-          component: BeenMatched,
+          component: MatchProfile,
           tabBarVisible: false,
         });
       },
