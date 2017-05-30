@@ -9,6 +9,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     alignSelf: 'stretch',
+    backgroundColor: 'rgb(245, 245, 245)',
   },
   username: {
     marginTop: 5,
@@ -19,30 +20,36 @@ const styles = StyleSheet.create({
   },
   header: {
     height: 220,
-    backgroundColor: 'rgb(178, 247, 235)',
+    backgroundColor: 'rgb(187, 158, 218)',
     alignItems: 'center',
     justifyContent: 'center',
-    shadowColor: '#000000',
-    shadowOffset: { width: 3, height: 4 },
-    shadowRadius: 1,
-    shadowOpacity: 0.3,
+    borderColor: 'rgb(165, 236, 223)',
+    borderWidth: 5,
   },
   info: {
     height: 250,
-    width: 200,
-    backgroundColor: 'rgb(214, 105, 169)',
+    backgroundColor: 'rgb(87, 157, 196)',
     justifyContent: 'center',
     alignItems: 'center',
+    textAlign: 'center',
+    margin: 10,
+    shadowColor: '#000000',
+    shadowOffset: { width: 5, height: 6 },
+    shadowRadius: 1,
+    shadowOpacity: 0.3,
   },
   title: {
     marginTop: 10,
+    color: 'white',
     fontSize: 20,
+    fontWeight: 'bold',
     fontFamily: 'Avenir Next',
   },
   interest: {
     textAlign: 'center',
     margin: 3,
     fontSize: 14,
+    color: 'white',
     fontFamily: 'Avenir Next',
   },
   image: {
@@ -69,13 +76,17 @@ const styles = StyleSheet.create({
     shadowRadius: 1,
     shadowOpacity: 1,
   },
+  list: {
+    margin: 20,
+  },
 });
 
 class ProfilePage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+    };
 
     this.onPressButton = this.onPressButton.bind(this);
     this.edit = this.edit.bind(this);
@@ -116,6 +127,7 @@ class ProfilePage extends Component {
             <Text style={styles.title}>Interests:</Text>
             <ScrollView>
               <FlatList
+                style={styles.list}
                 key={this.props.user.interests}
                 removeClippedSubviews={false}
                 data={this.props.user.interests}
