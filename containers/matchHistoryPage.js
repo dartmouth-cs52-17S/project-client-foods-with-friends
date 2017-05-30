@@ -55,6 +55,7 @@ class MatchHistoryPage extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: () => true,
       }),
+      history: [],
     };
 
     this.showProfileDetail = this.showProfileDetail.bind(this);
@@ -89,14 +90,14 @@ class MatchHistoryPage extends Component {
       showTabBar: false,
       translucent: 'false',
       tabBarVisible: false,
-      title: '',
+      title: 'Chat',
       component: ChatPage,
       passProps: person,
       rightButtonIcon: require('../imgs/user.png'),
       onRightButtonPress: () => {
         this.props.navigator.push({
           translucent: 'false',
-          title: '',
+          title: 'Match Profile',
           component: MatchProfile,
           tabBarVisible: false,
           passProps: person,
