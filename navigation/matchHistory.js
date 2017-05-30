@@ -12,6 +12,7 @@ class MatchHistory extends Component {
       />
    ),
   };
+
   render() {
     return (
       <NavigatorIOS
@@ -19,8 +20,11 @@ class MatchHistory extends Component {
           component: MatchHistoryPage,
           title: 'Match History',
           translucent: false,
+          passProps: {},
         }}
         style={{ flex: 1 }}
+        tintColor="#008888"
+        barTintColor="#f3f3f3"
       />
     );
   }
