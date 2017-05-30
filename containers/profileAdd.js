@@ -174,7 +174,7 @@ class ProfileAdd extends Component {
   handleSubmit(event) {
     event.preventDefault();
     console.log(`in handleSubmit, this.state.profile is: ${this.state.profile}`);
-    this.props.addInterests(this.state.interests, this.state.profile);
+    this.props.addInterests(this.state.interests, this.state.profile.toString());
     this.props.goToSignin();
   }
 
@@ -194,7 +194,8 @@ class ProfileAdd extends Component {
   handleImage(image) {
     console.log('in set state, handle image is:');
     console.log(image);
-    this.setState({ profile: image,
+    this.setState({
+      profile: image,
     });
   }
 
@@ -297,7 +298,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     goToSignin: () => dispatch(goToSignin()),
-    addInterests: interestList => dispatch(editInterests(interestList, profile)),
+    addInterests: (interestList, profile1) => dispatch(editInterests(interestList, profile1)),
   }
 );
 

@@ -8,12 +8,12 @@ import { editInterests, pullProfile, editName } from '../actions';
 
 const styles = StyleSheet.create({
   label: {
-    marginTop: '7%',
+    marginTop: 10,
     marginLeft: 20,
     marginRight: 20,
     textAlign: 'center',
     fontSize: 25,
-    marginBottom: 20,
+    marginBottom: 10,
     color: '#253e47',
   },
   container: {
@@ -248,8 +248,6 @@ class EditProfile extends Component {
   }
 
   render(props) {
-    console.log('render');
-    console.log(this.state.profile);
     const ds = new ListView.DataSource({ rowHasChanged: () => true });
     return (
       <ScrollView>
@@ -261,7 +259,7 @@ class EditProfile extends Component {
             dataSource={ds.cloneWithRows(profile)}
             renderRow={this.renderImage}
           />
-          <Text style={styles.label}>Edit your MealBuddy name</Text>
+          <Text style={styles.label}>Edit your MunchBuddy name</Text>
           <View style={styles.inputs}>
             <TextInput style={styles.TextInput} onChangeText={this.updateName} value={this.state.name} />
           </View>
