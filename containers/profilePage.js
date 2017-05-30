@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: 'rgb(199, 199, 199)',
+    backgroundColor: 'rgb(199, 197, 237)',
   },
   username: {
     marginTop: 5,

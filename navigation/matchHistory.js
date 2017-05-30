@@ -23,6 +23,7 @@ class MatchHistory extends Component {
           passProps: {},
         }}
         style={{ flex: 1 }}
+        tintColor="#008888"
       />
     );
   }
