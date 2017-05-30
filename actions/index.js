@@ -75,7 +75,7 @@ export function signinUser({ email, password }) {
   };
 }
 
-export function editInterests(interests, profile) {
+export function editInterests(interests, profileImage) {
   let newProfile;
   if (profile === '' || profile === null) {
     newProfile = '1';
