@@ -7,20 +7,12 @@ import { clearMatchResult, removeRequest } from '../actions';
 
 
 const styles = StyleSheet.create({
-  image: {
-    width: 100,
-    height: 100,
+  container: {
+    flex: 1,
+    alignSelf: 'stretch',
     display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    borderRadius: 125,
-    borderWidth: 1,
-    borderColor: '#000000',
-  },
-  imageView: {
-    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'flex-start',
   },
   username: {
     marginTop: 15,
@@ -29,16 +21,66 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Avenir Next',
   },
-  title: {
-    marginTop: 15,
-    fontSize: 30,
-    fontFamily: 'Avenir Next',
-  },
   text: {
     textAlign: 'center',
     marginTop: 7,
     fontSize: 20,
     fontFamily: 'Avenir Next',
+  },
+  image: {
+    width: 150,
+    height: 150,
+    borderColor: '#3694e9',
+    borderWidth: 4,
+    borderRadius: 75,
+  },
+  label: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 30,
+    marginBottom: 30,
+    textAlign: 'center',
+    fontSize: 30,
+    color: '#253e47',
+  },
+  title: {
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: '20%',
+    marginBottom: 30,
+    textAlign: 'center',
+    fontSize: 35,
+    color: '#f4424b',
+  },
+  explanation: {
+    marginTop: 0,
+    marginLeft: '10%',
+    marginRight: '10%',
+    textAlign: 'center',
+    fontSize: 17,
+    marginBottom: 22,
+    color: '#253e47',
+  },
+  button: {
+    marginTop: 15,
+    backgroundColor: '#3694e9',
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: '#3694e9',
+    width: '80%',
+    height: 45,
+    alignSelf: 'center',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowRadius: 2,
+    shadowOpacity: 0.8,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#ffffff',
   },
 });
 
@@ -63,16 +105,18 @@ class BeenMatched extends Component {
   }
   render() {
     return (
-      <View style={styles.imageView}>
-        <Text style={styles.username}>Youve Been Matched! </Text>
+      <View style={styles.container}>
+        <Text style={styles.title}>{'You\'ve been Matched!'} </Text>
         <Image
           style={styles.image}
-          source={{ uri: 'https://image.freepik.com/free-icon/business-person-silhouette-wearing-tie_318-49988.jpg' }}
+          source={require('../imgs/user-1.png')}
         />
-        <TouchableOpacity onPress={() => { this.beenMatchedButton(); }}>
-          <Text>Ok!</Text>
+        <Text style={styles.label}>Your MunchBuddy wants to talk about: </Text>
+        <Text style={styles.explanation}>You can chat with your new MunchBuddy by tapping the MatchHistory page. </Text>
+        <TouchableOpacity style={styles.button} onPress={() => { this.beenMatchedButton(); }}>
+          <Text style={styles.buttonText}>Ok!</Text>
         </TouchableOpacity>
-        <Text style={styles.title}>Your meal buddys conversation topic was: </Text>
+
       </View>
     );
   }
