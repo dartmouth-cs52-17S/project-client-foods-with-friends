@@ -18,7 +18,7 @@ class MatchHistory extends Component {
       <NavigatorIOS
         initialRoute={{
           component: MatchHistoryPage,
-          title: 'Match History',
+          title: 'My Matches',
           translucent: false,
           passProps: {},
         }}
