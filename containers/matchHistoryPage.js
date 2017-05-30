@@ -87,6 +87,7 @@ class MatchHistoryPage extends Component {
     this.props.navigator.push({
       showTabBar: false,
       translucent: 'false',
+      tabBarVisible: false,
       title: '',
       component: ChatPage,
       passProps: person,
@@ -96,6 +97,7 @@ class MatchHistoryPage extends Component {
           translucent: 'false',
           title: 'hello',
           component: BeenMatched,
+          tabBarVisible: false,
         });
       },
     });

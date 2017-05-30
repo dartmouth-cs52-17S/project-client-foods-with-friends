@@ -22,6 +22,7 @@ class Match extends Component {
           translucent: false,
         }}
         style={{ flex: 1 }}
+        barTintColor="#f3f3f3"
       />
     );
   }

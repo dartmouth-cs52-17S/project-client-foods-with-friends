@@ -31,6 +31,7 @@ class Profile extends Component {
           },
         }}
         style={{ flex: 1, alignSelf: 'stretch' }}
+        barTintColor="#f3f3f3"
       />
     );
   }
