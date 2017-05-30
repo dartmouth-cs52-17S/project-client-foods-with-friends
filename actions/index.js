@@ -51,13 +51,10 @@ export function signupUser({ fullname, email, password }) {
   console.log('in signupUser');
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, { fullname, email, password }).then((response) => {
-      console.log('made it through axios post');
       dispatch({ type: ActionTypes.AUTH_USER });
       AsyncStorage.setItem('token', response.data.token);
     })
     .catch((error) => {
-      console.log('signupUser failed');
-      console.log(error);
       dispatch(authError(`Sign up Failed: ${error.response.data}`));
     });
   };
@@ -82,6 +79,7 @@ export function editInterests(interests, profile) {
   } else {
     newProfile = profile;
   }
+  console.log(newProfile);
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
@@ -174,8 +172,6 @@ export function getMatchHistory() {
       const User = result;
       axios.get(`${ROOT_URL}/matchhistory`, { headers: { Authorization: User } }).then((response) => {
         dispatch({ type: ActionTypes.RECEIVE_HISTORY, payload: { history: response.data } });
-        console.log('print meeeeee');
-        console.log(response.data);
       })
       .catch((error) => {
         console.log(`Error trying to receive history: ${error.response.data}`);
@@ -199,10 +195,7 @@ export function postMatch({ start_time, end_time, topic, loc }) {
     end_time,
   };
   return (dispatch) => {
-    console.log('beginning of dispatch');
     AsyncStorage.getItem('token').then((result) => {
-      console.log('in getItem somewhere?');
-      console.log(result);
       const User = result;
       axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { Authorization: User } }).then((response) => {
         console.log(response.data);
