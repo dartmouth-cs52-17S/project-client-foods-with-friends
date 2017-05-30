@@ -108,7 +108,7 @@ class ProfilePage extends Component {
           <View style={styles.header}>
             <Image
               style={styles.image}
-              source={this.props.user.profile}
+              source={this.props.user.profile_image}
             />
             <Text style={styles.username}>{this.props.user.fullname}</Text>
           </View>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ListView, ScrollView } from 'react-native';
 
 import MunchBuddyTabs from '../navigation/tab';
 import { goToSignin, editInterests } from '../actions';
@@ -105,20 +105,24 @@ const styles = StyleSheet.create({
   interestText: {
     color: '#ffffff',
   },
-  profiles: {
-    width: 80,
-    height: 80,
-    marginLeft: 10,
-    marginRight: 10,
-  },
-  chosenProfile: {
-    borderWidth: 2,
-    borderRadius: 5,
-    borderColor: '#3694e9',
-  },
   profileFlat: {
     marginTop: 10,
     marginBottom: 10,
+  },
+  checkedImage: {
+    width: 70,
+    height: 70,
+    margin: 5,
+    marginTop: 10,
+    borderColor: 'rgb(0, 0, 0)',
+    borderRadius: 35,
+    borderWidth: 2,
+  },
+  uncheckedImage: {
+    width: 70,
+    height: 70,
+    margin: 5,
+    marginTop: 10,
   },
 });
 
@@ -128,19 +132,22 @@ const interests = ['animals', 'sports', 'cooking', 'arts', 'travelling',
   'gaming'];
 
 
-const imgs2 = [require('../imgs/cookie.png'), require('../imgs/cupcake.png'),
-  require('../imgs/donut.png'), require('../imgs/muffin.png'),
-  require('../imgs/pretzel.png')];
+const profile = [require('../imgs/user-1.png'), require('../imgs/user-2.png'),
+  require('../imgs/user-3.png'), require('../imgs/user-4.png'),
+  require('../imgs/user-5.png'), require('../imgs/user-6.png'), require('../imgs/user-7.png'), require('../imgs/user-8.png'),
+  require('../imgs/user-9.png'), require('../imgs/user-10.png'), require('../imgs/user-11.png')];
 
 class ProfileAdd extends Component {
 
   constructor(props) {
     super(props);
+    const ds = new ListView.DataSource({ rowHasChanged: () => true });
     this.state = {
       email: '',
       password: '',
       interests: [],
       profile: '',
+      dataSource: ds.cloneWithRows(profile),
     };
     this.updateEmail = this.updateEmail.bind(this);
     this.updatePassword = this.updatePassword.bind(this);
@@ -149,7 +156,7 @@ class ProfileAdd extends Component {
     this.renderInterests = this.renderInterests.bind(this);
     this.handleInterest = this.handleInterest.bind(this);
     this.renderImage = this.renderImage.bind(this);
-    this.handleProfile = this.handleProfile.bind(this);
+    this.handleImage = this.handleImage.bind(this);
   }
 
   updateEmail(text) {
@@ -166,6 +173,7 @@ class ProfileAdd extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    console.log(`in handleSubmit, this.state.profile is: ${this.state.profile}`);
     this.props.addInterests(this.state.interests, this.state.profile);
     this.props.goToSignin();
   }
@@ -183,37 +191,24 @@ class ProfileAdd extends Component {
     }
   }
 
-  handleProfile(profile1) {
-    console.log('profile checked!');
-    console.log(profile1);
-    console.log('this.state.profile:');
-    console.log(this.state.profile);
-    console.log(typeof this.state.profile);
-
-    if (this.state.profile === profile1) {
-      console.log('in me!');
-      this.setState({
-        profile: '',
-      });
-    } else {
-      console.log('not in me!');
-      this.setState({
-        profile: profile1,
-      });
-    }
+  handleImage(image) {
+    console.log('in set state, handle image is:');
+    console.log(image);
+    this.setState({ profile: image,
+    });
   }
 
   renderInterests() {
     const interestItems = interests.map((interest) => {
       if (this.state.interests.includes(interest)) {
         return (
-          <TouchableOpacity style={styles.checked} key={interest} onPress={() => { this.handleInterest(interest); }}>
+          <TouchableOpacity style={styles.checked} key={interest} onPress={(event) => { this.handleInterest(interest); }}>
             <Text style={styles.interestText}>{interest}</Text>
           </TouchableOpacity>
         );
       } else {
         return (
-          <TouchableOpacity style={styles.unchecked} key={interest} onPress={() => { this.handleInterest(interest); }}>
+          <TouchableOpacity style={styles.unchecked} key={interest} onPress={(event) => { this.handleInterest(interest); }}>
             <Text style={styles.interestText}>{interest}</Text>
           </TouchableOpacity>
         );
@@ -227,25 +222,24 @@ class ProfileAdd extends Component {
   }
 
   renderImage(item) {
-    console.log('item');
-    console.log(item.item);
-    let style;
     if (this.state.profile === item) {
-      style = [styles.profiles, styles.chosenProfile];
+      return (
+        <TouchableOpacity key={item} onPress={(event) => { this.handleImage(item); }}>
+          <Image style={styles.checkedImage} source={item} />
+        </TouchableOpacity>
+      );
     } else {
-      style = [styles.profiles];
+      return (
+        <TouchableOpacity key={item} onPress={(event) => { this.handleImage(item); }}>
+          <Image style={styles.uncheckedImage} source={item} />
+        </TouchableOpacity>
+      );
     }
-    return (
-      <TouchableOpacity key={item.item} onPress={(profile) => { this.handleProfile(item.item); }}>
-        <Image source={item.item} style={style} />
-      </TouchableOpacity>
-    );
   }
 
   renderPage() {
-    const imgs = ['../imgs/cookie.png', '../imgs/cupcake.png',
-      '../imgs/donut.png', '../imgs/muffin.png', '../imgs/pretzel.png'];
-
+    const ds = new ListView.DataSource({ rowHasChanged: () => true });
+    console.log(`this.state.profile in render is: ${this.state.profile}`);
     if (this.props.page) {
       return (
         <ScrollView>
@@ -254,11 +248,12 @@ class ProfileAdd extends Component {
               <Text style={styles.label}>Choose a photo!</Text>
               <Text style={styles.explanation}>You can change your profile picture at any time.</Text>
             </View>
-            <FlatList
+            <ListView
               horizontal
-              data={imgs2}
+              removeClippedSubviews={false}
+              dataSource={ds.cloneWithRows(profile)}
+              renderRow={this.renderImage}
               style={styles.profileFlat}
-              renderItem={this.renderImage}
             />
             <View>
               <Text style={styles.label}>Add some interests!</Text>
@@ -302,7 +297,7 @@ const mapStateToProps = state => (
 const mapDispatchToProps = dispatch => (
   {
     goToSignin: () => dispatch(goToSignin()),
-    addInterests: interestList => dispatch(editInterests(interestList)),
+    addInterests: interestList => dispatch(editInterests(interestList, profile)),
   }
 );
 

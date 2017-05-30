@@ -76,16 +76,13 @@ export function signinUser({ email, password }) {
 }
 
 export function editInterests(interests, profile) {
-  let newProfile;
-  if (profile === '' || profile === null) {
-    newProfile = '1';
-  } else {
-    newProfile = profile;
-  }
+  console.log('in renderInterests, profiel image is:');
+  console.log(profile);
+  console.log(typeof profile);
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
-      axios.put(`${ROOT_URL}/interests`, { interests, profileImage: newProfile }, { headers: { Authorization: User } }).then((response) => {
+      axios.put(`${ROOT_URL}/interests`, { interests, profile_image: profile }, { headers: { Authorization: User } }).then((response) => {
         dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
       })
       .catch((error) => {
