@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, TouchableHighlight, StyleSheet, Text, FlatList, ScrollView, List } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, Text, FlatList, ScrollView, AlertIOS } from 'react-native';
 
 import { signoutUser, clearError, pullProfile } from '../actions';
 import EditProfile from './editProfilePage';
@@ -9,29 +9,28 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     alignSelf: 'stretch',
-    backgroundColor: 'rgb(245, 245, 245)',
+    backgroundColor: '#ffffff',
   },
   username: {
     marginTop: 5,
-    fontSize: 30,
-    color: '#519bdd',
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next',
+    fontSize: 35,
+    color: '#ffffff',
   },
   header: {
     height: 220,
-    backgroundColor: 'rgb(187, 158, 218)',
+    backgroundColor: '#53c5bb',
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: 'rgb(165, 236, 223)',
+    borderColor: '#53c5bb',
     borderWidth: 5,
   },
   info: {
-    height: 250,
-    backgroundColor: 'rgb(87, 157, 196)',
+    height: 200,
+    backgroundColor: '#519bdd',
+    borderRadius: 7,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 10,
+    margin: 15,
     shadowColor: '#000000',
     shadowOffset: { width: 5, height: 6 },
     shadowRadius: 1,
@@ -40,16 +39,16 @@ const styles = StyleSheet.create({
   title: {
     marginTop: 10,
     color: 'white',
-    fontSize: 20,
-    fontWeight: 'bold',
-    fontFamily: 'Avenir Next',
+    fontSize: 30,
+  },
+  scroll: {
+    marginTop: 0,
   },
   interest: {
     textAlign: 'center',
     margin: 3,
-    fontSize: 14,
-    color: 'white',
-    fontFamily: 'Avenir Next',
+    fontSize: 20,
+    color: '#ffffff',
   },
   image: {
     width: 90,
@@ -59,13 +58,13 @@ const styles = StyleSheet.create({
     borderRadius: 45,
   },
   button: {
-    marginTop: 15,
+    marginTop: 25,
     alignSelf: 'center',
-    backgroundColor: '#c65353',
-    width: 70,
-    height: 30,
+    backgroundColor: '#da2a29',
+    width: 100,
+    height: 45,
     borderWidth: 2,
-    borderColor: '#823429',
+    borderColor: '#da2a29',
     borderRadius: 5,
     display: 'flex',
     alignItems: 'center',
@@ -74,6 +73,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 1 },
     shadowRadius: 1,
     shadowOpacity: 1,
+  },
+  buttonText: {
+    color: '#ffffff',
   },
   list: {
     margin: 20,
@@ -124,7 +126,7 @@ class ProfilePage extends Component {
           </View>
           <View style={styles.info}>
             <Text style={styles.title}>Interests:</Text>
-            <ScrollView>
+            <ScrollView style={styles.scroll}>
               <FlatList
                 style={styles.list}
                 key={this.props.user.interests}
@@ -134,18 +136,18 @@ class ProfilePage extends Component {
               />
             </ScrollView>
           </View>
-          <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
-            <Text>Sign Out</Text>
-          </TouchableHighlight>
+          <TouchableOpacity style={styles.button} onPress={this.onPressButton}>
+            <Text style={styles.buttonText}>Sign Out</Text>
+          </TouchableOpacity>
         </View>
       );
     } else {
       return (
         <View style={styles.body}>
           <Text>Loading...</Text>
-          <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
-            <Text>Sign Out</Text>
-          </TouchableHighlight>
+          <TouchableOpacity style={styles.button} onPress={this.onPressButton}>
+            <Text style={styles.buttonText}>Sign Out</Text>
+          </TouchableOpacity>
         </View>
       );
     }
