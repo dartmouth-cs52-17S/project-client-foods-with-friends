@@ -82,10 +82,11 @@ class MatchHistoryPage extends Component {
     }
   }
 
-  showProfileDetail(history) {
+  showProfileDetail(person) {
     this.props.navigator.push({
       showTabBar: false,
       translucent: 'false',
+      tabBarVisible: false,
       title: '',
       rightButtonIcon: require('../imgs/user.png'),
       onRightButtonPress: () => {
@@ -93,10 +94,11 @@ class MatchHistoryPage extends Component {
           translucent: 'false',
           title: 'hello',
           component: BeenMatched,
+          tabBarVisible: false,
         });
       },
       component: ChatPage,
-      passProps: { props: this.props.history },
+      passProps: person,
     });
   }
 

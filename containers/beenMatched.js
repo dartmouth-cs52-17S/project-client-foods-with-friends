@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import { View, NavigatorIOS, Image, Button, StyleSheet, Text } from 'react-native';
 import { connect } from 'react-redux';
 
-import Chat from '../containers/chatHistoryPage';
-import ChatHistory from '../navigation/chatHistory';
 import Match from './matchPage';
 import { clearMatchResult, removeRequest } from '../actions';
 
