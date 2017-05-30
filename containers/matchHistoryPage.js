@@ -65,14 +65,23 @@ class MatchHistoryPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const history = nextProps.history;
-    // let people = [];
-    // for (let i = 0; i < history.length; i += 1) {
-    //   if (people.length > 0 || people.includes(history[x]))
-    // }
+    const historyReverse = [...nextProps.history];
+    const history = historyReverse.reverse();
+    console.log(nextProps.history);
+    console.log(history);
+    const check = [];
+    const people = [];
+    for (let i = 0; i < history.length; i += 1) {
+      if (people.length === 0 || !check.includes(history[i].User)) {
+        people.push({ User: history[i].User, match_time: history[i].match_time });
+        check.push(history[i].User);
+        console.log(history[i].match_time);
+      }
+    }
     if (history) {
+      console.log(people);
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(history.reverse()),
+        dataSource: this.state.dataSource.cloneWithRows(people),
       });
     }
   }

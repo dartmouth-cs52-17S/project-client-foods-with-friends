@@ -65,7 +65,7 @@ class MemberTemplate extends Component {
           <View style={styles.container}>
             <View style={styles.rightContainer}>
               <Text style={styles.title}>{this.state.fullname}</Text>
-              <Text style={styles.title}>{`Matched on ${this.state.time.format('MM/DD/YY').toString()}`}</Text>
+              <Text style={styles.title}>{`Matched on ${this.state.time.format('MM/DD/YY, hh:mm A').toString()}`}</Text>
             </View>
           </View>
           <View style={styles.separator} />
