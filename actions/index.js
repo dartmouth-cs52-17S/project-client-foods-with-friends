@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
-const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
+// const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
 // NOTE: Change this ROOT_URL when testing with local server
-// const ROOT_URL = 'http://localhost:9090/api';
+const ROOT_URL = 'http://localhost:9090/api';
 
 export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
@@ -138,7 +138,7 @@ export function removeRequest() {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.get(`${ROOT_URL}/removeMatchRequest`, { headers: { Authorization: User } }).then((response) => {
-        console.log(response);
+        // console.log(response);
       })
       .catch((error) => {
         console.log(`Cannot remove match request: ${error.response.data}`);
@@ -154,6 +154,7 @@ export function getMatchResult() {
       axios.get(`${ROOT_URL}/getMatchResult`, { headers: { Authorization: User } }).then((response) => {
         if (response.data.InstaMatchedWith !== '') {
           console.log('matched!');
+          console.log(response.data.InstaMatchedWith);
           dispatch({ type: ActionTypes.RECEIVE_MATCH, payload: { match: response.data.InstaMatchedWith } });
         } else {
           console.log(`sad ${response.data.InstaMatchedWith}`);
@@ -181,6 +182,7 @@ export function getMatchHistory() {
 }
 
 export function clearMatchResult() {
+  console.log('cleared');
   return {
     type: ActionTypes.CLEAR_MATCH,
   };
