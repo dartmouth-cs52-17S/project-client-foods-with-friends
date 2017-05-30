@@ -112,12 +112,14 @@ class ProfilePage extends Component {
           </View>
           <View style={styles.info}>
             <Text style={styles.title}>Interests:</Text>
-            <FlatList
-              key={this.props.user.interests}
-              removeClippedSubviews={false}
-              data={this.props.user.interests}
-              renderItem={({ item }) => <Text style={styles.interest}>{item}</Text>}
-            />
+            <ScrollView>
+              <FlatList
+                key={this.props.user.interests}
+                removeClippedSubviews={false}
+                data={this.props.user.interests}
+                renderItem={({ item }) => <Text style={styles.interest}>{item}</Text>}
+              />
+            </ScrollView>
           </View>
           <TouchableHighlight style={styles.button} onPress={this.onPressButton}>
             <Text>Sign Out</Text>
@@ -138,11 +140,9 @@ class ProfilePage extends Component {
 
   render() {
     return (
-      <ScrollView>
-        <View style={styles.body}>
-          {this.renderProfile()}
-        </View>
-      </ScrollView>
+      <View style={styles.body}>
+        {this.renderProfile()}
+      </View>
     );
   }
 }

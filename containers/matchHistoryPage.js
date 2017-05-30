@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { connect } from 'react-redux';
 import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
-import MatchProfile from '../components/matchProfile';
+import ChatPage from '../components/chatPage';
 import MatchedPerson from '../components/matchedPerson';
 import BeenMatched from '../containers/beenMatched';
 import { getMatchHistory } from '../actions';
@@ -63,26 +62,20 @@ class MatchHistoryPage extends Component {
 
   componentDidMount() {
     this.props.getMatchHistory();
-    console.log('oohwee look at me');
-    console.log(this.state.dataSource);
   }
 
   componentWillReceiveProps(nextProps) {
     const historyReverse = [...nextProps.history];
     const history = historyReverse.reverse();
-    console.log(nextProps.history);
-    console.log(history);
     const check = [];
     const people = [];
     for (let i = 0; i < history.length; i += 1) {
       if (people.length === 0 || !check.includes(history[i].User)) {
         people.push({ User: history[i].User, match_time: history[i].match_time });
         check.push(history[i].User);
-        console.log(history[i].match_time);
       }
     }
     if (history) {
-      console.log(people);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(people),
       });
@@ -91,6 +84,7 @@ class MatchHistoryPage extends Component {
 
   showProfileDetail(history) {
     this.props.navigator.push({
+      showTabBar: false,
       translucent: 'false',
       title: '',
       rightButtonIcon: require('../imgs/user.png'),
@@ -101,7 +95,7 @@ class MatchHistoryPage extends Component {
           component: BeenMatched,
         });
       },
-      component: MatchProfile,
+      component: ChatPage,
       passProps: { props: this.props.history },
     });
   }
