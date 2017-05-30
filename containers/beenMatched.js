@@ -133,10 +133,6 @@ class BeenMatched extends Component {
 
 
   render() {
-    console.log('hihihihihiHIHWFEOFHWE:FH:WELf');
-    console.log(this.props.otherUser);
-    console.log(this.props.receiveMatch);
-
     if (this.props.otherUser !== null && this.props.receiveMatch !== null) {
       return (
         <View style={styles.container}>
