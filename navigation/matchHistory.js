@@ -6,6 +6,7 @@ import MatchHistoryPage from '../containers/matchHistoryPage';
 class MatchHistory extends Component {
   static navigationOptions = {
     tabBarLabel: 'My Matches',
+    tabBarVisible: true,
     tabBarIcon: ({ tintColor }) => (
       <Image
         source={require('../imgs/list-menu.png')}
