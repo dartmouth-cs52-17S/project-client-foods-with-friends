@@ -23,7 +23,8 @@ class Navigator extends Component {
     this.renderPage = this.renderPage.bind(this);
 
     // NOTE: change the url after server is deployed. TESTING socket io locally
-    this.socket = SocketIOClient('http://localhost:9090');
+    // this.socket = SocketIOClient('http://localhost:9090');
+    this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
     this.socket.emit('hello', 'Hello from client side');
   }
 

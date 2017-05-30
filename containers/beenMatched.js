@@ -52,13 +52,11 @@ class BeenMatched extends Component {
   }
 
   componentWillUnmount() {
-    console.log('yay it works!');
     this.props.clearMatchResult();
     this.props.removeMatchResult();
   }
 
   beenMatchedButton() {
-    console.log('beenMatchedButton Pressed!');
     this.props.clearMatchResult();
     this.props.removeMatchResult();
     this.props.navigator.pop();
