@@ -111,11 +111,20 @@ const styles = StyleSheet.create({
   interestText: {
     color: '#ffffff',
   },
-  image: {
+  checkedImage: {
     width: 70,
     height: 70,
     margin: 5,
     marginTop: 10,
+  },
+  uncheckedImage: {
+    width: 70,
+    height: 70,
+    margin: 5,
+    marginTop: 10,
+    borderColor: 'rgb(0, 0, 0)',
+    borderRadius: 30,
+    borderWidth: 5,
   },
 });
 
@@ -135,11 +144,13 @@ class EditProfile extends Component {
     this.state = {
       name: this.props.user.fullname,
       interests: this.props.user.interests,
+      profile: this.props.user.profileImage,
     };
     this.updateName = this.updateName.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleCancel = this.handleCancel.bind(this);
+    this.handleImage = this.handleImage.bind(this);
     this.renderInterests = this.renderInterests.bind(this);
+    this.renderImage = this.renderImage.bind(this);
     this.handleInterest = this.handleInterest.bind(this);
   }
 
@@ -151,7 +162,7 @@ class EditProfile extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.editInterests(this.state.interests, this.state.profile_image);
+    this.props.editInterests(this.state.interests, this.state.profileImage);
     if (this.props.user.fullname !== this.state.name) {
       this.props.editName(this.state.name);
     }
@@ -170,8 +181,9 @@ class EditProfile extends Component {
     });
   }
 
-  handleImage() {
-    this.props.addInterests(this.state.interests);
+  handleImage(image) {
+    this.setState(profile: image);
+    console.log(image);
   }
 
   handleInterest(interest) {
@@ -209,11 +221,21 @@ class EditProfile extends Component {
   }
 
   renderImage(item) {
-    return (
-      <TouchableOpacity key={item.item} onPress={(profile) => { this.handleImage(item.item); }}>
-        <Image style={styles.image} source={item.item} />
-      </TouchableOpacity>
-    );
+    if (this.state.profile !== null) {
+      console.log('APPLE');
+      return (
+        <TouchableOpacity key={item.item} onPress={(event) => { this.handleImage(item.item); }}>
+          <Image style={styles.checkedImage} source={`${item.item}`} />
+        </TouchableOpacity>
+      );
+    } else {
+      console.log('BANANA');
+      return (
+        <TouchableOpacity key={item.item} onPress={(event) => { this.handleImage(item.item); }}>
+          <Image style={styles.uncheckedImage} source={`${item.item}`} />
+        </TouchableOpacity>
+      );
+    }
   }
 
   render(props) {
