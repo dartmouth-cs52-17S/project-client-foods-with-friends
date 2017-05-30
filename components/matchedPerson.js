@@ -61,6 +61,7 @@ class MemberTemplate extends Component {
       this.setState({ time: temp });
     })
     .catch((error) => {
+      console.log('sad');
       this.setState({ fullname: null });
     });
   }
