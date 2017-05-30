@@ -19,7 +19,7 @@ import {
 import DateTimePicker from 'react-native-modal-datetime-picker';
 
 import MatchLoading from './matchLoading';
-import { postMatch } from '../actions';
+import { postMatch, removeRequest, clearMatchResult } from '../actions';
 
 const styles = StyleSheet.create({
   title: {
@@ -173,6 +173,8 @@ class MatchPage extends Component {
     }).catch((err) => {
       console.log(err);
     });
+    this.props.clearMatchResult();
+    this.props.removeMatchResult();
   }
 
   onMatchResultFound(result) {
@@ -329,5 +331,12 @@ class MatchPage extends Component {
   }
 }
 
+const mapDispatchToProps = dispatch => (
+  {
+    clearMatchResult: () => dispatch(clearMatchResult()),
+    removeMatchResult: () => dispatch(removeRequest()),
+    postMatch: matchinfo => dispatch(postMatch(matchinfo)),
+  }
+);
 
-export default connect(null, { postMatch })(MatchPage);
+export default connect(null, mapDispatchToProps)(MatchPage);
