@@ -19,15 +19,15 @@ class ChatPage extends React.Component {
     this.state = {
       messages: [
         {
-          _id: 1,
-          text: 'Hello developer',
-          createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
-          user: {
-            _id: 2,
-            name: 'React Native',
-            avatar: 'https://facebook.github.io/react/img/logo_og.png',
-          },
-          roomID: 1,
+          // _id: 1,
+          // text: 'Hello developer',
+          // createdAt: new Date(Date.UTC(2016, 7, 30, 17, 20, 0)),
+          // user: {
+          //   _id: 2,
+          //   name: 'React Native',
+          //   avatar: 'https://facebook.github.io/react/img/logo_og.png',
+          // },
+          // roomID: 1,
         },
       ],
     };
@@ -119,30 +119,6 @@ class ChatPage extends React.Component {
     console.log(`roomID = ${this.roomID}, convertedMsg = ${JSON.stringify(convertedMsg)}`);
     return convertedMsg;
   }
-
-  /**
-   * When a user joins the chatroom, check if they are an existing user.
-   * If they aren't, then ask the server for a userId.
-  //  * Set the userId to the component's state.
-  //  */
-  // determineUser() {
-  //   AsyncStorage.getItem(USER_ID)
-  //     .then((userId) => {
-  //       // If there isn't a stored userId, then fetch one from the server.
-  //       if (!userId) {
-  //         this.socket.emit('userJoined', null);
-  //         this.socket.on('userJoined', (userId) => {
-  //           AsyncStorage.setItem(USER_ID, userId);
-  //           this.setState({ userId });
-  //         });
-  //       } else {
-  //         this.socket.emit('userJoined', userId);
-  //         this.setState({ userId });
-  //       }
-  //     })
-  //     .catch(e => alert(e));
-  // }
-
 
   // Helper functions
   _storeMessages(messages) {
