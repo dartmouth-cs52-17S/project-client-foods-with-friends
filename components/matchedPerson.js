@@ -54,13 +54,14 @@ class MemberTemplate extends Component {
 
   // use axios call to access member location from the latitude and longitude given in the json file
   componentDidMount() {
-    axios.get(`https://munchbuddy.herokuapp.com/api/user/${this.props.userid}`).then((response) => {
+    axios.get(`http://localhost:9090/api/user/${this.props.userid}`).then((response) => {
       console.log(response.data);
       this.setState({ fullname: response.data.fullname });
       const temp = moment(this.props.time);
       this.setState({ time: temp });
     })
     .catch((error) => {
+      console.log('sad');
       this.setState({ fullname: null });
     });
   }

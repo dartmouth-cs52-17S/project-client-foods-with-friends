@@ -65,6 +65,7 @@ class MatchHistoryPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log('hey');
     const historyReverse = [...nextProps.history];
     const history = historyReverse.reverse();
     const check = [];
@@ -88,6 +89,8 @@ class MatchHistoryPage extends Component {
       translucent: 'false',
       tabBarVisible: false,
       title: '',
+      component: ChatPage,
+      passProps: person,
       rightButtonIcon: require('../imgs/user.png'),
       onRightButtonPress: () => {
         this.props.navigator.push({
@@ -97,8 +100,6 @@ class MatchHistoryPage extends Component {
           tabBarVisible: false,
         });
       },
-      component: ChatPage,
-      passProps: person,
     });
   }
 
