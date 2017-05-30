@@ -10,9 +10,9 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 20,
     marginTop: 30,
-    marginBottom: 30,
+    marginBottom: 5,
     textAlign: 'center',
-    fontSize: 30,
+    fontSize: 23,
     color: '#253e47',
   },
   explanation: {
@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     marginRight: '10%',
     textAlign: 'center',
     fontSize: 17,
-    marginBottom: 22,
+    marginBottom: 17,
     color: '#253e47',
   },
   container: {
@@ -106,8 +106,8 @@ const styles = StyleSheet.create({
     color: '#ffffff',
   },
   profileFlat: {
-    marginTop: 10,
-    marginBottom: 10,
+    // marginTop: 10,
+    // marginBottom: 10,
   },
   checkedImage: {
     width: 70,
