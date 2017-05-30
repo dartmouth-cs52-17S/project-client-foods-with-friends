@@ -66,7 +66,6 @@ class MatchHistoryPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('hey');
     const historyReverse = [...nextProps.history];
     const history = historyReverse.reverse();
     const check = [];
