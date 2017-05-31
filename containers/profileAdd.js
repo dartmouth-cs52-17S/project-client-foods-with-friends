@@ -5,7 +5,7 @@ It allows them to input their interests and choose a profile image.
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableOpacity, Image, ListView, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image, ListView, ScrollView, AlertIOS } from 'react-native';
 import MunchBuddyTabs from '../navigation/tab';
 import { goToSignin, editInterests } from '../actions';
 
@@ -174,8 +174,12 @@ class ProfileAdd extends Component {
   // edit the info to the user's model and go to the main match page
   handleSubmit(event) {
     event.preventDefault();
-    this.props.addInterests(this.state.interests, this.state.profile.toString());
-    this.props.goToSignin();
+    if (this.state.profile === '') {
+      AlertIOS.alert('Make sure you choose a profile picture!');
+    } else {
+      this.props.addInterests(this.state.interests, this.state.profile.toString());
+      this.props.goToSignin();
+    }
   }
 
   // check to see if interests have been checked or not
