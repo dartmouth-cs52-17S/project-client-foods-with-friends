@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     marginRight: 20,
     marginTop: 15,
     textAlign: 'center',
-    fontSize: 25,
+    fontSize: 23,
     color: '#253e47',
   },
   title: {
@@ -129,7 +129,7 @@ class BeenMatched extends Component {
             <Text style={styles.title}>{'You\'ve been Matched!'} </Text>
             <Image
               style={styles.image}
-              source={require('../imgs/user-1.png')}
+              source={this.props.otherUser.profile_image}
             />
             <Text style={styles.name}>{this.props.otherUser.fullname}</Text>
           </View>
