@@ -94,7 +94,6 @@ class ProfilePage extends Component {
     };
 
     this.onPressButton = this.onPressButton.bind(this);
-    this.edit = this.edit.bind(this);
     this.renderProfile = this.renderProfile.bind(this);
   }
 
@@ -108,20 +107,9 @@ class ProfilePage extends Component {
     this.props.clearError();
   }
 
-  // go to edit profile page
-  edit() {
-    this.props.navigator.push({
-      title: 'Edit Interests',
-      leftButtonTitle: ' ',
-      component: EditProfile,
-    });
-  }
-
   // render the profile once the user's information has been accessed
   renderProfile() {
     if (this.props.user && this.props.user !== null) {
-      console.log('render Profile');
-      console.log(this.props.user);
       return (
         <View style={styles.body}>
           <View style={styles.header}>

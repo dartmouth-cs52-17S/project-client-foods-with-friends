@@ -1,7 +1,17 @@
+/*
+tab bar for the match page
+*/
+
 import React, { Component } from 'react';
-import { NavigatorIOS, Image } from 'react-native';
+import { StyleSheet, NavigatorIOS, Image } from 'react-native';
 
 import MatchPage from '../containers/matchPage';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 class Match extends Component {
   static navigationOptions = {
@@ -21,7 +31,7 @@ class Match extends Component {
           title: 'Get Matched',
           translucent: false,
         }}
-        style={{ flex: 1 }}
+        style={styles.container}
         barTintColor="#f3f3f3"
         tintColor="#008888"
       />

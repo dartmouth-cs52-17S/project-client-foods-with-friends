@@ -1,3 +1,7 @@
+/*
+Main app
+*/
+
 import React, { Component } from 'react';
 import { View, StyleSheet, AsyncStorage, AppRegistry } from 'react-native';
 import { Provider } from 'react-redux';
@@ -18,6 +22,8 @@ const store = createStore(reducers, {}, compose(
   applyMiddleware(thunk),
   window.devToolsExtension ? window.devToolsExtension() : f => f,
 ));
+
+// check to see if the user is already authenticated
 AsyncStorage.getItem('token').then((response) => {
   if (response !== null) {
     store.dispatch({ type: ActionTypes.AUTH_USER });

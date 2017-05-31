@@ -1,5 +1,8 @@
-import { TabNavigator } from 'react-navigation';
+/*
+Tab navigator
+*/
 
+import { TabNavigator } from 'react-navigation';
 import Match from './match';
 import Profile from './profile';
 import MatchHistory from './matchHistory';
