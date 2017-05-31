@@ -1,7 +1,17 @@
+/*
+Tab bar for match history page
+*/
+
 import React, { Component } from 'react';
-import { NavigatorIOS, Image } from 'react-native';
+import { StyleSheet, NavigatorIOS, Image } from 'react-native';
 
 import MatchHistoryPage from '../containers/matchHistoryPage';
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 class MatchHistory extends Component {
   static navigationOptions = {
@@ -22,7 +32,7 @@ class MatchHistory extends Component {
           translucent: false,
           passProps: {},
         }}
-        style={{ flex: 1 }}
+        style={styles.container}
         barTintColor="#f3f3f3"
         tintColor="#008888"
       />

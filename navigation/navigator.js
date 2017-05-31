@@ -1,3 +1,8 @@
+/*
+Decides what page to load first. If the user is not authenticated, render signin/signup pages.
+If the user is authenticated, take them immediately to the main home page
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
@@ -21,13 +26,12 @@ class Navigator extends Component {
     this.state = { title: 'Sign Up', component: SignUp };
 
     this.renderPage = this.renderPage.bind(this);
-
-    // NOTE: change the url after server is deployed. TESTING socket io locally
-    // this.socket = SocketIOClient('http://localhost:9090');
     this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
     this.socket.emit('hello', 'Hello from client side');
   }
 
+  // render the view based on whether the user is authenticated
+  // and whether the user wants to sign in or sign up
   renderPage() {
     if (this.props.auth && !this.props.page) {
       return (

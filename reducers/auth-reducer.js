@@ -1,3 +1,7 @@
+/*
+reducer related to authentication and user profile information
+*/
+
 import { ActionTypes } from '../actions';
 
 const initialState = {

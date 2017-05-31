@@ -1,7 +1,12 @@
+/*
+This is a component for each person in the list of people the user has matched width.
+It is called in matchHistoryPage.js
+*/
+
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
 
 const styles = StyleSheet.create({
   view: {
@@ -15,11 +20,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     padding: 10,
-  },
-  thumbnail: {
-    width: 80,
-    height: 80,
-    marginRight: 10,
   },
   rightContainer: {
     flex: 1,
@@ -59,21 +59,17 @@ class MemberTemplate extends Component {
     this.componentDidMount = this.componentDidMount.bind(this);
   }
 
-  // use axios call to access member location from the latitude and longitude given in the json file
   componentDidMount() {
     axios.get(`https://munchbuddy.herokuapp.com/api/user/${this.props.userid}`).then((response) => {
-      console.log(response.data);
       this.setState({ fullname: response.data.fullname, image: response.data.profile_image });
       const temp = moment(this.props.time);
       this.setState({ time: temp });
     })
     .catch((error) => {
-      console.log('sad');
       this.setState({ fullname: null });
     });
   }
 
-  // render the address once axios has received it
   renderUser() {
     if (this.state.fullname != null) {
       return (
@@ -104,7 +100,6 @@ class MemberTemplate extends Component {
     }
   }
 
-// template for all of the DALI members
   render() {
     return (
       <View style={styles.view}>

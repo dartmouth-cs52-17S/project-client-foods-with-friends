@@ -1,6 +1,10 @@
+/*
+This is the profile page for the people the user has been matched with
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, TouchableOpacity, StyleSheet, Text, FlatList, ScrollView, AlertIOS } from 'react-native';
+import { View, Image, StyleSheet, Text, FlatList, ScrollView, AlertIOS } from 'react-native';
 
 import { pullOtherProfile } from '../actions';
 import EditProfile from './editProfilePage';
@@ -74,11 +78,10 @@ class ProfilePage extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.User);
     this.props.pullProfile(this.props.User);
-    console.log(this.props.user);
   }
 
+  // take the user to the edit Profile page to edit their info
   edit() {
     this.props.navigator.push({
       title: 'Edit Interests',
@@ -87,10 +90,9 @@ class ProfilePage extends Component {
     });
   }
 
+  // render the users profile once the information has been accessed
   renderProfile() {
     if (this.props.user && this.props.user !== null) {
-      console.log('render Profile');
-      console.log(this.props.user);
       return (
         <View style={styles.body}>
           <View style={styles.header}>

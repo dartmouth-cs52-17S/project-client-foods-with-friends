@@ -3,9 +3,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, Text, View, TouchableHighlight, Image, Animated, Easing, AlertIOS } from 'react-native';
-import MatchPage from '../containers/matchPage';
-
+import { StyleSheet, Text, View, TouchableHighlight, Animated, Easing, AlertIOS } from 'react-native';
 import { getMatchResult, clearMatchResult, removeRequest } from '../actions';
 import BeenMatched from './beenMatched';
 
@@ -17,19 +15,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  image: {
-    width: 107,
-    height: 165,
-    padding: 10,
-  },
-  description: {
-    marginTop: 10,
-    padding: 10,
-    fontSize: 20,
-    color: '#854af2',
-  },
   font: {
     fontFamily: 'Avenir Next',
+    fontSize: 17,
   },
   button: {
     backgroundColor: '#bf4132',
@@ -80,18 +68,20 @@ class MatchLoading extends Component {
 
   componentDidMount() {
     this.spin();
+
+    // check for a possible match
     setInterval(() => {
       this.props.getMatchResult();
-      console.log('I do not leak!');
     }, 20000);
   }
 
+  // clear results after leaving the page
   componentWillUnmount() {
-    console.log('yay it works as well!');
     this.props.clearMatchResult();
     this.props.removeMatchResult();
   }
 
+  // animate the rotating png as a waiting signal for the user
   spin() {
     this.spinValue.setValue(0);
     Animated.timing(
@@ -104,30 +94,27 @@ class MatchLoading extends Component {
   ).start(() => this.spin());
   }
 
+  // make sure the user actually wants to cancel
   handleCancel() {
     AlertIOS.alert(
      'Are you sure you want to cancel your match request?',
      'Requests normally expire when you reach your designated meal time.',
       [
        { text: 'Yes, cancel my request', onPress: () => { this.props.navigator.pop(); this.props.removeMatchResult(); } },
-       { text: 'No, I\'ve changed my mind', onPress: () => console.log('noCancel pressed') },
+       { text: 'No, I\'ve changed my mind' },
       ],
     );
   }
 
 
   render() {
-    console.log('state of this.props.match:');
-    console.log(this.props.match);
-
     const spin = this.spinValue.interpolate({
       inputRange: [0, 1],
       outputRange: ['0deg', '360deg'],
     });
 
+    // if user has been matched, taked them to the beenMatched page
     if (this.props.match !== null) {
-      console.log('this.props.match is not null');
-      console.log(typeof this.props.match);
       return <BeenMatched navigator={this.props.navigator} match={this.props.match} />;
     }
     return (
@@ -143,11 +130,11 @@ class MatchLoading extends Component {
           />
         </View>
         <View style={styles.findingMatch}>
-          <Text style={styles.description, styles.font}>Finding your match... Check back shortly!</Text>
+          <Text style={styles.font}>Finding your match... Check back shortly!</Text>
         </View>
         <View style={styles.buttonBox}>
           <TouchableHighlight style={styles.button} onPress={this.handleCancel}>
-            <Text style={[styles.font, styles.buttonText]}> Cancel my Match</Text>
+            <Text style={styles.buttonText}> Cancel my Match</Text>
           </TouchableHighlight>
         </View>
       </View>

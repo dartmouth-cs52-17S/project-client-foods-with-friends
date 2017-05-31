@@ -1,3 +1,7 @@
+/*
+Reducer related to match requests and match receiving
+*/
+
 import { ActionTypes } from '../actions';
 
 const initialState = {

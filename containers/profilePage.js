@@ -1,3 +1,7 @@
+/*
+The user's profile page
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, Image, TouchableOpacity, StyleSheet, Text, FlatList, ScrollView, AlertIOS } from 'react-native';
@@ -76,6 +80,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#ffffff',
+    fontSize: 20,
   },
   list: {
     margin: 20,
@@ -90,7 +95,6 @@ class ProfilePage extends Component {
     };
 
     this.onPressButton = this.onPressButton.bind(this);
-    this.edit = this.edit.bind(this);
     this.renderProfile = this.renderProfile.bind(this);
   }
 
@@ -98,23 +102,15 @@ class ProfilePage extends Component {
     this.props.pullProfile();
   }
 
+  // sign out button
   onPressButton() {
     this.props.signoutUser();
     this.props.clearError();
   }
 
-  edit() {
-    this.props.navigator.push({
-      title: 'Edit Interests',
-      leftButtonTitle: ' ',
-      component: EditProfile,
-    });
-  }
-
+  // render the profile once the user's information has been accessed
   renderProfile() {
     if (this.props.user && this.props.user !== null) {
-      console.log('render Profile');
-      console.log(this.props.user);
       return (
         <View style={styles.body}>
           <View style={styles.header}>

@@ -1,6 +1,10 @@
+/*
+List of people the user has been matched with
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
 import ChatPage from '../components/chatPage';
 import MatchedPerson from '../components/matchedPerson';
 import MatchProfile from '../containers/matchProfile';
@@ -11,37 +15,20 @@ const styles = StyleSheet.create({
   view: {
     flex: 1,
   },
-  container: {
-    flex: 1,
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    backgroundColor: 'white',
-    padding: 10,
-  },
-  thumbnail: {
-    width: 80,
-    height: 80,
-    marginRight: 10,
-  },
-  rightContainer: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 3,
-  },
-  subtitle: {
-    fontSize: 12,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#dddddd',
-  },
   listView: {
     backgroundColor: 'white',
+  },
+  empty: {
+    marginTop: '50%',
+    marginLeft: '10%',
+    marginRight: '10%',
+  },
+  emptyText: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#5f6068',
+    fontStyle: 'italic',
   },
 });
 
@@ -55,7 +42,6 @@ class MatchHistoryPage extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: () => true,
       }),
-      history: [],
     };
 
     this.showProfileDetail = this.showProfileDetail.bind(this);
@@ -85,10 +71,11 @@ class MatchHistoryPage extends Component {
     }
   }
 
+  // go to chat with the matched person, which can lead to their profile
   showProfileDetail(person) {
     this.props.navigator.push({
       showTabBar: false,
-      translucent: 'false',
+      translucent: false,
       tabBarVisible: false,
       title: 'Chat',
       component: ChatPage,
@@ -106,6 +93,7 @@ class MatchHistoryPage extends Component {
     });
   }
 
+  // render each matched person cell in the chat list
   renderCell(person) {
     return (
       <TouchableOpacity onPress={() => { this.showProfileDetail(person); }} underlayColor="#dddddd">
@@ -117,9 +105,12 @@ class MatchHistoryPage extends Component {
   render() {
     const ds = new ListView.DataSource({ rowHasChanged: () => true });
     if (this.state.history === null) {
-      console.log(this.state.history);
       return (
-        <View><Text>Hi</Text></View>
+        <View><Text>Loading...</Text></View>
+      );
+    } else if (this.state.history.length === 0) {
+      return (
+        <View style={styles.empty}><Text style={styles.emptyText}>You have not matched with anyone yet... come back later!</Text></View>
       );
     } else {
       return (
