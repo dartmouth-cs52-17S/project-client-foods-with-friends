@@ -1,3 +1,7 @@
+/*
+Sign in page
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -40,10 +44,6 @@ const styles = StyleSheet.create({
   donut: {
     height: 64,
     width: 64,
-  },
-  smallerDonut: {
-    height: 32,
-    width: 32,
   },
   container: {
     flex: 1,
@@ -136,19 +136,6 @@ class SignIn extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleSignup = this.handleSignup.bind(this);
     this.renderError = this.renderError.bind(this);
-    this.signin = this.signin.bind(this);
-  }
-
-
-  signin() {
-    this.props.navigator.push({
-      title: 'Match Me',
-      leftButtonTitle: ' ',
-      rightButtonTitle: 'Sign Out',
-      onRightButtonPress: () => { this.props.signoutUser(); this.handleSignup(); console.log(this.props.auth); },
-      component: MatchPage,
-      passProps: { },
-    });
   }
 
   updateEmail(text) {
@@ -163,6 +150,7 @@ class SignIn extends Component {
     });
   }
 
+  // sign in
   handleSubmit(event) {
     event.preventDefault();
     const user = {
@@ -172,11 +160,13 @@ class SignIn extends Component {
     this.props.signinUser(user);
   }
 
+  // go to sign up page
   handleSignup() {
     this.props.clearError();
     this.props.goToSignup();
   }
 
+  // render a sign in error if it exists
   renderError() {
     if (this.props.error === null) {
       return <View />;

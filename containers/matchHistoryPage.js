@@ -18,6 +18,18 @@ const styles = StyleSheet.create({
   listView: {
     backgroundColor: 'white',
   },
+  empty: {
+    marginTop: '50%',
+    marginLeft: '10%',
+    marginRight: '10%',
+  },
+  emptyText: {
+    alignSelf: 'center',
+    textAlign: 'center',
+    fontSize: 25,
+    color: '#5f6068',
+    fontStyle: 'italic',
+  },
 });
 
 class MatchHistoryPage extends Component {
@@ -59,6 +71,7 @@ class MatchHistoryPage extends Component {
     }
   }
 
+  // go to chat with the matched person, which can lead to their profile
   showProfileDetail(person) {
     this.props.navigator.push({
       showTabBar: false,
@@ -80,6 +93,7 @@ class MatchHistoryPage extends Component {
     });
   }
 
+  // render each matched person cell in the chat list
   renderCell(person) {
     return (
       <TouchableOpacity onPress={() => { this.showProfileDetail(person); }} underlayColor="#dddddd">
@@ -91,9 +105,12 @@ class MatchHistoryPage extends Component {
   render() {
     const ds = new ListView.DataSource({ rowHasChanged: () => true });
     if (this.state.history === null) {
-      console.log(this.state.history);
       return (
-        <View><Text>Hi</Text></View>
+        <View><Text>Loading...</Text></View>
+      );
+    } else if (this.state.history.length === 0) {
+      return (
+        <View style={styles.empty}><Text style={styles.emptyText}>You have not matched with anyone yet... come back later!</Text></View>
       );
     } else {
       return (

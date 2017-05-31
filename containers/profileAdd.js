@@ -178,27 +178,26 @@ class ProfileAdd extends Component {
     this.props.goToSignin();
   }
 
+  // check to see if interests have been checked or not
   handleInterest(interest) {
     if (this.state.interests.includes(interest)) {
       const newstate = [...this.state.interests];
       const index = newstate.indexOf(interest);
-      console.log(index);
       newstate.splice(index, 1);
       this.setState({ interests: newstate });
-      console.log(newstate);
     } else {
       this.setState({ interests: [...this.state.interests, interest] });
     }
   }
 
+  // change the profile
   handleImage(image) {
-    console.log('in set state, handle image is:');
-    console.log(image);
     this.setState({
       profile: image,
     });
   }
 
+  // display the interest options
   renderInterests() {
     const interestItems = interests.map((interest) => {
       if (this.state.interests.includes(interest)) {
@@ -222,6 +221,7 @@ class ProfileAdd extends Component {
     );
   }
 
+  // display the profile options
   renderImage(item) {
     if (this.state.profile === item) {
       return (
@@ -238,9 +238,9 @@ class ProfileAdd extends Component {
     }
   }
 
+  // either render the profile interests page or render the main tab view once the editting is done
   renderPage() {
     const ds = new ListView.DataSource({ rowHasChanged: () => true });
-    console.log(`this.state.profile in render is: ${this.state.profile}`);
     if (this.props.page) {
       return (
         <ScrollView>

@@ -1,3 +1,7 @@
+/*
+Sign up page
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
@@ -147,7 +151,6 @@ class SignUp extends Component {
     this.updatePassword = this.updatePassword.bind(this);
     this.updateRetypePassword = this.updateRetypePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
     this.handleSignin = this.handleSignin.bind(this);
     this.renderError = this.renderError.bind(this);
   }
@@ -176,6 +179,7 @@ class SignUp extends Component {
     });
   }
 
+  // make sure user inputs all the necessary information
   validateFields() {
     const regexpNum = /\d+/;
     const regExpChar = /@/;
@@ -198,6 +202,7 @@ class SignUp extends Component {
     return true;
   }
 
+  // sign up
   handleSubmit(event) {
     event.preventDefault();
     if (this.validateFields()) {
@@ -210,22 +215,13 @@ class SignUp extends Component {
     }
   }
 
-
-  handleCancel(event) {
-    event.preventDefault();
-    this.setState({
-      email: '',
-      password: '',
-      fullname: '',
-      retypePassword: '',
-    });
-  }
-
+  // go to signin page
   handleSignin(event) {
     this.props.clearError();
     this.props.goToSignin();
   }
 
+  // render the authentication error if it exists
   renderError() {
     if (this.props.error === null) {
       return <View />;
@@ -254,7 +250,7 @@ class SignUp extends Component {
             source={require('../imgs/cookie.png')}
           />
           <Image
-            style={[styles.cookies, styles.rotate1]}
+            style={[styles.cookies, styles.rotate2]}
             source={require('../imgs/cookie.png')}
           />
           <Image
