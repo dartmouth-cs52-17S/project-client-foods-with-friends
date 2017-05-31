@@ -111,6 +111,7 @@ class BeenMatched extends Component {
     this.props.pullOtherProfile(this.props.match.User);
   }
 
+  // ok button that takes user back to matchPage
   beenMatchedButton() {
     console.log('beenMatchedButton Pressed!');
     this.props.clearMatchResult();

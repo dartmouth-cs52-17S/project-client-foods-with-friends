@@ -137,7 +137,6 @@ class MatchPage extends Component {
     this._hideDateTimePicker2 = this._hideDateTimePicker2.bind(this);
     this._handleDate1Picked = this._handleDate1Picked.bind(this);
     this._handleDate2Picked = this._handleDate2Picked.bind(this);
-    // this.onMatchResultFound = this.onMatchResultFound.bind(this);
     this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
   }
 
@@ -166,13 +165,6 @@ class MatchPage extends Component {
     this.props.clearMatchResult();
     this.props.removeMatchResult();
   }
-  //
-  // onMatchResultFound(result) {
-  //   console.log(`Match SocketID = ${this.socket.id}`);
-  //   const hardCodedResult = { User: '5928deae7cb4d4216ad6580e', loc: [10.5, 93.6], topic: 'test topic 2', end_time: '2017-05-23T00:56:29.878Z', __v: 0, start_time: '2017-05-23T00:51:29.878Z', id: '5928df407cb4d42' };
-  //   // TODO: Give the hardCodedResult, display the matched Result.
-  //   // TODO: With the User field, initial a router request to get the user's name and interests.
-  // }
 
   onDate1Change(date1) {
     this.setState({ date1 });
@@ -186,6 +178,7 @@ class MatchPage extends Component {
     this.setState({ topic });
   }
 
+  // get location of user
   getPosition() {
     return new Promise((fulfill, reject) => {
       navigator.geolocation.getCurrentPosition(
@@ -193,13 +186,12 @@ class MatchPage extends Component {
           const initialPosition = JSON.stringify(position);
           this.setState({ initialPosition }, () => {
             fulfill();
-            console.log('our current position:');
-            console.log(position);
           });
         });
     });
   }
 
+  // send match request and go to match loading page
   matchButton() {
     if (this.validateInputs()) {
       navigator.geolocation.getCurrentPosition(
@@ -214,6 +206,7 @@ class MatchPage extends Component {
     }
   }
 
+  // sends match request
   sendEndpoint(location) {
     const matchInfo = {
       start_time: this.state.date1.toISOString(),
@@ -224,6 +217,7 @@ class MatchPage extends Component {
     this.props.postMatch(matchInfo);
   }
 
+  // check that time range is valid
   validateInputs() {
     if (this.state.date2.isBefore(this.state.date1)) {
       AlertIOS.alert('That\'s not a valid meal time!');
@@ -237,24 +231,21 @@ class MatchPage extends Component {
     }
   }
 
+  // for date picker modals
   _showDateTimePicker1() { this.setState({ isDateTimePicker1Visible: true }); }
   _showDateTimePicker2() { this.setState({ isDateTimePicker2Visible: true }); }
 
   _hideDateTimePicker1() { this.setState({ isDateTimePicker1Visible: false }); }
   _hideDateTimePicker2() { this.setState({ isDateTimePicker2Visible: false }); }
 
+  // set the times in state
   _handleDate1Picked(date1) {
-    console.log('A date has been picked: ', date1);
     const temp = moment(date1);
     this.setState({ date1: temp });
-    console.log(temp);
-    console.log(this.state.date1);
     this._hideDateTimePicker1();
   }
 
   _handleDate2Picked(date2) {
-    console.log('A date has been picked: ', date2);
-    console.log(this.state.date2);
     const temp = moment(date2);
     this.setState({ date2: temp });
     this._hideDateTimePicker2();

@@ -1,7 +1,11 @@
+/*
+This page shows up after a user signs up for the first time.
+It allows them to input their interests and choose a profile image.
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View, TouchableOpacity, Image, ListView, ScrollView } from 'react-native';
-
 import MunchBuddyTabs from '../navigation/tab';
 import { goToSignin, editInterests } from '../actions';
 
@@ -105,10 +109,6 @@ const styles = StyleSheet.create({
   interestText: {
     color: '#ffffff',
   },
-  profileFlat: {
-    // marginTop: 10,
-    // marginBottom: 10,
-  },
   checkedImage: {
     width: 70,
     height: 70,
@@ -171,9 +171,9 @@ class ProfileAdd extends Component {
     });
   }
 
+  // edit the info to the user's model and go to the main match page
   handleSubmit(event) {
     event.preventDefault();
-    console.log(`in handleSubmit, this.state.profile is: ${this.state.profile}`);
     this.props.addInterests(this.state.interests, this.state.profile.toString());
     this.props.goToSignin();
   }
@@ -254,7 +254,6 @@ class ProfileAdd extends Component {
               removeClippedSubviews={false}
               dataSource={ds.cloneWithRows(profile)}
               renderRow={this.renderImage}
-              style={styles.profileFlat}
             />
             <View>
               <Text style={styles.label}>Add some interests!</Text>
