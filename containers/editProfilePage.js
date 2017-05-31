@@ -1,8 +1,10 @@
+/*
+page to edit user information viewed on profile
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StyleSheet, ScrollView, Image, FlatList, Text, View, ListView, TouchableOpacity, TextInput } from 'react-native';
-
-import MunchBuddyTabs from '../navigation/tab';
+import { StyleSheet, ScrollView, Image, Text, View, ListView, TouchableOpacity, TextInput } from 'react-native';
 import ProfilePage from './profilePage';
 import { editInterests, pullProfile, editName } from '../actions';
 
@@ -163,6 +165,7 @@ class EditProfile extends Component {
     });
   }
 
+  // submit profile changes
   handleSubmit(event) {
     event.preventDefault();
     this.props.editInterests(this.state.interests, this.state.profile);
@@ -184,13 +187,12 @@ class EditProfile extends Component {
     });
   }
 
+  // update profile image in state
   handleImage(image) {
-    console.log('in handleImage');
-    this.setState({ profile: image,
-    });
-    console.log(image);
+    this.setState({ profile: image });
   }
 
+  // see if interest was checked or not
   handleInterest(interest) {
     if (this.state.interests.includes(interest)) {
       const newstate = [...this.state.interests];
@@ -202,6 +204,7 @@ class EditProfile extends Component {
     }
   }
 
+  // render display of interests
   renderInterests() {
     const interestItems = interests.map((interest) => {
       if (this.state.interests.includes(interest)) {
@@ -225,6 +228,7 @@ class EditProfile extends Component {
     );
   }
 
+  // render list of profile options
   renderImage(item) {
     if (this.state.profile === item) {
       return (

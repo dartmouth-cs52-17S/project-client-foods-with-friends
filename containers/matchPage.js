@@ -1,23 +1,15 @@
+/*
+Page that allows the user to send a match request.
+User inputs a conversation topic and start-time time range
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import SocketIOClient from 'socket.io-client';
-import { AsyncStorage } from 'react-native';
-
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  NavigatorIOS,
-  AlertIOS,
-} from 'react-native';
-
+import { StyleSheet, Text, TextInput, View, ScrollView, TouchableOpacity,
+        Image, AsyncStorage, NavigatorIOS, AlertIOS } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-
 import MatchLoading from './matchLoading';
 import { postMatch, removeRequest, clearMatchResult } from '../actions';
 
@@ -145,10 +137,8 @@ class MatchPage extends Component {
     this._hideDateTimePicker2 = this._hideDateTimePicker2.bind(this);
     this._handleDate1Picked = this._handleDate1Picked.bind(this);
     this._handleDate2Picked = this._handleDate2Picked.bind(this);
-
-    this.onMatchResultFound = this.onMatchResultFound.bind(this);
+    // this.onMatchResultFound = this.onMatchResultFound.bind(this);
     this.socket = SocketIOClient('https://munchbuddy.herokuapp.com');
-    // this.socket = SocketIOClient('http://localhost:9090');
   }
 
   componentDidMount() {
@@ -176,13 +166,13 @@ class MatchPage extends Component {
     this.props.clearMatchResult();
     this.props.removeMatchResult();
   }
-
-  onMatchResultFound(result) {
-    console.log(`Match SocketID = ${this.socket.id}`);
-    const hardCodedResult = { User: '5928deae7cb4d4216ad6580e', loc: [10.5, 93.6], topic: 'test topic 2', end_time: '2017-05-23T00:56:29.878Z', __v: 0, start_time: '2017-05-23T00:51:29.878Z', id: '5928df407cb4d42' };
-    // TODO: Give the hardCodedResult, display the matched Result.
-    // TODO: With the User field, initial a router request to get the user's name and interests.
-  }
+  //
+  // onMatchResultFound(result) {
+  //   console.log(`Match SocketID = ${this.socket.id}`);
+  //   const hardCodedResult = { User: '5928deae7cb4d4216ad6580e', loc: [10.5, 93.6], topic: 'test topic 2', end_time: '2017-05-23T00:56:29.878Z', __v: 0, start_time: '2017-05-23T00:51:29.878Z', id: '5928df407cb4d42' };
+  //   // TODO: Give the hardCodedResult, display the matched Result.
+  //   // TODO: With the User field, initial a router request to get the user's name and interests.
+  // }
 
   onDate1Change(date1) {
     this.setState({ date1 });

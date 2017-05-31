@@ -2,8 +2,6 @@ import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 
 const ROOT_URL = 'https://munchbuddy.herokuapp.com/api';
-// NOTE: Change this ROOT_URL when testing with local server
-// const ROOT_URL = 'http://localhost:9090/api';
 
 export const ActionTypes = {
   AUTH_ERROR: 'AUTH_ERROR',
@@ -19,7 +17,7 @@ export const ActionTypes = {
   PULL_OTHER_PROFILE: 'PULL_OTHER_PROFILE',
 };
 
-
+// used to render signin page
 export function goToSignin() {
   return {
     type: ActionTypes.NEW_ACCOUNT,
@@ -27,6 +25,7 @@ export function goToSignin() {
   };
 }
 
+// used to render signup page
 export function goToSignup() {
   return {
     type: ActionTypes.NEW_ACCOUNT,
@@ -34,6 +33,7 @@ export function goToSignup() {
   };
 }
 
+// used to reset the error message
 export function clearError() {
   return {
     type: ActionTypes.CLEAR_ERROR,
@@ -41,6 +41,7 @@ export function clearError() {
   };
 }
 
+// create authentication error message
 export function authError(error) {
   return {
     type: ActionTypes.AUTH_ERROR,
@@ -48,8 +49,8 @@ export function authError(error) {
   };
 }
 
+// sign up user
 export function signupUser({ fullname, email, password }) {
-  console.log('in signupUser');
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signup`, { fullname, email, password }).then((response) => {
       dispatch({ type: ActionTypes.AUTH_USER });
@@ -61,6 +62,7 @@ export function signupUser({ fullname, email, password }) {
   };
 }
 
+// sign in user
 export function signinUser({ email, password }) {
   return (dispatch) => {
     axios.post(`${ROOT_URL}/signin`, { email, password }).then((response) => {
@@ -73,6 +75,15 @@ export function signinUser({ email, password }) {
   };
 }
 
+// sign out the user
+export function signoutUser() {
+  return (dispatch) => {
+    AsyncStorage.removeItem('token');
+    dispatch({ type: ActionTypes.DEAUTH_USER });
+  };
+}
+
+// update interests and profile image for user
 export function editInterests(interests, profile) {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
@@ -87,13 +98,13 @@ export function editInterests(interests, profile) {
   };
 }
 
+// update username
 export function editName(name) {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.put(`${ROOT_URL}/updatename`, { fullname: name }, { headers: { Authorization: User } }).then((response) => {
         dispatch({ type: ActionTypes.PULL_PROFILE, payload: { user: response.data } });
-        console.log('posted successfully to update name!');
       })
       .catch((error) => {
         console.log(`Cannot update name: ${error.response.data}`);
@@ -102,6 +113,7 @@ export function editName(name) {
   };
 }
 
+// access the users information from api to create profile page
 export function pullProfile() {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
@@ -116,6 +128,7 @@ export function pullProfile() {
   };
 }
 
+// access other users' information from api to create their profile page
 export function pullOtherProfile(id) {
   return (dispatch) => {
     axios.get(`${ROOT_URL}/user/${id}`).then((response) => {
@@ -127,12 +140,33 @@ export function pullOtherProfile(id) {
   };
 }
 
+// Post a match request to the api
+export function postMatch({ start_time, end_time, topic, loc }) {
+  const toPost = {
+    topic,
+    loc,
+    start_time,
+    end_time,
+  };
+  return (dispatch) => {
+    AsyncStorage.getItem('token').then((result) => {
+      const User = result;
+      axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { Authorization: User } }).then((response) => {
+        dispatch({ type: ActionTypes.POST_MATCH });
+      })
+      .catch((error) => {
+        console.log(`cannot postMatch: ${error.response.data}`);
+      });
+    });
+  };
+}
+
+// remove a request from the api
 export function removeRequest() {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.get(`${ROOT_URL}/removeMatchRequest`, { headers: { Authorization: User } }).then((response) => {
-        // console.log(response);
       })
       .catch((error) => {
         console.log(`Cannot remove match request: ${error.response.data}`);
@@ -141,26 +175,31 @@ export function removeRequest() {
   };
 }
 
+// search for a match from api
 export function getMatchResult() {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
       const User = result;
       axios.get(`${ROOT_URL}/getMatchResult`, { headers: { Authorization: User } }).then((response) => {
         if (response.data.InstaMatchedWith !== '') {
-          console.log('matched!');
-          console.log(response.data.InstaMatchedWith);
           dispatch({ type: ActionTypes.RECEIVE_MATCH, payload: { match: response.data.InstaMatchedWith } });
-        } else {
-          console.log(`sad ${response.data.InstaMatchedWith}`);
         }
       })
       .catch((error) => {
-        console.log(`Error trying to receive match: ${error}`);
+        console.log(`Error trying to receive match: ${error.response.data}`);
       });
     });
   };
 }
 
+// reset the result obtained by getMatchResult
+export function clearMatchResult() {
+  return {
+    type: ActionTypes.CLEAR_MATCH,
+  };
+}
+
+// access the user's past matches
 export function getMatchHistory() {
   return (dispatch) => {
     AsyncStorage.getItem('token').then((result) => {
@@ -172,42 +211,5 @@ export function getMatchHistory() {
         console.log(`Error trying to receive history: ${error.response.data}`);
       });
     });
-  };
-}
-
-export function clearMatchResult() {
-  console.log('cleared');
-  return {
-    type: ActionTypes.CLEAR_MATCH,
-  };
-}
-
-export function postMatch({ start_time, end_time, topic, loc }) {
-  console.log('in postMatch function');
-  const toPost = {
-    topic,
-    loc,
-    start_time,
-    end_time,
-  };
-  return (dispatch) => {
-    AsyncStorage.getItem('token').then((result) => {
-      const User = result;
-      axios.post(`${ROOT_URL}/matchRequest`, toPost, { headers: { Authorization: User } }).then((response) => {
-        console.log(response.data);
-        dispatch({ type: ActionTypes.POST_MATCH });
-      })
-      .catch((error) => {
-        console.log(`cannot postMatch: ${error.response.data}`);
-      });
-    });
-  };
-}
-
-
-export function signoutUser() {
-  return (dispatch) => {
-    AsyncStorage.removeItem('token');
-    dispatch({ type: ActionTypes.DEAUTH_USER });
   };
 }

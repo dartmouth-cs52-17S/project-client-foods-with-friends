@@ -1,6 +1,10 @@
+/*
+List of people the user has been matched with
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text, Image, FlatList, ScrollView, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
 import ChatPage from '../components/chatPage';
 import MatchedPerson from '../components/matchedPerson';
 import MatchProfile from '../containers/matchProfile';
@@ -10,35 +14,6 @@ import { getMatchHistory } from '../actions';
 const styles = StyleSheet.create({
   view: {
     flex: 1,
-  },
-  container: {
-    flex: 1,
-    alignSelf: 'stretch',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
-    backgroundColor: 'white',
-    padding: 10,
-  },
-  thumbnail: {
-    width: 80,
-    height: 80,
-    marginRight: 10,
-  },
-  rightContainer: {
-    flex: 1,
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 3,
-  },
-  subtitle: {
-    fontSize: 12,
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#dddddd',
   },
   listView: {
     backgroundColor: 'white',
@@ -55,7 +30,6 @@ class MatchHistoryPage extends Component {
       dataSource: new ListView.DataSource({
         rowHasChanged: () => true,
       }),
-      history: [],
     };
 
     this.showProfileDetail = this.showProfileDetail.bind(this);
@@ -88,7 +62,7 @@ class MatchHistoryPage extends Component {
   showProfileDetail(person) {
     this.props.navigator.push({
       showTabBar: false,
-      translucent: 'false',
+      translucent: false,
       tabBarVisible: false,
       title: 'Chat',
       component: ChatPage,
