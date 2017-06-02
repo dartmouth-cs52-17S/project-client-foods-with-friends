@@ -1,6 +1,5 @@
 # MunchBuddy
 This is a react-native app that connects strangers to eat together if they don't have anyone to eat with for a meal! The MuchBuddy app allows users to signup and create a profile of interests. Upon creating an account, users can input a topic of conversation and a time range and wait to be matched with someone.
-![](imgs/matchPage.png)
 <img src="imgs/matchPage.png" alt="alt text" width="250">
 
 Once users are matched, they can view their match in the match history tab. Here users will be able to see all people that they have matched with in the past. MunchBuddy allows users to chat with the people they matched with to coordinate meals as well as view their profiles to get a sense of their interests.
@@ -40,9 +39,9 @@ Food<br/>
 * http://www.flaticon.com/authors/vectors-market
 * http://www.freepik.com
 * http://www.flaticon.com/authors/pixel-perfect
-<br/>Avatars<br/>
+Avatars<br/>
 * http://www.freepik.com
-</br>Tab Icons<br/>
+Tab Icons<br/>
 * http://www.flaticon.com/authors/madebyoliver
 * http://www.flaticon.com/authors/situ-herrera
 * http://www.freepik.com
