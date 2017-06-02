@@ -1,6 +1,6 @@
 # MunchBuddy
 This is a react-native app that connects strangers to eat together if they don't have anyone to eat with for a meal! The MuchBuddy app allows users to signup and create a profile of interests. Upon creating an account, users can input a topic of conversation and a time range and wait to be matched with someone.
-![](imgs/matchPage.png)
+![](imgs/matchPage.png =250x)
 
 Once users are matched, they can view their match in the match history tab. Here users will be able to see all people that they have matched with in the past. MunchBuddy allows users to chat with the people they matched with to coordinate meals as well as view their profiles to get a sense of their interests.
 
