@@ -254,6 +254,7 @@ class ProfileAdd extends Component {
               <Text style={styles.explanation}>You can change your profile picture at any time.</Text>
             </View>
             <ListView
+              key={this.props.user}
               horizontal
               removeClippedSubviews={false}
               dataSource={ds.cloneWithRows(profile)}
@@ -295,6 +296,7 @@ const mapStateToProps = state => (
     error: state.auth.message,
     auth: state.auth.authenticated,
     page: state.auth.page,
+    user: state.auth.user,
   }
 );
 

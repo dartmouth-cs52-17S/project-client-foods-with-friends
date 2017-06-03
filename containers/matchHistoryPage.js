@@ -5,8 +5,8 @@ List of people the user has been matched with
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet, RefreshControl, Text, TouchableOpacity, ListView } from 'react-native';
-import ChatPage from '../containers/chatPage';
-import MatchedPerson from '../containers/matchedPerson';
+import ChatPage from '../components/chatPage';
+import MatchedPerson from '../components/matchedPerson';
 import MatchProfile from '../containers/matchProfile';
 import { getMatchHistory } from '../actions';
 
@@ -130,6 +130,8 @@ class MatchHistoryPage extends Component {
       return (
         <View style={styles.view}>
           <ListView
+            key={this.state.history.user}
+            removeClippedSubviews={false}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}

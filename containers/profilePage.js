@@ -90,9 +90,6 @@ class ProfilePage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
-
     this.onPressButton = this.onPressButton.bind(this);
     this.renderProfile = this.renderProfile.bind(this);
   }
