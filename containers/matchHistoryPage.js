@@ -5,7 +5,7 @@ List of people the user has been matched with
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet, RefreshControl, Text, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
-import ChatPage from '../components/chatPage';
+import ChatPage from '../containers/chatPage';
 import MatchedPerson from '../components/matchedPerson';
 import MatchProfile from '../containers/matchProfile';
 import { getMatchHistory } from '../actions';
@@ -80,9 +80,11 @@ class MatchHistoryPage extends Component {
       this.setState({ refreshing: false });
     });
   }
+
   fetchData() {
     this.setState({ change: !this.state.change });
   }
+
   // go to chat with the matched person, which can lead to their profile
   showProfileDetail(person) {
     this.props.navigator.push({
