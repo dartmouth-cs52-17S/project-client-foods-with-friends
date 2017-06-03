@@ -33,7 +33,7 @@ To deploy the MunchBuddy App, you need an XCode account and a Testflight account
 5. Upload your app to iTunes Connect.
 6. Use iTunes connect to send email invitations to up to 25 testers.
 
-More information on deploying the app can be found under Apple's App Distribution Guide, found [here](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/DistributingYourAppUsingTestFlight/DistributingYourAppUsingTestFlight.html) and [here](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/UploadingYourApptoiTunesConnect/UploadingYourApptoiTunesConnect.html#//apple_ref/doc/uid/TP40012582-CH36-SW2)
+More information on deploying the app can be found under Apple's App Distribution Guide, found [here](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/DistributingYourAppUsingTestFlight/DistributingYourAppUsingTestFlight.html) and [here](https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/UploadingYourApptoiTunesConnect/UploadingYourApptoiTunesConnect.html#//apple_ref/doc/uid/TP40012582-CH36-SW2).
 
 ### Reflection and Next Steps
 #### Things that went well for our project:
@@ -63,14 +63,14 @@ More information on deploying the app can be found under Apple's App Distributio
 * Jason Feng – TA
 
 #### Icon citations
-Food<br/>
+##### Food
 * http://www.flaticon.com/authors/nikita-golubev
 * http://www.flaticon.com/authors/vectors-market
 * http://www.freepik.com
 * http://www.flaticon.com/authors/pixel-perfect
-Avatars<br/>
+##### Avatars
 * http://www.freepik.com
-Tab Icons<br/>
+##### Tab Icons
 * http://www.flaticon.com/authors/madebyoliver
 * http://www.flaticon.com/authors/situ-herrera
 * http://www.freepik.com
