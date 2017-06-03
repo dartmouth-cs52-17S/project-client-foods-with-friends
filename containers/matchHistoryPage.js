@@ -4,7 +4,7 @@ List of people the user has been matched with
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
+import { View, StyleSheet, RefreshControl, Text, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
 import ChatPage from '../components/chatPage';
 import MatchedPerson from '../components/matchedPerson';
 import MatchProfile from '../containers/matchProfile';
@@ -36,8 +36,8 @@ class MatchHistoryPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: 'cat',
-      isLoading: true,
+      change: true,
+      refreshing: false,
       history: [],
       dataSource: new ListView.DataSource({
         rowHasChanged: () => true,
@@ -46,6 +46,8 @@ class MatchHistoryPage extends Component {
 
     this.showProfileDetail = this.showProfileDetail.bind(this);
     this.renderCell = this.renderCell.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+    this.onRefresh = this.onRefresh.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +66,7 @@ class MatchHistoryPage extends Component {
       }
     }
     this.setState({ history: people });
+    console.log(historyReverse);
     if (history) {
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(this.state.history),
@@ -71,6 +74,15 @@ class MatchHistoryPage extends Component {
     }
   }
 
+  onRefresh() {
+    // this.setState({ refreshing: true });
+    this.fetchData().then(() => {
+      this.setState({ refreshing: false });
+    });
+  }
+  fetchData() {
+    this.setState({ change: !this.state.change });
+  }
   // go to chat with the matched person, which can lead to their profile
   showProfileDetail(person) {
     this.props.navigator.push({
@@ -116,7 +128,12 @@ class MatchHistoryPage extends Component {
       return (
         <View style={styles.view}>
           <ListView
-            removeClippedSubviews={false}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh}
+              />
+            }
             dataSource={ds.cloneWithRows(this.state.history)}
             renderRow={person => <View>{this.renderCell(person)}</View>}
             style={styles.listView}

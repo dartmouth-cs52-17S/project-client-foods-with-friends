@@ -142,7 +142,6 @@ class MatchPage extends Component {
 
   componentDidMount() {
     AsyncStorage.getItem('token').then((response) => {
-      console.log(`in match page socket io token = ${response}`);
       if (response !== null) {
         const User = response;
         this.socket.on('connect', () => {
@@ -150,11 +149,11 @@ class MatchPage extends Component {
               .emit('hello', 'HELLO FROM CLIENT')
               .emit('authenticate', { token: User }) // send the jwt token
               .on('authenticated', () => {
-                console.log('Yo, i am authorized!');
+                console.log('Authorized');
                 this.socket.on('foundMatchResult', this.onMatchResultFound);
               })
               .on('unauthorized', (msg) => {
-                console.log(`unauthorized: ${JSON.stringify(msg.data)}`);
+                console.log(`Unauthorized: ${JSON.stringify(msg.data)}`);
                 throw new Error(msg.data.type);
               });
         });
