@@ -4,7 +4,7 @@ Shows the profile of the person they've been matched with
 */
 
 import React, { Component } from 'react';
-import { View, NavigatorIOS, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { clearMatchResult, removeRequest, pullOtherProfile, getMatchHistory } from '../actions';
 
