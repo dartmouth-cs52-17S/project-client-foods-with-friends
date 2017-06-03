@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet, RefreshControl, Text, TouchableOpacity, ListView } from 'react-native';
 import ChatPage from '../containers/chatPage';
-import MatchedPerson from '../components/matchedPerson';
+import MatchedPerson from '../containers/matchedPerson';
 import MatchProfile from '../containers/matchProfile';
 import { getMatchHistory } from '../actions';
 
@@ -46,7 +46,7 @@ class MatchHistoryPage extends Component {
 
     this.showProfileDetail = this.showProfileDetail.bind(this);
     this.renderCell = this.renderCell.bind(this);
-    this.hi = this.hi.bind(this);
+    this.fetchData = this.fetchData.bind(this);
     this.onRefresh = this.onRefresh.bind(this);
   }
 
@@ -75,21 +75,10 @@ class MatchHistoryPage extends Component {
   }
 
   onRefresh() {
-    this.setState({ refreshing: true });
-    this.hi().then(() => {
+    // this.setState({ refreshing: true });
+    this.componentWillReceiveProps().then(() => {
       this.setState({ refreshing: false });
     });
-    // .catch(() => {
-    //   console.log('heo');
-    // });
-  }
-
-  hi() {
-    if (this.props.history) {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.state.history),
-      });
-    }
   }
 
   fetchData() {

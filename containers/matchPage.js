@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import SocketIOClient from 'socket.io-client';
 import { StyleSheet, Text, TextInput, View, ScrollView, TouchableOpacity,
-        Image, AsyncStorage, NavigatorIOS, AlertIOS } from 'react-native';
+        Image, AsyncStorage, AlertIOS } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import MatchLoading from './matchLoading';
 import { postMatch, removeRequest, clearMatchResult } from '../actions';

@@ -4,10 +4,9 @@ The user's profile page
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, TouchableOpacity, StyleSheet, Text, FlatList, ScrollView, AlertIOS } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
 
 import { signoutUser, clearError, pullProfile } from '../actions';
-import EditProfile from './editProfilePage';
 
 const styles = StyleSheet.create({
   body: {
