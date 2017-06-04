@@ -107,7 +107,7 @@ class ProfilePage extends Component {
             <ScrollView style={styles.scroll}>
               <FlatList
                 style={styles.list}
-                key={this.props.user}
+                key={item => item}
                 removeClippedSubviews={false}
                 data={this.props.user.interests}
                 renderItem={({ item }) => <Text style={styles.interest}>{item}</Text>}

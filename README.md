@@ -58,7 +58,7 @@ More information on deploying the app can be found under Apple's App Distributio
 1. Make our app compatible with more devices. The styling works on most phones, but not on iPod Touch.
 2. Implementing the app in Android. That was beyond the scope of our final project, but would represent a large user base in the real world.
 3. Reiterating the matching algorithm to include conversation topic as matching criteria, provided that there are enough users in the queue to make location and meal time less of an issue.
-4. Providing more indication to the user once he/she is in the atching queue. We have a spinning image of a pie right now, which is cute. A timer would be more relevant, though!
+4. Providing more indication to the user once he/she is in the matching queue. We have a spinning image of a pie right now, which is cute. A timer would be more relevant, though!
 5. Sign in through Facebook. We originally decided not to include it because it wasn't necessary for our MVP, but it's possible that users would feel more comfortable using Facebook Login than our own authentication services.
 
 ### Authors

@@ -23,7 +23,6 @@ class ChatPage extends React.Component {
     this.state = {
       messages: [],
     };
-
     this.matchedUserID = this.props.User;
     this.myUserID = '';
     this.roomID = '';
