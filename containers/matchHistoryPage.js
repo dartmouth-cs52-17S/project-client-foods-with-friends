@@ -4,7 +4,7 @@ List of people the user has been matched with
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, RefreshControl, Text, TouchableOpacity, ListView } from 'react-native';
+import { View, StyleSheet, Text, TouchableOpacity, ListView, FlatList } from 'react-native';
 import ChatPage from '../components/chatPage';
 import MatchedPerson from '../components/matchedPerson';
 import MatchProfile from '../containers/matchProfile';
@@ -132,12 +132,6 @@ class MatchHistoryPage extends Component {
           <ListView
             key={this.state.history.user}
             removeClippedSubviews={false}
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this.onRefresh}
-              />
-            }
             dataSource={ds.cloneWithRows(this.state.history)}
             renderRow={person => <View>{this.renderCell(person)}</View>}
             style={styles.listView}

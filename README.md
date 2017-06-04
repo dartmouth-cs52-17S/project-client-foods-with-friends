@@ -1,5 +1,7 @@
 # MunchBuddy
 <img src="imgs/matchPage.png" alt="alt text" width="250">
+<img src="imgs/matchhistory.png" alt="alt text" width="250">
+<img src="imgs/profilescreenshot.png" alt="alt text" width="250">
 
 MunchBuddy is a React-Native app designed and implemented as a final project for [Tim Tregubov's CS52 class](http://cs52.me/) that connects strangers to eat together if they don't have anyone to eat with for a meal! The MuchBuddy app allows users to signup and create a profile of interests. Upon creating an account, users can input a topic of conversation and a time range and wait to be matched with someone.
 
@@ -50,7 +52,7 @@ More information on deploying the app can be found under Apple's App Distributio
 #### Things to do better for next time:
 1. Setting more milestones for ourselves. We had meetings every night to work on the project, but we had no solid goals for each meeting. This resulted in our group working for 5-6 hours per meeting, then missing work in other classes. A smarter approach would have been to set a particular feature as a goal, then work until that feature was implemented. That way, project members could have spent more or less time per day depending on member schedules.
 2. The buddy matching algorithm. In a two-week timeline and without much prior knowledge in matching algorithms, it was hard for our group to implement the matching ideas we had in our initial brainstorm. Maybe next time, we could try designing the matching algorithm together right after handling the project scaffolding.
-3. **Optimization.  This app works but will occasionally take a while to render the expected information (perhaps because the state is taking too long to set) and we need to improve this for usability.  This happens particularly with editing profile and match history tab loading new data.**
+3. Optimization.  This app works but will occasionally take a while to render the expected information (perhaps because the state is taking too long to set) and we need to improve this for usability.  This happens particularly with editing profile and match history tab loading new data.
 
 #### TODOs and Next Steps:
 1. Make our app compatible with more devices. The styling works on most phones, but not on iPod Touch.

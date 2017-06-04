@@ -113,7 +113,6 @@ class BeenMatched extends Component {
 
   // ok button that takes user back to matchPage
   beenMatchedButton() {
-    console.log('beenMatchedButton Pressed!');
     this.props.clearMatchResult();
     this.props.removeMatchResult();
     this.props.getMatchHistory();
