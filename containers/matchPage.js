@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import SocketIOClient from 'socket.io-client';
 import { StyleSheet, Text, TextInput, View, ScrollView, TouchableOpacity,
-        Image, AsyncStorage, NavigatorIOS, AlertIOS } from 'react-native';
+        Image, AsyncStorage, AlertIOS } from 'react-native';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import MatchLoading from './matchLoading';
 import { postMatch, removeRequest, clearMatchResult } from '../actions';
@@ -142,7 +142,6 @@ class MatchPage extends Component {
 
   componentDidMount() {
     AsyncStorage.getItem('token').then((response) => {
-      console.log(`in match page socket io token = ${response}`);
       if (response !== null) {
         const User = response;
         this.socket.on('connect', () => {
@@ -150,11 +149,11 @@ class MatchPage extends Component {
               .emit('hello', 'HELLO FROM CLIENT')
               .emit('authenticate', { token: User }) // send the jwt token
               .on('authenticated', () => {
-                console.log('Yo, i am authorized!');
+                console.log('Authorized');
                 this.socket.on('foundMatchResult', this.onMatchResultFound);
               })
               .on('unauthorized', (msg) => {
-                console.log(`unauthorized: ${JSON.stringify(msg.data)}`);
+                console.log(`Unauthorized: ${JSON.stringify(msg.data)}`);
                 throw new Error(msg.data.type);
               });
         });

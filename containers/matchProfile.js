@@ -4,7 +4,7 @@ This is the profile page for the people the user has been matched with
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, StyleSheet, Text, FlatList, ScrollView, AlertIOS } from 'react-native';
+import { View, Image, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
 
 import { pullOtherProfile } from '../actions';
 import EditProfile from './editProfilePage';

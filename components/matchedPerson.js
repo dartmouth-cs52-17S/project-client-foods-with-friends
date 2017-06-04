@@ -53,7 +53,9 @@ const styles = StyleSheet.create({
 class MemberTemplate extends Component {
   constructor(props) {
     super(props);
-    this.state = { fullname: null, time: moment(), image: '' };
+    this.state = {
+      fullname: null, time: moment(), image: '',
+    };
 
     this.renderUser = this.renderUser.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);

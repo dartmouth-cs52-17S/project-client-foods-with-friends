@@ -252,6 +252,7 @@ class EditProfile extends Component {
         <Text style={styles.label}>Choose a new profile picture</Text>
         <View style={styles.container}>
           <ListView
+            key={this.props.user}
             horizontal
             removeClippedSubviews={false}
             dataSource={ds.cloneWithRows(profile)}

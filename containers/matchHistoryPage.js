@@ -4,12 +4,11 @@ List of people the user has been matched with
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text, TouchableOpacity, NavigatorIOS, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import ChatPage from '../components/chatPage';
 import MatchedPerson from '../components/matchedPerson';
 import MatchProfile from '../containers/matchProfile';
 import { getMatchHistory } from '../actions';
-
 
 const styles = StyleSheet.create({
   container: {
@@ -57,6 +56,17 @@ class MatchHistoryPage extends Component {
       }
     }
     this.setState({ history: people });
+  }
+
+  onRefresh() {
+    // this.setState({ refreshing: true });
+    this.componentWillReceiveProps().then(() => {
+      this.setState({ refreshing: false });
+    });
+  }
+
+  fetchData() {
+    this.setState({ change: !this.state.change });
   }
 
   // go to chat with the matched person, which can lead to their profile
