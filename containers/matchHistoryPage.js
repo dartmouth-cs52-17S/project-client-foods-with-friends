@@ -41,6 +41,7 @@ class MatchHistoryPage extends Component {
       history: [],
       dataSource: new ListView.DataSource({
         rowHasChanged: () => true,
+
       }),
     };
 
