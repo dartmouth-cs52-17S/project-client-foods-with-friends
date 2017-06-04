@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, Image } from 'react-native';
 
-import MatchPage from './matchPage';
 import { signinUser, signoutUser, clearError, goToSignup } from '../actions';
 
 const styles = StyleSheet.create({

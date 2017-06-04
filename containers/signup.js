@@ -279,8 +279,6 @@ class SignUp extends Component {
           </TouchableOpacity>
         </View>
       </View>
-
-
     );
   }
 }

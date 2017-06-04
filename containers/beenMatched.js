@@ -4,7 +4,7 @@ Shows the profile of the person they've been matched with
 */
 
 import React, { Component } from 'react';
-import { View, NavigatorIOS, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { clearMatchResult, removeRequest, pullOtherProfile, getMatchHistory } from '../actions';
 
@@ -102,18 +102,17 @@ class BeenMatched extends Component {
     this.beenMatchedButton = this.beenMatchedButton.bind(this);
   }
 
+  componentWillMount() {
+    this.props.pullOtherProfile(this.props.match.User);
+  }
+
   componentWillUnmount() {
     this.props.clearMatchResult();
     this.props.removeMatchResult();
   }
 
-  componentWillMount() {
-    this.props.pullOtherProfile(this.props.match.User);
-  }
-
   // ok button that takes user back to matchPage
   beenMatchedButton() {
-    console.log('beenMatchedButton Pressed!');
     this.props.clearMatchResult();
     this.props.removeMatchResult();
     this.props.getMatchHistory();
@@ -135,7 +134,7 @@ class BeenMatched extends Component {
           </View>
           <Text style={styles.label}>{`${this.props.otherUser.fullname} wants to talk about:`}</Text>
           <Text style={styles.convotopic}>{this.props.receiveMatch.topic}</Text>
-          <Text style={styles.explanation}>{`You can chat with ${this.props.otherUser.fullname} by tapping the MatchHistory page.`}</Text>
+          <Text style={styles.explanation}>{`You can chat with ${this.props.otherUser.fullname} by tapping OK and then going to Match History Page.`}</Text>
           <TouchableOpacity style={styles.button} onPress={() => { this.beenMatchedButton(); }}>
             <Text style={styles.buttonText}>Ok!</Text>
           </TouchableOpacity>

@@ -4,19 +4,15 @@ List of people the user has been matched with
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text, TouchableOpacity, NavigatorIOS, ListView } from 'react-native';
+import { StyleSheet, View, Text, TouchableOpacity, ScrollView } from 'react-native';
 import ChatPage from '../components/chatPage';
 import MatchedPerson from '../components/matchedPerson';
 import MatchProfile from '../containers/matchProfile';
 import { getMatchHistory } from '../actions';
 
-
 const styles = StyleSheet.create({
-  view: {
-    flex: 1,
-  },
-  listView: {
-    backgroundColor: 'white',
+  container: {
+    marginBottom: 65,
   },
   empty: {
     marginTop: '50%',
@@ -36,16 +32,12 @@ class MatchHistoryPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      query: 'cat',
-      isLoading: true,
       history: [],
-      dataSource: new ListView.DataSource({
-        rowHasChanged: () => true,
-      }),
     };
 
     this.showProfileDetail = this.showProfileDetail.bind(this);
     this.renderCell = this.renderCell.bind(this);
+    this.renderList = this.renderList.bind(this);
   }
 
   componentDidMount() {
@@ -64,11 +56,17 @@ class MatchHistoryPage extends Component {
       }
     }
     this.setState({ history: people });
-    if (history) {
-      this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(this.state.history),
-      });
-    }
+  }
+
+  onRefresh() {
+    // this.setState({ refreshing: true });
+    this.componentWillReceiveProps().then(() => {
+      this.setState({ refreshing: false });
+    });
+  }
+
+  fetchData() {
+    this.setState({ change: !this.state.change });
   }
 
   // go to chat with the matched person, which can lead to their profile
@@ -102,8 +100,8 @@ class MatchHistoryPage extends Component {
     );
   }
 
-  render() {
-    const ds = new ListView.DataSource({ rowHasChanged: () => true });
+  renderList() {
+    let matches = [];
     if (this.state.history === null) {
       return (
         <View><Text>Loading...</Text></View>
@@ -113,17 +111,27 @@ class MatchHistoryPage extends Component {
         <View style={styles.empty}><Text style={styles.emptyText}>You have not matched with anyone yet... come back later!</Text></View>
       );
     } else {
-      return (
-        <View style={styles.view}>
-          <ListView
-            removeClippedSubviews={false}
-            dataSource={ds.cloneWithRows(this.state.history)}
-            renderRow={person => <View>{this.renderCell(person)}</View>}
-            style={styles.listView}
-          />
-        </View>
-      );
+      matches = this.state.history.map((person) => {
+        return (
+          <TouchableOpacity key={person.User} onPress={() => { this.showProfileDetail(person); }} underlayColor="#dddddd">
+            <MatchedPerson userid={person.User} time={person.match_time} />
+          </TouchableOpacity>
+        );
+      });
     }
+    return (
+      <View>
+        {matches}
+      </View>
+    );
+  }
+
+  render() {
+    return (
+      <ScrollView style={styles.container}>
+        {this.renderList()}
+      </ScrollView>
+    );
   }
 }
 

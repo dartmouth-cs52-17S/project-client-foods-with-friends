@@ -4,10 +4,9 @@ The user's profile page
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { View, Image, TouchableOpacity, StyleSheet, Text, FlatList, ScrollView, AlertIOS } from 'react-native';
+import { View, Image, TouchableOpacity, StyleSheet, Text, FlatList, ScrollView } from 'react-native';
 
 import { signoutUser, clearError, pullProfile } from '../actions';
-import EditProfile from './editProfilePage';
 
 const styles = StyleSheet.create({
   body: {
@@ -91,9 +90,6 @@ class ProfilePage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
-
     this.onPressButton = this.onPressButton.bind(this);
     this.renderProfile = this.renderProfile.bind(this);
   }
@@ -125,7 +121,7 @@ class ProfilePage extends Component {
             <ScrollView style={styles.scroll}>
               <FlatList
                 style={styles.list}
-                key={this.props.user.interests}
+                keyExtractor={(item, index) => index}
                 removeClippedSubviews={false}
                 data={this.props.user.interests}
                 renderItem={({ item }) => <Text style={styles.interest}>{item}</Text>}
