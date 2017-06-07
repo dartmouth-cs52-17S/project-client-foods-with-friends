@@ -11,7 +11,7 @@ import { clearMatchResult, removeRequest, pullOtherProfile, getMatchHistory } fr
 
 const styles = StyleSheet.create({
   page: {
-    marginBottom: 80,
+    marginTop: 65,
   },
   container: {
     flex: 1,
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    marginBottom: 15,
   },
   image: {
     width: 150,

@@ -10,12 +10,12 @@ import { signoutUser, clearError, pullProfile } from '../actions';
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 80,
   },
   body: {
     flex: 1,
     alignSelf: 'stretch',
     backgroundColor: '#ffffff',
+    marginBottom: 80,
   },
   username: {
     marginTop: 5,
