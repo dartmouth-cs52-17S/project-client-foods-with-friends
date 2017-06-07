@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+    marginBottom: 15,
   },
   buttonBox: {
     flex: 1,
