@@ -6,9 +6,12 @@ It is called in matchHistoryPage.js
 import React, { Component } from 'react';
 import axios from 'axios';
 import moment from 'moment';
-import { View, StyleSheet, Text, Image } from 'react-native';
+import { View, StyleSheet, Text, Image, ScrollView } from 'react-native';
 
 const styles = StyleSheet.create({
+  page: {
+    marginBottom: 80,
+  },
   view: {
     flex: 1,
   },
@@ -20,6 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'white',
     padding: 10,
+    marginBottom: 80,
   },
   rightContainer: {
     flex: 1,
@@ -75,27 +79,29 @@ class MemberTemplate extends Component {
   renderUser() {
     if (this.state.fullname != null) {
       return (
-        <View style={styles.view}>
-          <View style={styles.container}>
-            <View style={styles.leftContainer}>
-              <Image
-                style={styles.leftIcon}
-                source={this.state.image}
-              />
+        <ScrollView style={styles.page}>
+          <View style={styles.view}>
+            <View style={styles.container}>
+              <View style={styles.leftContainer}>
+                <Image
+                  style={styles.leftIcon}
+                  source={this.state.image}
+                />
+              </View>
+              <View style={styles.rightContainer}>
+                <Text style={styles.title}>{this.state.fullname}</Text>
+                <Text style={styles.info}>{`Matched on ${this.state.time.format('MM/DD/YY, hh:mm A').toString()}`}</Text>
+              </View>
+              <View style={styles.rightIcon}>
+                <Image
+                  style={styles.sideIcon}
+                  source={require('../imgs/right-arrow.png')}
+                />
+              </View>
             </View>
-            <View style={styles.rightContainer}>
-              <Text style={styles.title}>{this.state.fullname}</Text>
-              <Text style={styles.info}>{`Matched on ${this.state.time.format('MM/DD/YY, hh:mm A').toString()}`}</Text>
-            </View>
-            <View style={styles.rightIcon}>
-              <Image
-                style={styles.sideIcon}
-                source={require('../imgs/right-arrow.png')}
-              />
-            </View>
+            <View style={styles.separator} />
           </View>
-          <View style={styles.separator} />
-        </View>
+        </ScrollView>
       );
     } else {
       return <View><Text>Loading...</Text></View>;

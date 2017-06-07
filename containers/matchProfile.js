@@ -10,6 +10,9 @@ import { pullOtherProfile } from '../actions';
 import EditProfile from './editProfilePage';
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 80,
+  },
   body: {
     flex: 1,
     alignSelf: 'stretch',
@@ -94,27 +97,29 @@ class ProfilePage extends Component {
   renderProfile() {
     if (this.props.user && this.props.user !== null) {
       return (
-        <View style={styles.body}>
-          <View style={styles.header}>
-            <Image
-              style={styles.image}
-              source={this.props.user.profile_image}
-            />
-            <Text style={styles.username}>{this.props.user.fullname}</Text>
-          </View>
-          <View style={styles.info}>
-            <Text style={styles.title}>Interests:</Text>
-            <ScrollView style={styles.scroll}>
-              <FlatList
-                style={styles.list}
-                keyExtractor={(item, index) => index}
-                removeClippedSubviews={false}
-                data={this.props.user.interests}
-                renderItem={({ item }) => <Text style={styles.interest}>{item}</Text>}
+        <ScrollView style={styles.container}>
+          <View style={styles.body}>
+            <View style={styles.header}>
+              <Image
+                style={styles.image}
+                source={this.props.user.profile_image}
               />
-            </ScrollView>
+              <Text style={styles.username}>{this.props.user.fullname}</Text>
+            </View>
+            <View style={styles.info}>
+              <Text style={styles.title}>Interests:</Text>
+              <ScrollView style={styles.scroll}>
+                <FlatList
+                  style={styles.list}
+                  keyExtractor={(item, index) => index}
+                  removeClippedSubviews={false}
+                  data={this.props.user.interests}
+                  renderItem={({ item }) => <Text style={styles.interest}>{item}</Text>}
+                />
+              </ScrollView>
+            </View>
           </View>
-        </View>
+        </ScrollView>
       );
     } else {
       return (

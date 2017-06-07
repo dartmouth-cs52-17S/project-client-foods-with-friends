@@ -4,12 +4,15 @@ Shows the profile of the person they've been matched with
 */
 
 import React, { Component } from 'react';
-import { View, Image, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { clearMatchResult, removeRequest, pullOtherProfile, getMatchHistory } from '../actions';
 
 
 const styles = StyleSheet.create({
+  page: {
+    marginBottom: 80,
+  },
   container: {
     flex: 1,
     alignSelf: 'stretch',
@@ -123,22 +126,24 @@ class BeenMatched extends Component {
   render() {
     if (this.props.otherUser !== null && this.props.receiveMatch !== null) {
       return (
-        <View style={styles.container}>
-          <View style={styles.header}>
-            <Text style={styles.title}>{'You\'ve been Matched!'} </Text>
-            <Image
-              style={styles.image}
-              source={this.props.otherUser.profile_image}
-            />
-            <Text style={styles.name}>{this.props.otherUser.fullname}</Text>
+        <ScrollView style={styles.page}>
+          <View style={styles.container}>
+            <View style={styles.header}>
+              <Text style={styles.title}>{'You\'ve been Matched!'} </Text>
+              <Image
+                style={styles.image}
+                source={this.props.otherUser.profile_image}
+              />
+              <Text style={styles.name}>{this.props.otherUser.fullname}</Text>
+            </View>
+            <Text style={styles.label}>{`${this.props.otherUser.fullname} wants to talk about:`}</Text>
+            <Text style={styles.convotopic}>{this.props.receiveMatch.topic}</Text>
+            <Text style={styles.explanation}>{`You can chat with ${this.props.otherUser.fullname} by tapping OK and then going to Match History Page.`}</Text>
+            <TouchableOpacity style={styles.button} onPress={() => { this.beenMatchedButton(); }}>
+              <Text style={styles.buttonText}>Ok!</Text>
+            </TouchableOpacity>
           </View>
-          <Text style={styles.label}>{`${this.props.otherUser.fullname} wants to talk about:`}</Text>
-          <Text style={styles.convotopic}>{this.props.receiveMatch.topic}</Text>
-          <Text style={styles.explanation}>{`You can chat with ${this.props.otherUser.fullname} by tapping OK and then going to Match History Page.`}</Text>
-          <TouchableOpacity style={styles.button} onPress={() => { this.beenMatchedButton(); }}>
-            <Text style={styles.buttonText}>Ok!</Text>
-          </TouchableOpacity>
-        </View>
+        </ScrollView>
       );
     } else {
       return (

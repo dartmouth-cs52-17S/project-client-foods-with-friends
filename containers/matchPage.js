@@ -14,6 +14,9 @@ import MatchLoading from './matchLoading';
 import { postMatch, removeRequest, clearMatchResult } from '../actions';
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 65,
+  },
   title: {
     marginTop: 25,
     fontSize: 35,
@@ -253,7 +256,7 @@ class MatchPage extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView style={styles.container}>
         <View>
           <Text style={styles.title}>Grab a munch!</Text>
           <Text style={styles.instructions}>Choose a conversation topic:</Text>

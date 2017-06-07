@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     color: '#253e47',
   },
   container: {
+    marginBottom: 80,
     flex: 1,
     alignSelf: 'stretch',
     display: 'flex',
